@@ -1,0 +1,9 @@
+<csd:careServicesRequest xmlns:csd='urn:ihe:iti:csd:2013' xmlns='urn:ihe:iti:csd:2013'>
+  <function uuid='8a5df595-51ec-46e6-8a92-7db3c2484ee8'>
+    <requestParams>
+      <commonName>Patrick</commonName>
+      <start/>
+      <max/>
+    </requestParams>
+  </function>
+</csd:careServicesRequest>

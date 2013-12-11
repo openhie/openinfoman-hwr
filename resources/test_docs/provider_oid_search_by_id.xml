@@ -1,0 +1,9 @@
+<csd:careServicesRequest xmlns:csd='urn:ihe:iti:csd:2013' xmlns='urn:ihe:iti:csd:2013'>
+  <function uuid='fcbab300-6270-11e3-bd76-0002a5d5c51b'>
+    <requestParams>
+      <otherID assigningAuthorityName="2.25.309768652999692686176651983274504471835.646.3.4" code="3525410"/>
+      <start/>
+      <max/>
+    </requestParams>
+  </function>
+</csd:careServicesRequest>
