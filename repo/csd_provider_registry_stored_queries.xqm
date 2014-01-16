@@ -17,12 +17,21 @@ declare variable $csd_prsq:stored_functions :=
  	     content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='8a5df595-51ec-46e6-8a92-7db3c2484ee8'
-              method='csd_prsq:oid_search'
+              method='csd_prsq:get_oids'
+ 	     content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='e3cd7f80-7edb-11e3-baa7-0800200c9a66'
+              method='csd_prsq:get_name_indices'
+ 	     content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='d251f150-7edb-11e3-baa7-0800200c9a66'
+              method='csd_prsq:get_name'
  	     content-type='text/xml; charset=utf-8'      
 	     />
+
 );
 
-declare function csd_prsq:oid_search($requestParams, $doc) as element() 
+declare function csd_prsq:get_oids($requestParams, $doc) as element() 
 {
 <CSD xmlns:csd="urn:ihe:iti:csd:2013"  >
   <organizationDirectory/>
@@ -42,8 +51,65 @@ declare function csd_prsq:oid_search($requestParams, $doc) as element()
     }     
   </providerDirectory>
 </CSD>
+};
+
+declare function csd_prsq:get_name($requestParams, $doc) as element() 
+{
+<CSD xmlns:csd="urn:ihe:iti:csd:2013"  >
+  <organizationDirectory/>
+  <serviceDirectory/>
+  <facilityDirectory/>
+  <providerDirectory>
+    {
+      for $provider in  if (exists($requestParams/id)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+	return
+	<provider oid="{$provider/@oid}">
+	  <demographic>
+	  {
+	    if (exists($requestParams/nameIndex)) then 
+	      for $name in $provider/demographic/name[position() = $requestParams/nameIndex]
+	      return <name id="{$requestParams/nameIndex}">{$name/*}</name>
+            else
+	      ()
+	  }
+	  </demographic>
+	  {$provider/record}
+	</provider>
+    }
+  </providerDirectory>
+</CSD>
 
 };
+
+declare function csd_prsq:get_name_indices($requestParams, $doc) as element() 
+{
+<CSD xmlns:csd="urn:ihe:iti:csd:2013"  >
+  <organizationDirectory/>
+  <serviceDirectory/>
+  <facilityDirectory/>
+  <providerDirectory>
+    {
+      let $providers := 
+	if (exists($requestParams/id)) then 
+	  csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) 
+	else ($doc/CSD/providerDirectory/*)
+      for $provider in  $providers
+	return
+	<provider oid="{$provider/@oid}">
+	  <demographic>
+	  {
+	    for $name at $pos  in  $provider/demographic/name
+	    return <name id="{$pos}"/> 
+	  }
+	  </demographic>
+	</provider>
+    }
+  </providerDirectory>
+</CSD>
+
+
+};
+
 
 
 declare function csd_prsq:oid_search_by_id($requestParams, $doc) as element() 
