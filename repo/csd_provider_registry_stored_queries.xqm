@@ -38,13 +38,61 @@ declare variable $csd_prsq:stored_functions :=
               method='csd_prsq:create_name'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
-
 	     />,
     <function uuid='866455e0-7f84-11e3-baa7-0800200c9a66'
               method='csd_prsq:update_name'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
+	      />,
 
+	      (:Methods for Common Names:)
+    <function uuid='26890a10-82ba-11e3-baa7-0800200c9a66'
+              method='csd_prsq:indices_common_name'
+ 	      content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='1d94b620-82ba-11e3-baa7-0800200c9a66'
+              method='csd_prsq:read_common_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='155cd460-82ba-11e3-baa7-0800200c9a66'
+              method='csd_prsq:delete_common_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='0ad4e820-82ba-11e3-baa7-0800200c9a66'
+              method='csd_prsq:create_common_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='a8a05f90-82b9-11e3-baa7-0800200c9a66'
+              method='csd_prsq:update_common_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	      updating='1'
+	     />,
+
+	      (:Methods for Other Names:)
+    <function uuid='26890a10-82ba-11e3-baa7-0800200c9a77'
+              method='csd_prsq:indices_other_name'
+ 	      content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='1d94b620-82ba-11e3-baa7-0800200c9a77'
+              method='csd_prsq:read_other_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='155cd460-82ba-11e3-baa7-0800200c9a77'
+              method='csd_prsq:delete_other_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='0ad4e820-82ba-11e3-baa7-0800200c9a77'
+              method='csd_prsq:create_other_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='a8a05f90-82b9-11e3-baa7-0800200c9a77'
+              method='csd_prsq:update_other_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	      updating='1'
 	     />
 
 
@@ -142,15 +190,18 @@ let $provs2 :=
     let $provider :=  $provs1[1] 
     return 
     <provider oid="{$provider/@oid}">
-      <demographic>
-	{
-	  if (exists($requestParams/name) and exists($requestParams/name/@position)) then 
-	    for $name in $provider/demographic/name[position() = $requestParams/name/@position]
-	    return <name position="{$requestParams/name/@position}">{$name/*}</name>
-	  else
-	    ()
-	}
-      </demographic>
+      {
+	if (exists($requestParams/name) and exists($requestParams/name/@position)) 
+	  then 
+	  <demographic>
+	    {
+	      for $name in $provider/demographic/name[position() = $requestParams/name/@position]
+	      return       <name position="{$requestParams/name/@position}">{$name/*}</name>
+	  }
+	  </demographic>
+	else
+	  ()
+      }
       {$provider/record}
     </provider>
   else ()    
@@ -172,19 +223,26 @@ return
   if ( count($provs2) = 1 )
     then
     let $provider:= $provs2[1]
-    let $name := <name/>
     let $position := count($provider/demographic/name) +1
+    let $name := 
+      <name>
+	{(
+	  if (exists($requestParams/name/honorific)) then  $requestParams/name/honorific else (),
+	  if (exists($requestParams/name/suffix)) then  $requestParams/name/suffix else (),
+	  if (exists($requestParams/name/forename)) then  $requestParams/name/forename else (),
+	  if (exists($requestParams/name/surname)) then  $requestParams/name/surname else ()
+	 )}
+      </name>
     let $provs3:=  
     <provider oid="{$provider/@oid}">
       <demographic>
 	<name position="{$position}"/>
       </demographic>
     </provider>
-    return (
-      insert node $name into $provider/demographic, 	  
-      csd_prsq:update_name_parts($name,$requestParams/name),
+    return 
+      (insert node $name into $provider/demographic ,    
       csd_prsq:wrap_updating_providers($provs3)
-    )
+      )
   else  csd_prsq:wrap_updating_providers(())
       
 };
@@ -219,8 +277,8 @@ declare updating function csd_prsq:update_name_parts($old,$new)
   (
     if (exists($new/honorific)) 
       then
-      (if (exists($old/honorific)) then (delete node $old/honoroific) else (),
-      insert node $new/honorofic into $old)
+      (if (exists($old/honorific)) then (delete node $old/honorific) else (),
+      insert node $new/honorific into $old)
     else (),
     if (exists($new/surname)) 
       then
@@ -249,6 +307,328 @@ declare updating function csd_prsq:delete_name($requestParams, $doc)
 	then
 	let  $name :=  $providers[1]/demographic/name[position() = $requestParams/name/@position]
 	return if (exists($name)) then (delete node $name) else ()
+      else  ()
+    else ()      
+};
+
+
+
+(:Methods for Common Names:)
+declare function csd_prsq:indices_common_name($requestParams, $doc) as element() 
+{
+  let $provs0 := 
+    if (exists($requestParams/id/@oid)) then 
+      csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) 
+    else ($doc/CSD/providerDirectory/*)
+  let $provs1:=     
+      for $provider in  $provs0
+      return
+      <provider oid="{$provider/@oid}">
+	<demographic>
+	  {
+	    for $name in  $provider/demographic/name[position() = $requestParams/name/@position]
+	    return
+	    <name position="{ $requestParams/name/@position}">
+	      {for $common_name at $pos  in  $name/commonName
+	      return <commonName position="{$pos}"/>
+	      }
+	    </name>
+	  }
+	</demographic>
+    </provider>
+      
+    return csd_prsq:wrap_providers($provs1)
+};
+
+declare function csd_prsq:read_common_name($requestParams, $doc) as element() 
+{
+
+let $provs0 := if (exists($requestParams/name/@position)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $provs2 := 
+  if (count($provs1) = 1) 
+    then 
+    let $provider :=  $provs1[1] 
+    return 
+    <provider oid="{$provider/@oid}">
+      {
+	if ( exists($requestParams/name/@position) and exists($requestParams/name/commonName/@position)) 
+	  then 
+	  <demographic>
+	    {
+	      for $common_name in $provider/demographic/name[position() = $requestParams/name/@position]/commonName[position() = $requestParams/name/commonName/@position]
+	      return       
+	      <name position="{$requestParams/name/@position}">
+		<commonName position="{$requestParams/name/commonName/@position}" language="{$common_name/@language}">{string($common_name)}</commonName>
+	      </name>
+	  }
+	  </demographic>
+	else
+	  ()
+      }
+      {$provider/record}
+    </provider>
+  else ()    
+    
+return csd_prsq:wrap_providers($provs2)
+};
+
+
+declare updating function csd_prsq:update_common_name_from_parts($old,$new)
+{
+(   
+if (exists($new/@language)) then
+  if (exists($old/@language))
+    then (replace value of node $old/@language with $new/@language)
+  else 
+    (insert node $new/@language into $old)
+  else ()
+  ,
+ replace value of node $old with $new
+)
+    
+};
+
+
+declare updating function csd_prsq:create_common_name($requestParams, $doc) 
+{  
+
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs1 := if (count($provs0) = 1) then $provs0 else ()
+let $provs2 := if (exists($requestParams/name/@position))  then $provs1 else ()
+let $provs3 := if (exists($requestParams/name/commonName))  then $provs2 else ()
+return  
+  if ( count($provs3) = 1 )
+    then
+    let $provider:= $provs3[1]
+    let $name := $provider/demographic/name[position() = $requestParams/name/@position]
+    return if (count($name) =1 ) then
+      let $position := count($name/commonName) +1
+      let $common_name := if (not($requestParams/name/commonName/@language = '') )
+	then
+	<commonName language="{$requestParams/name/commonName/@language}">
+	  {string($requestParams/name/commonName)}
+	</commonName>
+	else
+	<commonName>
+	  {string($requestParams/name/commonName)}
+	</commonName>	
+      let $provs4:=  
+      <provider oid="{$provider/@oid}">
+	<demographic>
+	  <name position="{$requestParams/name/@position}">
+	    <commonName position="{$position}"/>
+	  </name>
+	</demographic>
+      </provider>
+      return (
+	insert node $common_name into $name,
+	csd_prsq:wrap_updating_providers($provs4)
+      )
+    else
+      csd_prsq:wrap_updating_providers(())
+  else  csd_prsq:wrap_updating_providers(())
+      
+};
+
+
+declare updating function csd_prsq:update_common_name($requestParams, $doc) 
+{  
+let $provs0 := if (exists($requestParams/name/@position)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $name := $provs1[1]/demographic/name[position() = $requestParams/name/@position]
+let $common_name := $name/commonName[position() = $requestParams/name/commonName/@position]
+return
+  if (count($provs1) = 1 and count($name) = 1 and exists($common_name)) 
+    then
+    let $provs2 := 
+    <provider oid="{$provs1[1]/@oid}" >
+      <demographic>
+	<name position="{$requestParams/name/@position}">
+	  <commonName position="{$requestParams/name/commonName/@position}"/>
+	  {$requestParams}
+	</name>
+      </demographic>
+    </provider>
+    return
+      (
+	csd_prsq:update_common_name_from_parts($common_name,$requestParams/name/commonName)
+	,
+	csd_prsq:wrap_updating_providers($provs2)
+     )
+  else 	csd_prsq:wrap_updating_providers(())
+
+};
+
+
+
+declare updating function csd_prsq:delete_common_name($requestParams, $doc) 
+{
+  if (exists($requestParams/name/@position) and exists($requestParams/name/commonName/@position))
+    then 
+    let $providers := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+    return
+      if ( count($providers) = 1 )
+	then
+	let  $name :=  $providers[1]/demographic/name[position() = $requestParams/name/@position]
+	let  $common_name :=  $providers[1]/demographic/name/commonName[position() = $requestParams/name/commonName/@position]
+
+	return if (exists($common_name)) then (delete node $common_name) else ()
+      else  ()
+    else ()      
+};
+
+
+
+(:Methods for Other Names:)
+declare function csd_prsq:indices_other_name($requestParams, $doc) as element() 
+{
+  let $provs0 := 
+    if (exists($requestParams/id/@oid)) then 
+      csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) 
+    else ($doc/CSD/providerDirectory/*)
+  let $provs1:=     
+      for $provider in  $provs0
+      return
+      <provider oid="{$provider/@oid}">
+	<demographic>
+	  {
+	    for $name in  $provider/demographic/name[position() = $requestParams/name/@position]
+	    return
+	    <name position="{ $requestParams/name/@position}">
+	      {for $other_name at $pos  in  $name/otherNames
+	      return <otherNames position="{$pos}"/>
+	      }
+	    </name>
+	  }
+	</demographic>
+    </provider>
+      
+    return csd_prsq:wrap_providers($provs1)
+};
+
+declare function csd_prsq:read_other_name($requestParams, $doc) as element() 
+{
+
+let $provs0 := if (exists($requestParams/name/@position)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $provs2 := 
+  if (count($provs1) = 1) 
+    then 
+    let $provider :=  $provs1[1] 
+    return 
+    <provider oid="{$provider/@oid}">
+      {
+	if ( exists($requestParams/name/@position) and exists($requestParams/name/otherNames/@position)) 
+	  then 
+	  <demographic>
+	    {
+	      for $other_name in $provider/demographic/name[position() = $requestParams/name/@position]/otherNames[position() = $requestParams/name/otherNames/@position]
+	      return       
+	      <name position="{$requestParams/name/@position}">
+		<otherNames position="{$requestParams/name/otherNames/@position}" >{string($other_name)}</otherNames>
+	      </name>
+	  }
+	  </demographic>
+	else
+	  ()
+      }
+      {$provider/record}
+    </provider>
+  else ()    
+    
+return csd_prsq:wrap_providers($provs2)
+};
+
+
+declare updating function csd_prsq:update_other_name_from_parts($old,$new)
+{
+(   
+ replace value of node $old with $new
+)
+    
+};
+
+
+declare updating function csd_prsq:create_other_name($requestParams, $doc) 
+{  
+
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs1 := if (count($provs0) = 1) then $provs0 else ()
+let $provs2 := if (exists($requestParams/name/@position))  then $provs1 else ()
+let $provs3 := if (exists($requestParams/name/otherNames))  then $provs2 else ()
+return  
+  if ( count($provs3) = 1 )
+    then
+    let $provider:= $provs3[1]
+    let $name := $provider/demographic/name[position() = $requestParams/name/@position]
+    return if (count($name) =1 ) then
+      let $position := count($name/otherNames) +1
+      let $other_name := 
+      <otherNames>
+      	{$requestParams/name/otherNames}
+      </otherNames>
+      let $provs4:=  
+      <provider oid="{$provider/@oid}">
+	<demographic>
+	  <name position="{$requestParams/name/@position}">
+	    <otherNames position="{$position}"/>
+	  </name>
+	</demographic>
+      </provider>
+      return (
+	insert node $other_name into $name,
+	csd_prsq:wrap_updating_providers($provs4)
+      )
+    else
+      csd_prsq:wrap_updating_providers(())
+  else  csd_prsq:wrap_updating_providers(())
+      
+};
+
+
+declare updating function csd_prsq:update_other_name($requestParams, $doc) 
+{  
+let $provs0 := if (exists($requestParams/name/@position)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $name := $provs1[1]/demographic/name[position() = $requestParams/name/@position]
+let $other_name := $name/otherNames[position() = $requestParams/name/otherNames/@position]
+return
+  if (count($provs1) = 1 and count($name) = 1 and exists($other_name)) 
+    then
+    let $provs2 := 
+    <provider oid="{$provs1[1]/@oid}" >
+      <demographic>
+	<name position="{$requestParams/name/@position}">
+	  <otherNames position="{$requestParams/name/otherNames/@position}"/>
+	  {$requestParams}
+	</name>
+      </demographic>
+    </provider>
+    return
+      (
+	csd_prsq:update_other_name_from_parts($other_name,$requestParams/name/otherNames)
+	,
+	csd_prsq:wrap_updating_providers($provs2)
+     )
+  else 	csd_prsq:wrap_updating_providers(())
+
+};
+
+
+
+declare updating function csd_prsq:delete_other_name($requestParams, $doc) 
+{
+  if (exists($requestParams/name/@position) and exists($requestParams/name/otherNames/@position))
+    then 
+    let $providers := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+    return
+      if ( count($providers) = 1 )
+	then
+	let  $name :=  $providers[1]/demographic/name[position() = $requestParams/name/@position]
+	let  $other_name :=  $providers[1]/demographic/name/otherNames[position() = $requestParams/name/otherNames/@position]
+
+	return if (exists($other_name)) then (delete node $other_name) else ()
       else  ()
     else ()      
 };
