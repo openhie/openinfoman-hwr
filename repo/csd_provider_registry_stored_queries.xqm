@@ -93,7 +93,57 @@ declare variable $csd_prsq:stored_functions :=
               method='csd_prsq:update_other_name'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
+	     />,
+
+	      (:Methods for Facility Affiliation:)
+    <function uuid='a4544da0-831f-11e3-baa7-0800200c9a66'
+              method='csd_prsq:indices_provider_facility'
+ 	      content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='aa65a5e0-831f-11e3-baa7-0800200c9a66'
+              method='csd_prsq:read_provider_facility'
+ 	     content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='afcc3f30-831f-11e3-baa7-0800200c9a66'
+              method='csd_prsq:delete_provider_facility'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='b6078da0-831f-11e3-baa7-0800200c9a66'
+              method='csd_prsq:create_provider_facility'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='bc0a3fe0-831f-11e3-baa7-0800200c9a66'
+              method='csd_prsq:update_provider_facility'
+ 	     content-type='text/xml; charset=utf-8'      
+	      updating='1'
+	     />,
+	      (:Methods for Organizational Affiliation:)
+    <function uuid='cf97b490-8313-11e3-baa7-0800200c9a66'
+              method='csd_prsq:indices_provider_organization'
+ 	      content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='dd319bc0-8313-11e3-baa7-0800200c9a66'
+              method='csd_prsq:read_provider_organization'
+ 	     content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='e7007130-8313-11e3-baa7-0800200c9a66'
+              method='csd_prsq:delete_provider_organization'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='f0908ff0-8313-11e3-baa7-0800200c9a66'
+              method='csd_prsq:create_provider_organization'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='f5b36980-8313-11e3-baa7-0800200c9a66'
+              method='csd_prsq:update_provider_organization'
+ 	     content-type='text/xml; charset=utf-8'      
+	      updating='1'
 	     />
+
 
 
 );
@@ -634,5 +684,237 @@ declare updating function csd_prsq:delete_other_name($requestParams, $doc)
 };
 
 
+
+(:Methods for Provider Organization:)
+declare function csd_prsq:indices_provider_organization($requestParams, $doc) as element() 
+{
+  let $provs0 := 
+    if (exists($requestParams/id/@oid)) then 
+      csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) 
+    else ($doc/CSD/providerDirectory/*)
+  let $provs1:=     
+      for $provider in  $provs0
+      return
+      <provider oid="{$provider/@oid}">
+	<organizations>
+          {
+	    for $org in $provider/organizations/organization 
+	    return
+	    <organization oid="{$org/@oid}"></organization>
+	  }
+	</organizations>
+      </provider>
+      
+    return csd_prsq:wrap_providers($provs1)
+};
+
+declare function csd_prsq:read_provider_organization($requestParams, $doc) as element() 
+{
+
+let $provs0 := if (exists($requestParams/organization/@oid)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $provs2 := 
+  if (count($provs1) = 1) 
+    then 
+    let $provider :=  $provs1[1] 
+    return 
+      <provider oid="{$provider/@oid}">
+	  {
+	    (
+	    <organizations>
+	      {
+		for $org in $provider/organizations/organization[@oid = $requestParams/organization/@oid  ]
+		return
+		<organization oid="{$org/@oid}"></organization>
+	      }
+	    </organizations>
+	       
+	      ,
+	      $provider/record
+	    )
+	  }
+      </provider>
+  else ()    
+    
+return csd_prsq:wrap_providers($provs2)
+};
+
+
+
+
+
+declare updating function csd_prsq:create_provider_organization($requestParams, $doc) 
+{  
+
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs1 := if (count($provs0) = 1) then $provs0 else ()
+let $provs2 := if (exists($requestParams/organization/@oid))  then $provs1 else ()
+let $orgs0 := $provs2/organizations/organization[@oid = $requestParams/organization/@oid]
+let $organizations := $provs2/organizations[1]
+return  
+  if ( count($provs2) = 1 and count($orgs0) = 0)  (:DO NOT ALLOW SAME ORG TWICE :)
+    then
+    let $provider:= $provs2[1]
+    let $org :=  <organization oid="{$requestParams/organization/@oid}"/>
+    let $orgs_new :=  <organizations>{$org}</organizations>
+
+    let $provs3:=  
+    <provider oid="{$provider/@oid}">{$orgs_new}</provider>
+    return 
+      if (exists($organizations)) 
+	then
+	(insert node $org into $organizations, 
+	csd_prsq:wrap_updating_providers($provs3)
+	)
+      else
+	(
+	insert node $orgs_new into $provider,
+	csd_prsq:wrap_updating_providers($provs3)
+	)
+
+  else  csd_prsq:wrap_updating_providers(())
+      
+};
+
+
+declare updating function csd_prsq:update_provider_organization($requestParams, $doc) 
+{  
+() (: does nothing:)
+};
+
+
+
+declare updating function csd_prsq:delete_provider_organization($requestParams, $doc) 
+{
+  if (exists($requestParams/organization/@oid)) 
+    then 
+    let $providers := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+    return
+      if ( count($providers) = 1 )
+	then
+	let  $org :=  $providers[1]/organizations/organization[@oid = $requestParams/organization/@oid]
+	return if (exists($org)) then (delete node $org) else ()
+      else  ()
+    else ()      
+};
+
+
+
+
+
+
+
+(:Methods for Provider Facility:)
+declare function csd_prsq:indices_provider_facility($requestParams, $doc) as element() 
+{
+  let $provs0 := 
+    if (exists($requestParams/id/@oid)) then 
+      csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) 
+    else ($doc/CSD/providerDirectory/*)
+  let $provs1:=     
+      for $provider in  $provs0
+      return
+      <provider oid="{$provider/@oid}">
+	<facilities>
+          {
+	    for $fac in $provider/facilities/facility 
+	    return
+	    <facility oid="{$fac/@oid}"></facility>
+	  }
+	</facilities>
+      </provider>
+      
+    return csd_prsq:wrap_providers($provs1)
+};
+
+declare function csd_prsq:read_provider_facility($requestParams, $doc) as element() 
+{
+
+let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $provs2 := 
+  if (count($provs1) = 1) 
+    then 
+    let $provider :=  $provs1[1] 
+    return 
+      <provider oid="{$provider/@oid}">
+	  {
+	    (
+	    <facilities>
+	      {
+		for $fac in $provider/facilities/facility[@oid = $requestParams/facility/@oid  ]
+		return
+		<facility oid="{$fac/@oid}"></facility>
+	      }
+	    </facilities>
+	       
+	      ,
+	      $provider/record
+	    )
+	  }
+      </provider>
+  else ()    
+    
+return csd_prsq:wrap_providers($provs2)
+};
+
+
+
+
+
+declare updating function csd_prsq:create_provider_facility($requestParams, $doc) 
+{  
+
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs1 := if (count($provs0) = 1) then $provs0 else ()
+let $provs2 := if (exists($requestParams/facility/@oid))  then $provs1 else ()
+let $facs0 := $provs2/facilities/facility[@oid = $requestParams/facility/@oid]
+let $facilities := $provs2/facilities[1]
+return  
+  if ( count($provs2) = 1 and count($facs0) = 0)  (:DO NOT ALLOW SAME ORG TWICE :)
+    then
+    let $provider:= $provs2[1]
+    let $fac :=  <facility oid="{$requestParams/facility/@oid}"/>
+    let $facs_new :=  <facilities>{$fac}</facilities>
+
+    let $provs3:=  
+    <provider oid="{$provider/@oid}">{$facs_new}</provider>
+    return 
+      if (exists($facilities)) 
+	then
+	(insert node $fac into $facilities, 
+	csd_prsq:wrap_updating_providers($provs3)
+	)
+      else
+	(
+	insert node $facs_new into $provider,
+	csd_prsq:wrap_updating_providers($provs3)
+	)
+
+  else  csd_prsq:wrap_updating_providers(())
+      
+};
+
+
+declare updating function csd_prsq:update_provider_facility($requestParams, $doc) 
+{  
+() (: does nothing:)
+};
+
+
+
+declare updating function csd_prsq:delete_provider_facility($requestParams, $doc) 
+{
+  if (exists($requestParams/facility/@oid)) 
+    then 
+    let $providers := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+    return
+      if ( count($providers) = 1 )
+	then
+	let  $fac :=  $providers[1]/facilities/facility[@oid = $requestParams/facility/@oid]
+	return if (exists($fac)) then (delete node $fac) else ()
+      else  ()
+    else ()      
+};
 
 
