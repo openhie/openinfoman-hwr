@@ -95,6 +95,36 @@ declare variable $csd_prsq:stored_functions :=
 	      updating='1'
 	     />,
 
+	     (:Methods for Contact Point:)
+
+
+
+
+
+    <function uuid='5a268fa0-8391-11e3-baa7-0800200c9a66'
+              method='csd_prsq:indices_contact_point'
+ 	      content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='5e338c60-8391-11e3-baa7-0800200c9a66'
+              method='csd_prsq:read_contact_point'
+ 	     content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='6181cd00-8391-11e3-baa7-0800200c9a66'
+              method='csd_prsq:delete_contact_point'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='68d457d0-8391-11e3-baa7-0800200c9a66'
+              method='csd_prsq:create_contact_point'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='6cb318a0-8391-11e3-baa7-0800200c9a66'
+              method='csd_prsq:update_contact_point'
+ 	     content-type='text/xml; charset=utf-8'      
+	      updating='1'
+	      />,
+
 	      (:Methods for Facility Affiliation:)
     <function uuid='a4544da0-831f-11e3-baa7-0800200c9a66'
               method='csd_prsq:indices_provider_facility'
@@ -142,7 +172,36 @@ declare variable $csd_prsq:stored_functions :=
               method='csd_prsq:update_provider_organization'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
-	     />
+	     />,
+	     (:Methods for Organizational Contact Point:)
+
+
+
+    <function uuid='6ca9a7b2-e1c8-402c-9b45-8c3009c29492'
+              method='csd_prsq:indices_org_contact_point'
+ 	      content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='bf6e77e1-8908-4ffb-b322-f472bfd24a51'
+              method='csd_prsq:read_org_contact_point'
+ 	     content-type='text/xml; charset=utf-8'      
+	     />,
+
+    <function uuid='90c71896-2991-4f27-a65d-0bd442e60567'
+              method='csd_prsq:delete_org_contact_point'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='82e65afd-a52a-49e0-92b4-292134c1699d'
+              method='csd_prsq:create_org_contact_point'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='5e4e6bca-451d-41a7-b82e-7dc017a3e3ff'
+              method='csd_prsq:update_org_contact_point'
+ 	     content-type='text/xml; charset=utf-8'      
+	      updating='1'
+	      />
+
 
 
 
@@ -682,6 +741,342 @@ declare updating function csd_prsq:delete_other_name($requestParams, $doc)
       else  ()
     else ()      
 };
+
+
+
+
+
+
+(:Methods for Contact Point:)
+declare function csd_prsq:indices_contact_point($requestParams, $doc) as element() 
+{
+  let $provs0 := 
+    if (exists($requestParams/id/@oid)) then 
+      csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) 
+    else ($doc/CSD/providerDirectory/*)
+  let $provs1:=     
+      for $provider in  $provs0
+      return
+      <provider oid="{$provider/@oid}">
+	<demographic>
+	  {
+	    for $cp at $pos  in  $provider/demographic/contactPoint
+	    return <contactPoint position="{$pos}"/> 
+	  }
+	</demographic>
+    </provider>
+      
+    return csd_prsq:wrap_providers($provs1)
+};
+
+declare function csd_prsq:read_contact_point($requestParams, $doc) as element() 
+{
+
+let $provs0 := if (exists($requestParams/contactPoint/@position)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $provs2 := 
+  if (count($provs1) = 1) 
+    then 
+    let $provider :=  $provs1[1] 
+    return 
+    <provider oid="{$provider/@oid}">
+      {
+	if (exists($requestParams/contactPoint) and exists($requestParams/contactPoint/@position)) 
+	  then 
+	  <demographic>
+	    {
+	      for $cp in $provider/demographic/contactPoint[position() = $requestParams/contactPoint/@position]
+	      return       <contactPoint position="{$requestParams/contactPoint/@position}">{$cp/*}</contactPoint>
+	  }
+	  </demographic>
+	else
+	  ()
+      }
+      {$provider/record}
+    </provider>
+  else ()    
+    
+return csd_prsq:wrap_providers($provs2)
+};
+
+
+
+
+
+declare updating function csd_prsq:create_contact_point($requestParams, $doc) 
+{  
+
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs1 := if (count($provs0) = 1) then $provs0 else ()
+let $provs2 := if (exists($requestParams/contactPoint))  then $provs1 else ()
+return  
+  if ( count($provs2) = 1 )
+    then
+    let $provider:= $provs2[1]
+    let $position := count($provider/demographic/contactPoint) +1
+    let $cp := 
+      <contactPoint>
+	{(
+	  if (exists($requestParams/contactPoint/codedType)) then  $requestParams/contactPoint/codedType else (),
+	  if (exists($requestParams/contactPoint/equipment)) then  $requestParams/contactPoint/equipment else (),
+	  if (exists($requestParams/contactPoint/purpose)) then  $requestParams/contactPoint/purpose else (),
+	  if (exists($requestParams/contactPoint/certificate)) then  $requestParams/contactPoint/certificate else ()
+	 )}
+      </contactPoint>
+    let $provs3:=  
+    <provider oid="{$provider/@oid}">
+      <demographic>
+	<contactPoint position="{$position}"/>
+      </demographic>
+    </provider>
+    return 
+      (insert node $cp into $provider/demographic ,    
+      csd_prsq:wrap_updating_providers($provs3)
+      )
+  else  csd_prsq:wrap_updating_providers(())
+      
+};
+
+
+declare updating function csd_prsq:update_contact_point($requestParams, $doc) 
+{  
+let $provs0 := if (exists($requestParams/contactPoint/@position)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $old_cp := $provs1[1]/demographic/contactPoint[position() = $requestParams/contactPoint/@position]
+return
+  if (count($provs1) = 1 and exists($old_cp)) 
+    then
+    let $new_cp := $requestParams/contactPoint
+    let $provs2 := 
+    <provider oid="{$provs1[1]/@oid}">
+      <demographic>
+	<contactPoint position="{$requestParams/contactPoint/@position}"/>
+      </demographic>
+    </provider>
+    return
+      (
+	if (exists($new_cp/codedType)) 
+	  then
+	  (if (exists($old_cp/codedType)) then (delete node $old_cp/codedType) else (),
+	  insert node $new_cp/codedType into $old_cp)
+	else (),
+	if (exists($new_cp/equipment)) 
+	  then
+	  (if (exists($old_cp/equipment)) then (delete node $old_cp/equipment) else (),
+	  insert node $new_cp/equipment into $old_cp)
+	else (),
+	if (exists($new_cp/purpose)) then
+	  (if (exists($old_cp/purpose)) then (delete node $old_cp/purpose) else (),
+	  insert node $new_cp/purpose into $old_cp)
+	else (),
+	if (exists($new_cp/certificate)) then
+	  (if (exists($old_cp/certificate)) then (delete node $old_cp/certificate) else (),
+	  insert node $new_cp/certificate into $old_cp)
+	else (),
+	csd_prsq:wrap_updating_providers($provs2)
+     )
+  else 	csd_prsq:wrap_updating_providers(())
+
+};
+
+
+
+
+declare updating function csd_prsq:delete_contact_point($requestParams, $doc) 
+{
+  if (exists($requestParams/contactPoint/@position)) 
+    then 
+    let $providers := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+    return
+      if ( count($providers) = 1 )
+	then
+	let  $cp :=  $providers[1]/demographic/contactPoint[position() = $requestParams/contactPoint/@position]
+	return if (exists($cp)) then (delete node $cp) else ()
+      else  ()
+    else ()      
+};
+
+
+(:Methods for Organizational Contact Point:)
+declare function csd_prsq:indices_org_contact_point($requestParams, $doc) as element() 
+{
+  let $provs0 := 
+    if (exists($requestParams/id/@oid)) then 
+      csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) 
+    else ($doc/CSD/providerDirectory/*)
+  let $provs1:=     
+      for $provider in  $provs0
+      return
+      <provider oid="{$provider/@oid}">
+	<organizations>
+	  {
+	    let $orgs := 
+	      if (exists($requestParams/organization/@oid)) 
+		then 
+		$provider/organizations/organization[@oid = $requestParams/organization/@oid]
+	      else    $provider/organizations/organization
+            for $org in $orgs
+	      return 
+	       <organization oid="{$org/@oid}">
+		  {
+		    for $cp at $pos in $org/contactPoint
+		    return <contactPoint position="{$pos}"/> 
+		  }
+		</organization>
+	  }
+	</organizations>
+    </provider>
+      
+    return csd_prsq:wrap_providers($provs1)
+};
+
+declare function csd_prsq:read_org_contact_point($requestParams, $doc) as element() 
+{
+
+let $provs0 := if (exists($requestParams/organization/@oid)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/organization/contactPoint/@position)) then $provs0  else ()
+let $provs2 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs1,$requestParams/id) else ()
+let $provs3 := 
+  if (count($provs2) = 1) 
+    then 
+    let $provider :=  $provs2[1] 
+    return 
+    <provider oid="{$provider/@oid}">
+      {
+	if (exists($requestParams/organization/@oid) and exists($requestParams/organization/contactPoint/@position)) 
+	  then 
+	  <organizations>
+	    <organization oid="{$requestParams/organization/@oid}">
+	    {
+	      for $cp in $provider/organizations/organization[@oid = $requestParams/organization/@oid]/contactPoint[position() = $requestParams/organization/contactPoint/@position]
+	      return       <contactPoint position="{$requestParams/organization/contactPoint/@position}">{$cp/*}</contactPoint>
+	  }
+	    </organization>
+	  </organizations>
+	else
+	  ()
+      }
+      {$provider/record}
+    </provider>
+  else ()    
+    
+return csd_prsq:wrap_providers($provs3)
+};
+
+
+
+
+
+declare updating function csd_prsq:create_org_contact_point($requestParams, $doc) 
+{  
+
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs1 := if (count($provs0) = 1) then $provs0 else ()
+let $provs2 := if (exists($requestParams/organization/@oid))  then $provs1 else ()
+let $provs3 := if (exists($requestParams/organization/contactPoint))  then $provs2 else ()
+return  
+  if ( count($provs3) = 1 )
+    then
+    let $provider:= $provs3[1]
+    let $orgs := $provider/organizations/organization[@oid = $requestParams/organization/@oid]
+    return 
+      if (count($orgs) = 1) 
+	then
+	let $org := $orgs[1]
+	let $position := count($org/contactPoint) +1
+	let $new_cp := $requestParams/organization/contactPoint
+	let $cp := 
+	<contactPoint>
+	  {(
+	    if (exists($new_cp/codedType)) then  $new_cp/codedType else (),
+            if (exists($new_cp/equipment)) then  $new_cp/equipment else (),
+            if (exists($new_cp/purpose)) then  $new_cp/purpose else (),
+            if (exists($new_cp/certificate)) then  $new_cp/certificate else ()
+	   )}
+	</contactPoint>
+	let $provs3:=  
+	<provider oid="{$provider/@oid}">
+	  <organizations>
+	    <organization>
+	      <contactPoint position="{$position}"/>
+	    </organization>
+	  </organizations>
+	</provider>
+	return 
+	  (insert node $cp into $org ,    
+	  csd_prsq:wrap_updating_providers($provs3)
+	)
+      else   csd_prsq:wrap_updating_providers(())
+    else  csd_prsq:wrap_updating_providers(())
+      
+};
+
+
+declare updating function csd_prsq:update_org_contact_point($requestParams, $doc) 
+{  
+let $provs0 := if (exists($requestParams/organization/@oid)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/organization/contactPoint/@position)) then $provs0  else ()
+let $provs2 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs1,$requestParams/id) else ()
+let $old_cp := $provs2[1]/organizations/organization[@oid =$requestParams/organization/@oid]/contactPoint[position() = $requestParams/organization/contactPoint/@position]
+return
+  if (count($provs2) = 1 and exists($old_cp)) 
+    then
+    let $new_cp := $requestParams/organization/contactPoint
+    let $provs3 := 
+    <provider oid="{$provs1[1]/@oid}">
+      <organizations>
+	<organization oid="{$requestParams/organization/@oid}">
+	  <contactPoint position="{$requestParams/organization/contactPoint/@position}"/>
+	</organization>
+      </organizations>
+    </provider>
+    return
+      (
+	if (exists($new_cp/codedType)) 
+	  then
+	  (if (exists($old_cp/codedType)) then (delete node $old_cp/codedType) else (),
+	  insert node $new_cp/codedType into $old_cp)
+	else (),
+	if (exists($new_cp/equipment)) 
+	  then
+	  (if (exists($old_cp/equipment)) then (delete node $old_cp/equipment) else (),
+	  insert node $new_cp/equipment into $old_cp)
+	else (),
+	if (exists($new_cp/purpose)) then
+	  (if (exists($old_cp/purpose)) then (delete node $old_cp/purpose) else (),
+	  insert node $new_cp/purpose into $old_cp)
+	else (),
+	if (exists($new_cp/certificate)) then
+	  (if (exists($old_cp/certificate)) then (delete node $old_cp/certificate) else (),
+	  insert node $new_cp/certificate into $old_cp)
+	else (),
+	csd_prsq:wrap_updating_providers($provs2)
+     )
+  else 	csd_prsq:wrap_updating_providers(())
+
+};
+
+
+
+
+declare updating function csd_prsq:delete_org_contact_point($requestParams, $doc) 
+{
+  if (exists($requestParams/organization/contactPoint/@position) and exists($requestParams/organization/@oid)) 
+    then 
+    let $providers := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+    return
+      if ( count($providers) = 1 )
+	then
+	let $orgs := $providers[1]/organizations/organization[@oid = $requestParams/organization/@oid]
+	return
+	  if (count($orgs) = 1) then
+	    let  $cp :=  $orgs[1]/contactPoint[position() = $requestParams/organization/contactPoint/@position]
+	    return if (exists($cp)) then (delete node $cp) else ()
+	  else () 
+      else  ()
+    else ()      
+};
+
 
 
 
