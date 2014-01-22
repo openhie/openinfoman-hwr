@@ -134,7 +134,7 @@ declare function csd_prsq:get_oids($requestParams, $doc) as element()
   let $provs0 := if (exists($requestParams/id)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else $doc/CSD/providerDirectory/*
   let $provs1 := if (exists($requestParams/otherID)) then csd:filter_by_other_id($provs0,$requestParams/otherID) else $provs0
   let $provs2 := if (exists($requestParams/commonName)) then csd:filter_by_common_name($provs1,$requestParams/commonName) else $provs1
-  let $provs3 := if (exists($requestParams/type)) then csd:filter_by_coded_type($provs2,$requestParams/type)    else $provs2
+  let $provs3 := if (exists($requestParams/codedType)) then csd:filter_by_coded_type($provs2,$requestParams/codedType)    else $provs2
   let $provs4 := if (exists($requestParams/address/addressLine)) then csd:filter_by_address($provs3, $requestParams/address/addressLine) else $provs3
   let $provs5 := if (exists($requestParams/record)) then csd:filter_by_record($provs4,$requestParams/record) else $provs4
   let $provs6 := if (exists($requestParams/start) and exists($requestParams/max)) then csd:limit_items($provs5,$requestParams/start,$requestParams/max) else $provs5
