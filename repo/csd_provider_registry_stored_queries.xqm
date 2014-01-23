@@ -95,11 +95,59 @@ declare variable $csd_prsq:stored_functions :=
 	      updating='1'
 	     />,
 
+	      (:Methods for Common Names:)
+    <function uuid='26890a10-82ba-11e3-baa7-0800200c9a66'
+              method='csd_prsq:indices_common_name'
+ 	      content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='1d94b620-82ba-11e3-baa7-0800200c9a66'
+              method='csd_prsq:read_common_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='155cd460-82ba-11e3-baa7-0800200c9a66'
+              method='csd_prsq:delete_common_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='0ad4e820-82ba-11e3-baa7-0800200c9a66'
+              method='csd_prsq:create_common_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='a8a05f90-82b9-11e3-baa7-0800200c9a66'
+              method='csd_prsq:update_common_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	      updating='1'
+	     />,
+
+	      (:Methods for Other Names:)
+    <function uuid='26890a10-82ba-11e3-baa7-0800200c9a77'
+              method='csd_prsq:indices_other_name'
+ 	      content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='1d94b620-82ba-11e3-baa7-0800200c9a77'
+              method='csd_prsq:read_other_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='155cd460-82ba-11e3-baa7-0800200c9a77'
+              method='csd_prsq:delete_other_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='0ad4e820-82ba-11e3-baa7-0800200c9a77'
+              method='csd_prsq:create_other_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='a8a05f90-82b9-11e3-baa7-0800200c9a77'
+              method='csd_prsq:update_other_name'
+ 	     content-type='text/xml; charset=utf-8'      
+	      updating='1'
+	     />,
+
+
+
 	     (:Methods for Contact Point:)
-
-
-
-
 
     <function uuid='5a268fa0-8391-11e3-baa7-0800200c9a66'
               method='csd_prsq:indices_contact_point'
@@ -121,6 +169,32 @@ declare variable $csd_prsq:stored_functions :=
 	     />,
     <function uuid='6cb318a0-8391-11e3-baa7-0800200c9a66'
               method='csd_prsq:update_contact_point'
+ 	     content-type='text/xml; charset=utf-8'      
+	      updating='1'
+	      />,
+
+	     (:Methods for Credentials:)
+
+    <function uuid='ecaeac3f-a4db-4407-9bec-12c47c853e65'
+              method='csd_prsq:indices_credential'
+ 	      content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='edb4316b-9408-4a6c-afde-74a6f0f7c706'
+              method='csd_prsq:read_credential'
+ 	     content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='d0a0992e-47c5-443f-b532-16f8b3a1d4a3'
+              method='csd_prsq:delete_credential'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='d2657386-9dca-4fc7-a0ef-af0b0c892186'
+              method='csd_prsq:create_credential'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='039fef0f-6e9c-4b71-bf6d-ce7c259a0f64'
+              method='csd_prsq:update_credential'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	      />,
@@ -1050,7 +1124,7 @@ return
 	  (if (exists($old_cp/certificate)) then (delete node $old_cp/certificate) else (),
 	  insert node $new_cp/certificate into $old_cp)
 	else (),
-	csd_prsq:wrap_updating_providers($provs2)
+	csd_prsq:wrap_updating_providers($provs3)
      )
   else 	csd_prsq:wrap_updating_providers(())
 
@@ -1191,6 +1265,166 @@ declare updating function csd_prsq:delete_provider_organization($requestParams, 
 	return if (exists($org)) then (delete node $org) else ()
       else  ()
     else ()      
+};
+
+
+
+
+(:Methods for Provider Credential:)
+declare function csd_prsq:indices_credential($requestParams, $doc) as element() 
+{
+  let $provs0 := 
+    if (exists($requestParams/id/@oid)) then 
+      csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) 
+    else ($doc/CSD/providerDirectory/*)
+  let $provs1:=     
+      for $provider in  $provs0
+      return
+      <provider oid="{$provider/@oid}">
+        {
+	  for $cred in $provider/credential
+	  return
+	  <credential >{$cred/codedType}</credential>
+	}
+      </provider>
+      
+    return csd_prsq:wrap_providers($provs1)
+};
+
+declare function csd_prsq:read_credential($requestParams, $doc) as element() 
+{
+
+let $provs0 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingSchema) ) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $provs2 := 
+  if (count($provs1) = 1) 
+    then 
+    let $provider :=  $provs1[1] 
+    let $code:= $requestParams/credential/codedType/@code
+    let $codingSchema:= $requestParams/credential/codedType/@codingSchema
+    return 
+      <provider oid="{$provider/@oid}">
+	  {
+	    (
+	      $provider/credential/codedType[@code = $code and @codingSchema = $codingSchema]/..
+	      ,
+	      $provider/record
+	    )
+	  }
+      </provider>
+  else ()    
+    
+return csd_prsq:wrap_providers($provs2)
+};
+
+
+
+
+
+declare updating function csd_prsq:create_credential($requestParams, $doc) 
+{  
+
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs1 := if (count($provs0) = 1) then $provs0 else ()
+let $provs2 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingSchema) ) then $provs1  else ()
+let $cred_request := $requestParams/credential
+let $code:= $cred_request/codedType/@code
+let $codingSchema:= $cred_request/codedType/@codingSchema
+let $creds0 := $provs2/credential[@code = $code and @codingSchema = $codingSchema]
+return  
+  if ( count($provs2) = 1 and count($creds0) = 0)  (:DO NOT ALLOW SAME CRED TWICE :)
+    then
+    let $provider:= $provs2[1]
+    let $cred_rec :=
+    <credential>
+      <codedType code="{$code}" codingSchema="{$codingSchema}"/>
+    </credential>
+    let $cred_new :=
+    <credential>
+      <codedType code="{$code}" codingSchema="{$codingSchema}"/>
+      {(
+	if (exists($cred_request/number)) then $cred_request/number else (),
+	if (exists($cred_request/issuingAuthority)) then $cred_request/issuingAuthority else (),
+	if (exists($cred_request/credentialIssueDate)) then $cred_request/credentialIssueDate else (),
+        if (exists($cred_request/credentialRenewalDate)) then $cred_request/credentialRenewalDate else ()
+      )}
+    </credential>
+    let $provs3:=  
+    <provider oid="{$provider/@oid}">{$cred_rec}</provider>
+    return 
+	(
+	insert node $cred_new into $provider,
+	csd_prsq:wrap_updating_providers($provs3)
+	)
+
+  else  csd_prsq:wrap_updating_providers(())
+      
+};
+
+
+declare updating function csd_prsq:update_credential($requestParams, $doc) 
+{  
+
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs1 := if (count($provs0) = 1) then $provs0 else ()
+let $provs2 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingSchema) ) then $provs1  else ()
+let $cred_new := $requestParams/credential
+let $code:= $cred_new/codedType/@code
+let $codingSchema:= $cred_new/codedType/@codingSchema
+let $creds0 := $provs2/credential/codedType[@code = $code and @codingSchema = $codingSchema]
+return  
+  if ( count($provs2) = 1 and count($creds0) = 1)  (:Update only:)
+    then
+    let $cred_old := $creds0[1]/..
+    let $provider:= $provs2[1]
+    let $provs3 := 
+      <provider oid="{$provider/@oid}">
+	<credential>
+	  <codedType code="{$code}" codingSchema="{$codingSchema}"/>
+	</credential>
+      </provider>
+
+
+    return
+      
+      (
+	if (exists($cred_new/issuingAuthority)) then
+	  (if (exists($cred_old/issuingAuthority)) then (delete node $cred_old/issuingAuthority) else (),
+	  insert node $cred_new/issuingAuthority into $cred_old)
+	else (),
+	if (exists($cred_new/number)) then
+	  (if (exists($cred_old/number)) then (delete node $cred_old/number) else (),
+	  insert node $cred_new/number into $cred_old)
+	else (),
+	if (exists($cred_new/credentialIssueDate)) then
+	  (if (exists($cred_old/credentialIssueDate)) then (delete node $cred_old/credentialIssueDate) else (),
+	  insert node $cred_new/credentialIssueDate into $cred_old)
+	else (),
+	if (exists($cred_new/credentialRenewalDate)) then
+	  (if (exists($cred_old/credentialRenewalDate)) then (delete node $cred_old/credentialRenewalDate) else (),
+	  insert node $cred_new/credentialRenewalDate into $cred_old)
+	else (),
+	csd_prsq:wrap_updating_providers($provs3)
+       )
+  else 	csd_prsq:wrap_updating_providers((<bad cs="{$codingSchema}" c="{$code}"></bad>,count($provs2), count($creds0)))
+};
+
+
+
+declare updating function csd_prsq:delete_credential($requestParams, $doc) 
+{
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs1 := if (count($provs0) = 1) then $provs0 else ()
+let $provs2 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingSchema) ) then $provs1  else ()
+let $cred_new := $requestParams/credential
+let $code:= $cred_new/codedType/@code
+let $codingSchema:= $cred_new/codedType/@codingSchema
+let $creds0 := $provs2/credential[@code = $code and @codingSchema = $codingSchema]
+return  
+  if ( count($provs2) = 1 and count($creds0) = 1)  then
+    delete node $creds0[1]
+  else
+    ()
 };
 
 
