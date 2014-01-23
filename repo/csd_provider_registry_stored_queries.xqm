@@ -274,9 +274,34 @@ declare variable $csd_prsq:stored_functions :=
               method='csd_prsq:update_org_contact_point'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
+	      />,
+
+
+	     (:Methods for Identification:)
+
+    <function uuid='af556315-9e6f-4a90-b5be-ee0ca71cae26'
+              method='csd_prsq:indices_otherid'
+ 	      content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='e0e01b0d-8d18-4b65-a3ca-82229050709c'
+              method='csd_prsq:read_otherid'
+ 	     content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='ef194926-bdf9-4c80-80e3-cdbe6b73f0a9'
+              method='csd_prsq:delete_otherid'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='a1772539-cfa2-4601-9c34-3c6c473a878a'
+              method='csd_prsq:create_otherid'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='78680061-23c7-41cb-b128-abac3b26b8df'
+              method='csd_prsq:update_otherid'
+ 	     content-type='text/xml; charset=utf-8'      
+	      updating='1'
 	      />
-
-
 
 
 );
@@ -1546,4 +1571,140 @@ declare updating function csd_prsq:delete_provider_facility($requestParams, $doc
     else ()      
 };
 
+
+
+
+(:Methods for Provider Other ID:)
+declare function csd_prsq:indices_otherid($requestParams, $doc) as element() 
+{
+  let $provs0 := 
+    if (exists($requestParams/id/@oid)) then 
+      csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) 
+    else ($doc/CSD/providerDirectory/*)
+  let $provs1:=     
+      for $provider in  $provs0
+      return
+      <provider oid="{$provider/@oid}">
+	{
+	  for $id at $pos  in  $provider/otherID
+	  return <otherID position="{$pos}"/> 
+	}
+    </provider>
+      
+    return csd_prsq:wrap_providers($provs1)
+};
+
+declare function csd_prsq:read_otherid($requestParams, $doc) as element() 
+{
+
+let $provs0 := if (exists($requestParams/otherID/@position)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $provs2 := 
+  if (count($provs1) = 1) 
+    then 
+    let $provider :=  $provs1[1] 
+    return 
+    <provider oid="{$provider/@oid}">
+      {(
+	if (exists($requestParams/otherID/@position))
+	  then 
+	  for $id in $provider/otherID[position() = $requestParams/otherID/@position]
+	  return       
+	  <otherID 
+	  position="{$requestParams/otherID/@position}"
+	  code="{$id/@code}"
+	  assigningAuthorityName="{$id/@assigningAuthorityName}">{string($id)}</otherID>
+	else
+	  ()
+        ,      
+	$provider/record
+	)}
+    </provider>
+  else ()    
+    
+return csd_prsq:wrap_providers($provs2)
+};
+
+
+
+
+
+declare updating function csd_prsq:create_otherid($requestParams, $doc) 
+{  
+
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs1 := if (count($provs0) = 1) then $provs0 else ()
+let $provs2 := if (exists($requestParams/otherID/@code))  then $provs1 else ()
+return  
+  if ( count($provs2) = 1 )
+    then
+    let $provider:= $provs2[1]
+    let $position := count($provider/otherID) +1
+    let $id := 
+      if (exists($requestParams/otherID/@assigningAuthorityName)) then
+      <otherID code="{$requestParams/otherID/@code}" assigningAuthorityName="{$requestParams/otherID/@assigningAuthorityName}">{string($requestParams/otherID)}</otherID>
+    else 
+      <otherID code="{$requestParams/otherID/@code}">{string($requestParams/otherID)}</otherID>
+    let $provs3:=  
+    <provider oid="{$provider/@oid}">
+      <otherID position="{$position}"/>
+    </provider>
+    return 
+      (insert node $id into $provider ,    
+      csd_prsq:wrap_updating_providers($provs3)
+      )
+  else  csd_prsq:wrap_updating_providers(())
+      
+};
+
+
+declare updating function csd_prsq:update_otherid($requestParams, $doc) 
+{  
+let $provs0 := if (exists($requestParams/otherID)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $id := $provs1[1]/otherID[position() = $requestParams/otherID/@position]
+return
+  if (count($provs1) = 1 and exists($id)) 
+    then
+    let $provs2 := 
+    <provider oid="{$provs1[1]/@oid}">
+      <otherID position="{$requestParams/name/@position}"/>
+    </provider>
+    return
+      (
+	if ($requestParams/otherID/@code) 
+	  then 	    
+	    if (exists($id/@code))
+	      then  (replace value of node $id/@code with $requestParams/otherID/@code)
+	      else (insert node  $requestParams/otherID/@code into $id)
+	  else (),
+	if (exists($requestParams/otherID/@assigningAuthorityName) )
+	  then 
+	    if (exists($id/@assigningAuthorityName))
+	      then replace value of node $id/@assigningAuthorityName with $requestParams/otherID/@assigningAuthorityName
+	      else insert node $requestParams/otherID/@assigningAuthorityName into $id		
+	  else (),
+	if (not(string($requestParams/otherID) = '')) 
+	  then (replace value of node $id with string($requestParams/otherID))
+	  else (),
+	csd_prsq:wrap_updating_providers($provs2)
+     )
+  else 	csd_prsq:wrap_updating_providers(())
+
+};
+
+
+declare updating function csd_prsq:delete_otherid($requestParams, $doc) 
+{
+  if (exists($requestParams/otherID/@position)) 
+    then 
+    let $providers := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+    return
+      if ( count($providers) = 1 )
+	then
+	let  $id :=  $providers[1]/otherID[position() = $requestParams/otherID/@position]
+	return if (exists($id)) then (delete node $id) else ()
+      else  ()
+    else ()      
+};
 
