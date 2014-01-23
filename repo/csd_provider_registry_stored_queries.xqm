@@ -7,6 +7,7 @@
 module namespace csd_prsq = "https://github.com/his-interop/openinfoman-pr/csd_prsq";
 
 import module namespace csd = "urn:ihe:iti:csd:2013" at "csd_base_library.xqm";
+import module namespace random = "http://basex.org/modules/random";  
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 
 
@@ -20,6 +21,26 @@ declare variable $csd_prsq:stored_functions :=
               method='csd_prsq:get_oids'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
+    <function uuid='09b62156-32bf-48ab-b803-206efec0f7c3'
+              method='csd_prsq:read_provider'
+ 	     content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='f9bfe37f-95fc-4e74-8f07-2d3e7162e7a5'
+              method='csd_prsq:delete_provider'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='dddb64c8-0eb1-49df-a2ad-b53e59f0bb7c'
+              method='csd_prsq:create_provider'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='71d18ee0-6963-40c6-887a-a227ef302077'
+              method='csd_prsq:update_provider'
+ 	     content-type='text/xml; charset=utf-8'      
+	      updating='1'
+	      />,
+
 	     (:Methods for Names:)
     <function uuid='e3cd7f80-7edb-11e3-baa7-0800200c9a66'
               method='csd_prsq:indices_name'
@@ -339,6 +360,119 @@ declare function csd_prsq:oid_search_by_id($requestParams, $doc) as element()
   return csd_prsq:wrap_providers($provs2)
 };
 
+
+declare function csd_prsq:read_provider($requestParams,$doc) as element() 
+{
+let $provs0 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()  
+let $provs1 :=  if (count($provs0) = 1) then
+  let $prov := $provs0[1]
+  return 
+  <provider oid="{$prov/@oid}">  
+  {(
+      $prov/codedType,
+      <demographic>
+      {(
+	if (exists($prov/demographic/gender)) then $prov/demographic/gender else (),
+	if (exists($prov/demographic/dateOfBirth)) then $prov/demographic/dateOfBirth else ()
+      )}
+      </demographic>,
+      $prov/language,
+      $prov/specialty,
+      $prov/record
+  )}
+  </provider>
+  else ()
+  return csd_prsq:wrap_providers($provs1)
+};
+
+
+
+
+declare updating function csd_prsq:create_provider($requestParams,$doc) 
+{
+let $provs0 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()  
+return
+  if (count($provs0) > 0) then (csd_prsq:wrap_updating_providers(()))     (:do not allow duplicate OIDs:)
+else
+  let $oid := 
+    if (exists($requestParams/id/@oid) and not($requestParams/id/@oid = '')) then $requestParams/id/@oid
+  else concat('2.25.', random:uuid())
+  let $time :="2013-12-01T14:00:00+00:00" 
+  let $prov := 
+  <provider oid="{$oid}">
+    {(
+      $requestParams/codedType,
+      <demographic>
+	{(
+	  $requestParams/gender,
+	  $requestParams/dateOfBirth
+	 )}
+	 </demographic>,
+	 $requestParams/language,
+         $requestParams/specialty,
+	 if ($requestParams/status) 
+	   then
+	   <record created="{$time}" updated="{$time}" status="{$requestParams/status}" sourceDirectory="{$requestParams/sourceDirectory}"/>
+	 else 
+	   <record created="{$time}" updated="{$time}" status="Active" sourceDirectory="{$requestParams/sourceDirectory}"/>
+     )}
+  </provider>
+  
+  return (
+    insert node $prov into $doc/CSD/providerDirectory,  
+    csd_prsq:wrap_updating_providers(<provider oid="{$oid}"/>)
+  )
+
+};
+
+
+declare updating function csd_prsq:update_provider($requestParams,$doc) 
+{
+let $provs0 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()  
+return
+  if (not (count($provs0) = 1)) 
+    then ( csd_prsq:wrap_updating_providers((<bad/>)))     (:do nothing :)
+  else
+    let $provider := $provs0[1]
+    let $demo := $provider/demographic
+    let $dob := $demo/dateOfBirth
+    let $gender := $demo/gender
+    return 
+      (
+	delete node $provider/codedType,
+	insert node $requestParams/codedType into $provider,
+	if (not(exists($demo)))
+	  then
+	  insert node
+	  <demographic>
+	    {($requestParams/gender,$requestParams/dateOfBirth)}
+	  </demographic>
+	  into $provider	
+	else	
+	  (
+	    if (not(exists($dob))) then  insert node $requestParams/dateOfBirth into $demo else replace value of node  $demo/dateOfBirth with $requestParams/dateOfBirth,
+	    if (not(exists($gender))) then  insert node $requestParams/gender into $demo else replace value of node  $demo/gender with $requestParams/gender
+	),
+	delete node $provider/language,
+	insert node $requestParams/language into $provider,
+	delete node $provider/specialty,
+	insert node $requestParams/specialty into $provider,
+	if (exists($provider/record/@status)) 
+	  then replace value of node $provider/record/@status with $requestParams/status 
+	else insert node attribute { 'status' } { string($requestParams/status) } into $provider/record,
+	csd_prsq:wrap_updating_providers(<provider oid="{$provider/@oid}" ok='1'/>)
+    )
+
+};
+
+
+
+declare updating function csd_prsq:delete_provider($requestParams,$doc) 
+{
+let $provs0 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()  
+return  if (count($provs0) = 1) then
+  delete node $provs0[1] else ()
+};
 
 
 (:Methods for Names:)
