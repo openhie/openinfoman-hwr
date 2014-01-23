@@ -71,54 +71,30 @@ declare variable $csd_prsq:stored_functions :=
 	     />,
 
 	      (:Methods for Other Names:)
-    <function uuid='26890a10-82ba-11e3-baa7-0800200c9a77'
+    <function uuid='ba3bde36-943b-4cec-8eb2-331063a54403'
               method='csd_prsq:indices_other_name'
  	      content-type='text/xml; charset=utf-8'      
 	     />,
-    <function uuid='1d94b620-82ba-11e3-baa7-0800200c9a77'
+    <function uuid='00b6f16c-e3f5-45c8-9f73-bb7cc08de10d'
               method='csd_prsq:read_other_name'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
-    <function uuid='155cd460-82ba-11e3-baa7-0800200c9a77'
+    <function uuid='e3bc9677-333b-488a-9187-f9af94571e44'
               method='csd_prsq:delete_other_name'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
-    <function uuid='0ad4e820-82ba-11e3-baa7-0800200c9a77'
+    <function uuid='98595e07-151a-4762-acea-aff4ab257e4e'
               method='csd_prsq:create_other_name'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
-    <function uuid='a8a05f90-82b9-11e3-baa7-0800200c9a77'
+    <function uuid='b8e5c4c2-f434-4224-bd30-1f9c05273bb1'
               method='csd_prsq:update_other_name'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	     />,
 
-	      (:Methods for Common Names:)
-    <function uuid='26890a10-82ba-11e3-baa7-0800200c9a66'
-              method='csd_prsq:indices_common_name'
- 	      content-type='text/xml; charset=utf-8'      
-	     />,
-    <function uuid='1d94b620-82ba-11e3-baa7-0800200c9a66'
-              method='csd_prsq:read_common_name'
- 	     content-type='text/xml; charset=utf-8'      
-	     />,
-    <function uuid='155cd460-82ba-11e3-baa7-0800200c9a66'
-              method='csd_prsq:delete_common_name'
- 	     content-type='text/xml; charset=utf-8'      
-	     updating='1'
-	     />,
-    <function uuid='0ad4e820-82ba-11e3-baa7-0800200c9a66'
-              method='csd_prsq:create_common_name'
- 	     content-type='text/xml; charset=utf-8'      
-	     updating='1'
-	     />,
-    <function uuid='a8a05f90-82b9-11e3-baa7-0800200c9a66'
-              method='csd_prsq:update_common_name'
- 	     content-type='text/xml; charset=utf-8'      
-	      updating='1'
-	     />,
 
 	      (:Methods for Other Names:)
     <function uuid='26890a10-82ba-11e3-baa7-0800200c9a77'
