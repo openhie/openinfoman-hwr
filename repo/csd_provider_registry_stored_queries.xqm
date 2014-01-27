@@ -226,6 +226,34 @@ declare variable $csd_prsq:stored_functions :=
 	      />,
 
 
+	     (:Methods for Organiational Address :)
+
+    <function uuid='10d8749c-866c-4df8-a3dd-49d0efee5ea4'
+              method='csd_prsq:indices_org_address'
+ 	      content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='5df2fffc-a0aa-489d-a3af-e09806b9e05f'
+              method='csd_prsq:read_org_address'
+ 	      content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='c96a5fe4-5ccf-460e-8f9f-d696800bc498'
+              method='csd_prsq:delete_org_address'
+ 	      content-type='text/xml; charset=utf-8'      
+	      updating='1'
+	     />,
+    <function uuid='91447349-e771-4b80-b467-934953f38ca1'
+              method='csd_prsq:create_org_address'
+ 	      content-type='text/xml; charset=utf-8'      
+	      updating='1'
+	     />,
+    <function uuid='26f230dd-0abf-42e4-883a-57cf7ec760d9'
+              method='csd_prsq:update_org_address'
+ 	      content-type='text/xml; charset=utf-8'      
+	      updating='1'
+	      />,
+
+
+
 	     (:Methods for Identification:)
 
     <function uuid='af556315-9e6f-4a90-b5be-ee0ca71cae26'
@@ -812,7 +840,7 @@ return
 	let $provs3:=  
 	<provider oid="{$provider/@oid}">
 	  <organizations>
-	    <organization>
+	    <organization oid="{$org/@oid}">
 	      <contactPoint position="{$position}"/>
 	    </organization>
 	  </organizations>
@@ -1467,12 +1495,8 @@ let $provs2 :=
     <provider oid="{$provider/@oid}">
       <demographic>
 	{(
-	  if (exists($requestParams/address/@type))
-	    then 
-	    for $address in $provider/demographic/address[@type = $requestParams/address/@type]
-	    return $address
-	  else
-	    ()
+	  for $address in $provider/demographic/address[@type = $requestParams/address/@type]
+	  return $address
 	 )}
       </demographic>
       {$provider/record}
@@ -1502,7 +1526,7 @@ return
     else
       let $provs3:=  
       <provider oid="{$provider/@oid}">
-        <demographic>$address</demographic>
+        <demographic><address type="{$requestParams/address/@type}"/></demographic>
       </provider>
        return (
 	 if (not(exists($demo)))
@@ -1557,3 +1581,143 @@ return if (exists($address)) then (delete node $address) else ()
 
 
 
+
+
+
+(:Methods for Provider's Organizational Address:)
+declare function csd_prsq:indices_org_address($requestParams, $doc) as element() 
+{
+  let $provs0 := 
+    if (exists($requestParams/id/@oid)) then 
+      csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) 
+    else ($doc/CSD/providerDirectory/*)
+  let $provs1:=     
+      for $provider in  $provs0
+      return
+      <provider oid="{$provider/@oid}">
+	<organizations>
+          {
+	    let $orgs := 
+	      if (exists($requestParams/organization/@oid)) 
+		then 
+		$provider/organizations/organization[@oid = $requestParams/organization/@oid]
+	      else    $provider/organizations/organization
+            for $org in $orgs
+	      return 
+	       <organization oid="{$org/@oid}">
+		  {
+		    for $address  in $org/address
+		    return <address type="{$address/@type}"/> 
+		  }
+		</organization>
+	  }
+	</organizations>
+    </provider>
+      
+    return csd_prsq:wrap_providers($provs1)
+};
+
+
+
+
+declare function csd_prsq:read_org_address($requestParams, $doc) as element() 
+{
+
+let $provs0 := if (exists($requestParams/organization/@oid) and exists($requestParams/organization/address/@type)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $provs2 := 
+  if (count($provs1) = 1) 
+    then 
+    let $provider :=  $provs1[1] 
+    return 
+    <provider oid="{$provider/@oid}">
+      <organizations>
+	<organization oid="{$requestParams/organization/@oid}">
+	  {
+	    $provider/organizations/organization[@oid = $requestParams/organization/@oid]/address[@type = $requestParams/organization/address/@type]
+	  }
+	</organization>
+      </organizations>
+      {$provider/record}
+    </provider>
+  else ()        
+return csd_prsq:wrap_providers($provs2)
+};
+
+
+
+
+declare updating function csd_prsq:create_org_address($requestParams, $doc) 
+{  
+
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs1 := if (count($provs0) = 1) then $provs0 else ()
+let $provs2 := if (exists($requestParams/organization/@oid))  then $provs1 else ()
+let $provs3 := if (exists($requestParams/organization/address/@type))  then $provs2 else ()
+let $provider:= $provs3[1]
+let $orgs := $provider/organizations/organization[@oid = $requestParams/organization/@oid]
+let $org := if(count($orgs) =1) then $orgs[1] else ()
+let $address := $org/address[@type = $requestParams/organization/address/@type]
+return if (not(exists($org)) or exists($address))
+  then   csd_prsq:wrap_updating_providers(()) (:do not create an already existing one :)	  
+else
+  (
+    insert node $requestParams/organization/address into $org,
+    csd_prsq:wrap_updating_providers(    
+	<provider oid="{$provider/@oid}">
+	  <organizations>
+	    <organization oid="{$org/@oid}">
+	      <contactPoint position="{$requestParams/organization/address/@type}"/>
+	    </organization>
+	  </organizations>
+	</provider>
+     )
+)
+};
+
+
+
+declare updating function csd_prsq:update_org_address($requestParams, $doc) 
+{  
+
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs1 := if (count($provs0) = 1) then $provs0 else ()
+let $provs2 := if (exists($requestParams/organization/@oid))  then $provs1 else ()
+let $provs3 := if (exists($requestParams/organization/address/@type))  then $provs2 else ()
+let $provider:= $provs3[1]
+let $org_container := $provider/organizations[1]
+let $orgs := $provider/organizations/organization[@oid = $requestParams/organization/@oid]
+let $org := if(count($orgs) =1) then $orgs[1] else ()
+let $address := $org/address[@type = $requestParams/organization/address/@type]
+return if (not(exists($address)))
+  then   csd_prsq:wrap_updating_providers((<bad0/>,$requestParams)) (:do not update an non-existent one :)
+else
+  (
+    replace node $address with  $requestParams/organization/address ,
+     csd_prsq:wrap_updating_providers(    
+       <provider oid="{$provider/@oid}">
+	 <organizations>
+	   <organization oid="{$org/@oid}">
+	     <contactPoint position="{$address/@type}"/>
+	   </organization>
+	 </organizations>
+       </provider>
+    )
+)
+};
+
+
+
+declare updating function csd_prsq:delete_org_address($requestParams, $doc) 
+{  
+
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs1 := if (count($provs0) = 1) then $provs0 else ()
+let $provs2 := if (exists($requestParams/organization/@oid))  then $provs1 else ()
+let $provs3 := if (exists($requestParams/organization/address/@type))  then $provs2 else ()
+let $provider:= $provs3[1]
+let $orgs := $provider/organizations/organization[@oid = $requestParams/organization/@oid]
+let $org := if(count($orgs) =1) then $orgs[1] else ()
+let $address := $org/address[@type = $requestParams/organization/address/@type]
+return if (exists($address)) then (delete node $address) else ()
+};
