@@ -199,6 +199,33 @@ declare variable $csd_prsq:stored_functions :=
 	      updating='1'
 	     />,
 
+
+	      (:Methods for Operating Hours:)
+    <function uuid='9c77ad44-73a9-4c85-bb3e-5a0a2cc23a99'
+              method='csd_prsq:indices_operating_hours'
+ 	      content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='ae26b85d-48cf-4127-97c6-e587587411f3'
+              method='csd_prsq:read_operating_hours'
+ 	     content-type='text/xml; charset=utf-8'      
+	     />,
+    <function uuid='acd3f03f-17cc-48de-bd99-9f6a9156b530'
+              method='csd_prsq:delete_operating_hours'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='3c976647-c300-4a0f-bdc0-b218d335a3b7'
+              method='csd_prsq:create_operating_hours'
+ 	     content-type='text/xml; charset=utf-8'      
+	     updating='1'
+	     />,
+    <function uuid='abea97b8-d0b2-46c3-aea0-fec960dbf1eb'
+              method='csd_prsq:update_operating_hours'
+ 	     content-type='text/xml; charset=utf-8'      
+	      updating='1'
+	     />,
+
+
 	      (:Methods for Organizational Affiliation:)
     <function uuid='cf97b490-8313-11e3-baa7-0800200c9a66'
               method='csd_prsq:indices_provider_organization'
@@ -1891,5 +1918,170 @@ declare updating function csd_prsq:delete_service($requestParams, $doc)
 	  else () 
       else  ()
     else ()      
+};
+
+
+
+
+
+
+
+(:Methods for Provider's Operating Hours :)
+declare function csd_prsq:indices_operating_hours($requestParams, $doc) as element() 
+{
+  let $provs0 := 
+    if (exists($requestParams/id/@oid)) then 
+      csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) 
+    else ($doc/CSD/providerDirectory/*)
+  let $provs1:=     
+      for $provider in  $provs0
+      return
+      <provider oid="{$provider/@oid}">
+	<facilities>
+	  {
+	    let $facs := 
+	      if (exists($requestParams/facility/@oid)) 
+		then 
+		$provider/facilities/facility[@oid = $requestParams/facility/@oid]
+	      else    $provider/facilities/facility
+            for $fac in $facs
+	      return 
+	       <facility oid="{$fac/@oid}">
+		  {
+		    if ($requestParams/facility/service/@position) 
+		      then
+			for $srvc in $fac/service[position()= $requestParams/facility/service/@position] 
+			return 
+			<service position="{$requestParams/facility/service/@position}">
+			  {for $oh at $ohpos in $srvc/operatingHours return <operatingHours position="{$ohpos}"/>}
+			</service>
+		    else 
+		      for $srvc at $spos in $fac/service
+			return 
+			<service position="{$spos}">
+			  {for $oh at $ohpos in $srvc/operatingHours return <operaingHours position="{$ohpos}"/>}
+			</service>
+		  }
+		</facility>
+	  }
+	</facilities>
+    </provider>
+      
+    return csd_prsq:wrap_providers($provs1)
+};
+
+declare function csd_prsq:read_operating_hours($requestParams, $doc) as element() 
+{
+let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/facility/service/@position)) then $provs0  else ()
+let $provs2 := if (exists($requestParams/facility/service/operatingHours/@position)) then $provs1  else ()
+let $provs3 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs2,$requestParams/id) else ()
+let $srvc := $provs3[1]/facilities/facility[@oid =$requestParams/facility/@oid]/service[position() = $requestParams/facility/service/@position]
+let  $provs4:=   
+  if (count($srvc) = 1) 
+    then
+    let $oh := $srvc/operatingHours[position() = $requestParams/facility/service/operatingHours/@position]
+    return <provider oid="{$requestParams/id/@oid}">
+      <facilities>
+	<facility oid="{$requestParams/facility/@oid}">
+	  <service position="{$requestParams/facility/service/@position}" >
+	    <operatingHours position="{$requestParams/facility/service/operatingHours/@position}">{$oh/*}</operatingHours>
+	  </service>
+	</facility>
+      </facilities>
+      {$requestParams}
+    </provider>
+  else ()
+
+
+return csd_prsq:wrap_providers($provs4)
+};
+
+
+
+
+declare updating function csd_prsq:create_operating_hours($requestParams, $doc) 
+{  
+let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/facility/service/@position)) then $provs0  else ()
+let $provs2 := if (exists($requestParams/facility/service/operatingHours)) then $provs1  else ()
+let $provs3 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs2,$requestParams/id) else ()
+let $srvc := $provs3[1]/facilities/facility[@oid =$requestParams/facility/@oid]/service[position() = $requestParams/facility/service/@position]
+return if (count($srvc) = 1) 
+  then
+  let $position := count($srvc/operatingHours)
+  let $provs4:=  
+  <provider oid="{$requestParams/id/@oid}">
+    <facilities>
+      <facility oid="{$requestParams/facility/@oid}">
+	<service position="{$requestParams/facility/service/@position}" oid="{$requestParams/facility/service/@oid}">
+	  <operatingHours position="{$position}" />
+	</service>
+      </facility>
+    </facilities>
+  </provider>
+  return 
+    (insert node $requestParams/facility/service/operatingHours into $srvc[1] ,    
+    csd_prsq:wrap_updating_providers($provs4)
+  )
+else   csd_prsq:wrap_updating_providers(())
+      
+};
+
+
+declare updating function csd_prsq:update_operating_hours($requestParams, $doc) 
+{  
+let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/facility/service/@position)) then $provs0  else ()
+let $provs2 := if (exists($requestParams/facility/service/operatingHours/@position)) then $provs1  else ()
+let $provs3 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs2,$requestParams/id) else ()
+let $oh := $provs3[1]/facilities/facility[@oid =$requestParams/facility/@oid]/service[position() = $requestParams/facility/service/@position]/operatingHours[position() = $requestParams/facility/service/operatingHours/@position]
+return
+  if (count($oh) = 1)
+    then
+    let $new_oh := $requestParams/facility/service/operatingHours
+    let $provs4 := 
+    <provider oid="{$provs1[1]/@oid}">
+      <facilities>
+	<facility oid="{$requestParams/facility/@oid}">
+	  <service position="{$requestParams/facility/service/@position}" >
+	    <operatingHours position="{$requestParams/facility/service/operatingHours/@position}"/>
+	  </service>
+	</facility>
+      </facilities>
+    </provider>
+    return
+      (
+	delete node $oh/openFlag,
+	if (exists($new_oh/openFlag)) then insert node $new_oh/openFlag into $oh else (),
+	delete node $oh/dayOfTheWeek,
+	if (exists($new_oh/dayOfTheWeek)) then insert node $new_oh/dayOfTheWeek into $oh else (),
+	delete node $oh/beginningHour,
+	if (exists($new_oh/beginningHour)) then insert node $new_oh/beginningHour into $oh else (),
+	delete node $oh/endingHour,
+	if (exists($new_oh/endingHour)) then insert node $new_oh/endingHour into $oh else (),
+	delete node $oh/beginEffectiveDate,
+	if (exists($new_oh/beginEffectiveDate)) then insert node $new_oh/beginEffectiveDate into $oh else (),
+	delete node $oh/endEffectiveDate,
+	if (exists($new_oh/endEffectiveDate)) then insert node $new_oh/endEffectiveDate into $oh else (),
+	csd_prsq:wrap_updating_providers($provs4)
+     )
+  else 	csd_prsq:wrap_updating_providers(())
+
+};
+
+
+
+
+declare updating function csd_prsq:delete_operating_hours($requestParams, $doc) 
+{
+let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($requestParams/facility/service/@position)) then $provs0  else ()
+let $provs2 := if (exists($requestParams/facility/service/operatingHours/@position)) then $provs1  else ()
+let $provs3 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs2,$requestParams/id) else ()
+let $oh := $provs3[1]/facilities/facility[@oid =$requestParams/facility/@oid]/service[position() = $requestParams/facility/service/@position]/operatingHours[position() = $requestParams/facility/service/operatingHours/@position]
+return
+  if (count($oh) = 1)
+    then (delete node $oh) else ()
 };
 
