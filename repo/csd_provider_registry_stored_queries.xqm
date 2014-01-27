@@ -367,6 +367,10 @@ declare updating function csd_prsq:wrap_updating_providers($providers)
 };
 
 
+declare updating function csd_prsq:bump_timestamp($provider) {
+  if (exists($provider/record/@updated)) then replace value of node $provider/record/@updated with current-dateTime() else ()
+};
+
 (:Top-Level Provider  methods:)
 declare function csd_prsq:get_oids($requestParams, $doc) as element() 
 {
@@ -431,7 +435,7 @@ else
   let $oid := 
     if (exists($requestParams/id/@oid) and not($requestParams/id/@oid = '')) then $requestParams/id/@oid
   else concat('2.25.', random:uuid())
-  let $time :="2013-12-01T14:00:00+00:00" 
+  let $time :=current-dateTime()
   let $prov := 
   <provider oid="{$oid}">
     {(
@@ -473,6 +477,7 @@ return
     let $gender := $demo/gender
     return 
       (
+	csd_prsq:bump_timestamp($provider),
 	delete node $provider/codedType,
 	insert node $requestParams/codedType into $provider,
 	if (not(exists($demo)))
@@ -615,6 +620,7 @@ return
     </name>
     return
       (
+	csd_prsq:bump_timestamp($provs1[1]),
 	replace  node $name with $new_name,
 	csd_prsq:wrap_updating_providers($provs2)
      )
@@ -752,6 +758,7 @@ return
     </provider>
     return
       (
+	csd_prsq:bump_timestamp($provs1[1]),
 	delete node $old_cp/codeType,
 	if (exists($new_cp/codeType)) then insert node $new_cp/codeType into $old_cp else (),
 	delete node $old_cp/equipment,
@@ -919,6 +926,7 @@ return
     </provider>
     return
       (
+	csd_prsq:bump_timestamp($provs2[1]),
 	delete node $old_cp/codeType,
 	if (exists($new_cp/codeType)) then insert node $new_cp/codeType into $old_cp else (),
 	delete node $old_cp/equipment,
@@ -1191,6 +1199,7 @@ return
     return
       
       (
+	csd_prsq:bump_timestamp($provider),
 	if (exists($cred_new/issuingAuthority)) then
 	  (if (exists($cred_old/issuingAuthority)) then (delete node $cred_old/issuingAuthority) else (),
 	  insert node $cred_new/issuingAuthority into $cred_old)
@@ -1450,6 +1459,7 @@ return
     </provider>
     return
       (
+	csd_prsq:bump_timestamp($provs1[1]),
 	if ($requestParams/otherID/@code) 
 	  then 	    
 	    if (exists($id/@code))
@@ -1595,6 +1605,7 @@ return
       <demographic><address type="{$requestParams/address/@type}"/></demographic>
     </provider>
     return (
+      csd_prsq:bump_timestamp($provider),
       replace  node  $address with $requestParams/address
       ,
       csd_prsq:wrap_updating_providers($provs3)
@@ -1727,6 +1738,7 @@ return if (not(exists($address)))
   then   csd_prsq:wrap_updating_providers((<bad0/>,$requestParams)) (:do not update an non-existent one :)
 else
   (
+    csd_prsq:bump_timestamp($provider),
     replace node $address with  $requestParams/organization/address ,
      csd_prsq:wrap_updating_providers(    
        <provider oid="{$provider/@oid}">
@@ -1887,6 +1899,7 @@ return
     </provider>
     return
       (
+	csd_prsq:bump_timestamp($provs2[1]),
 	delete node $old_srvc/freeBusyURI,
 	if (exists($new_srvc/freeBusyURI)) then insert node $new_srvc/freeBusyURI into $old_srvc else (),
 	delete node $old_srvc/organization,
@@ -2037,7 +2050,7 @@ let $provs2 := if (exists($requestParams/facility/service/operatingHours/@positi
 let $provs3 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs2,$requestParams/id) else ()
 let $oh := $provs3[1]/facilities/facility[@oid =$requestParams/facility/@oid]/service[position() = $requestParams/facility/service/@position]/operatingHours[position() = $requestParams/facility/service/operatingHours/@position]
 return
-  if (count($oh) = 1)
+  if (count($oh) = 1 and count($provs3) = 1)
     then
     let $new_oh := $requestParams/facility/service/operatingHours
     let $provs4 := 
@@ -2052,6 +2065,7 @@ return
     </provider>
     return
       (
+	csd_prsq:bump_timestamp($provs3[1]),
 	delete node $oh/openFlag,
 	if (exists($new_oh/openFlag)) then insert node $new_oh/openFlag into $oh else (),
 	delete node $oh/dayOfTheWeek,
