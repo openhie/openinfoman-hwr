@@ -4,64 +4,64 @@
 : @see https://github.com/his-interop/openinfoman @see http://ihe.net
 :
 :)
-module namespace csd_prsq = "https://github.com/his-interop/openinfoman-pr/csd_prsq";
+module namespace csd_hwrsq = "https://github.com/his-interop/openinfoman-hwr/csd_hwrsq";
 
 import module namespace csd = "urn:ihe:iti:csd:2013" at "csd_base_library.xqm";
 import module namespace random = "http://basex.org/modules/random";  
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 
 
-declare variable $csd_prsq:stored_functions :=
+declare variable $csd_hwrsq:stored_functions :=
 (
     <function uuid='fcbab300-6270-11e3-bd76-0002a5d5c51b'
-              method='csd_prsq:oid_search_by_id'
+              method='csd_hwrsq:oid_search_by_id'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='8a5df595-51ec-46e6-8a92-7db3c2484ee8'
-              method='csd_prsq:get_oids'
+              method='csd_hwrsq:get_oids'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='09b62156-32bf-48ab-b803-206efec0f7c3'
-              method='csd_prsq:read_provider'
+              method='csd_hwrsq:read_provider'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='f9bfe37f-95fc-4e74-8f07-2d3e7162e7a5'
-              method='csd_prsq:delete_provider'
+              method='csd_hwrsq:delete_provider'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='dddb64c8-0eb1-49df-a2ad-b53e59f0bb7c'
-              method='csd_prsq:create_provider'
+              method='csd_hwrsq:create_provider'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='71d18ee0-6963-40c6-887a-a227ef302077'
-              method='csd_prsq:update_provider'
+              method='csd_hwrsq:update_provider'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	      />,
 
 	     (:Methods for Names:)
     <function uuid='e3cd7f80-7edb-11e3-baa7-0800200c9a66'
-              method='csd_prsq:indices_name'
+              method='csd_hwrsq:indices_name'
  	      content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='d251f150-7edb-11e3-baa7-0800200c9a66'
-              method='csd_prsq:read_name'
+              method='csd_hwrsq:read_name'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='4808be30-7f84-11e3-baa7-0800200c9a66'
-              method='csd_prsq:delete_name'
+              method='csd_hwrsq:delete_name'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='8c8a2080-7f84-11e3-baa7-0800200c9a66'
-              method='csd_prsq:create_name'
+              method='csd_hwrsq:create_name'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='866455e0-7f84-11e3-baa7-0800200c9a66'
-              method='csd_prsq:update_name'
+              method='csd_hwrsq:update_name'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	      />,
@@ -72,25 +72,25 @@ declare variable $csd_prsq:stored_functions :=
 	     (:Methods for Address :)
 
     <function uuid='896b7bfd-d4c1-43c8-a109-9baa5c0328f7'
-              method='csd_prsq:indices_address'
+              method='csd_hwrsq:indices_address'
  	      content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='cddd804b-1c2a-41c4-8937-91dcfadd04eb'
-              method='csd_prsq:read_address'
+              method='csd_hwrsq:read_address'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='ff349aa8-e3e3-4f3d-8be1-dc157ccbeab1'
-              method='csd_prsq:delete_address'
+              method='csd_hwrsq:delete_address'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='d225d217-91c2-4d8d-a330-79c0e73de2e5'
-              method='csd_prsq:create_address'
+              method='csd_hwrsq:create_address'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='8023e3c8-d36f-4ab2-b2c7-0ca36925e900'
-              method='csd_prsq:update_address'
+              method='csd_hwrsq:update_address'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	      />,
@@ -99,25 +99,25 @@ declare variable $csd_prsq:stored_functions :=
 	     (:Methods for Contact Point:)
 
     <function uuid='5a268fa0-8391-11e3-baa7-0800200c9a66'
-              method='csd_prsq:indices_contact_point'
+              method='csd_hwrsq:indices_contact_point'
  	      content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='5e338c60-8391-11e3-baa7-0800200c9a66'
-              method='csd_prsq:read_contact_point'
+              method='csd_hwrsq:read_contact_point'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='6181cd00-8391-11e3-baa7-0800200c9a66'
-              method='csd_prsq:delete_contact_point'
+              method='csd_hwrsq:delete_contact_point'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='68d457d0-8391-11e3-baa7-0800200c9a66'
-              method='csd_prsq:create_contact_point'
+              method='csd_hwrsq:create_contact_point'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='6cb318a0-8391-11e3-baa7-0800200c9a66'
-              method='csd_prsq:update_contact_point'
+              method='csd_hwrsq:update_contact_point'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	      />,
@@ -125,50 +125,50 @@ declare variable $csd_prsq:stored_functions :=
 	     (:Methods for Credentials:)
 
     <function uuid='ecaeac3f-a4db-4407-9bec-12c47c853e65'
-              method='csd_prsq:indices_credential'
+              method='csd_hwrsq:indices_credential'
  	      content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='edb4316b-9408-4a6c-afde-74a6f0f7c706'
-              method='csd_prsq:read_credential'
+              method='csd_hwrsq:read_credential'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='d0a0992e-47c5-443f-b532-16f8b3a1d4a3'
-              method='csd_prsq:delete_credential'
+              method='csd_hwrsq:delete_credential'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='d2657386-9dca-4fc7-a0ef-af0b0c892186'
-              method='csd_prsq:create_credential'
+              method='csd_hwrsq:create_credential'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='039fef0f-6e9c-4b71-bf6d-ce7c259a0f64'
-              method='csd_prsq:update_credential'
+              method='csd_hwrsq:update_credential'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	      />,
 
 	      (:Methods for Facility Affiliation:)
     <function uuid='a4544da0-831f-11e3-baa7-0800200c9a66'
-              method='csd_prsq:indices_provider_facility'
+              method='csd_hwrsq:indices_provider_facility'
  	      content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='aa65a5e0-831f-11e3-baa7-0800200c9a66'
-              method='csd_prsq:read_provider_facility'
+              method='csd_hwrsq:read_provider_facility'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='afcc3f30-831f-11e3-baa7-0800200c9a66'
-              method='csd_prsq:delete_provider_facility'
+              method='csd_hwrsq:delete_provider_facility'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='b6078da0-831f-11e3-baa7-0800200c9a66'
-              method='csd_prsq:create_provider_facility'
+              method='csd_hwrsq:create_provider_facility'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='bc0a3fe0-831f-11e3-baa7-0800200c9a66'
-              method='csd_prsq:update_provider_facility'
+              method='csd_hwrsq:update_provider_facility'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	     />,
@@ -176,25 +176,25 @@ declare variable $csd_prsq:stored_functions :=
 
 	      (:Methods for Service:)
     <function uuid='584d0adc-2d80-414f-a7c9-0ad250c8b7c0'
-              method='csd_prsq:indices_service'
+              method='csd_hwrsq:indices_service'
  	      content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='f5db6fa4-fec0-422c-a562-428f7dc9ebf3'
-              method='csd_prsq:read_service'
+              method='csd_hwrsq:read_service'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='76f30efb-0b62-40b5-9b58-406cb55d63c4'
-              method='csd_prsq:delete_service'
+              method='csd_hwrsq:delete_service'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='1186ceea-a95f-4605-b427-303c38f2ce14'
-              method='csd_prsq:create_service'
+              method='csd_hwrsq:create_service'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='a57f5668-6b4b-44a9-b7f2-64eb56270e6a'
-              method='csd_prsq:update_service'
+              method='csd_hwrsq:update_service'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	     />,
@@ -202,25 +202,25 @@ declare variable $csd_prsq:stored_functions :=
 
 	      (:Methods for Operating Hours:)
     <function uuid='9c77ad44-73a9-4c85-bb3e-5a0a2cc23a99'
-              method='csd_prsq:indices_operating_hours'
+              method='csd_hwrsq:indices_operating_hours'
  	      content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='ae26b85d-48cf-4127-97c6-e587587411f3'
-              method='csd_prsq:read_operating_hours'
+              method='csd_hwrsq:read_operating_hours'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='acd3f03f-17cc-48de-bd99-9f6a9156b530'
-              method='csd_prsq:delete_operating_hours'
+              method='csd_hwrsq:delete_operating_hours'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='3c976647-c300-4a0f-bdc0-b218d335a3b7'
-              method='csd_prsq:create_operating_hours'
+              method='csd_hwrsq:create_operating_hours'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='abea97b8-d0b2-46c3-aea0-fec960dbf1eb'
-              method='csd_prsq:update_operating_hours'
+              method='csd_hwrsq:update_operating_hours'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	     />,
@@ -228,25 +228,25 @@ declare variable $csd_prsq:stored_functions :=
 
 	      (:Methods for Organizational Affiliation:)
     <function uuid='cf97b490-8313-11e3-baa7-0800200c9a66'
-              method='csd_prsq:indices_provider_organization'
+              method='csd_hwrsq:indices_provider_organization'
  	      content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='dd319bc0-8313-11e3-baa7-0800200c9a66'
-              method='csd_prsq:read_provider_organization'
+              method='csd_hwrsq:read_provider_organization'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='e7007130-8313-11e3-baa7-0800200c9a66'
-              method='csd_prsq:delete_provider_organization'
+              method='csd_hwrsq:delete_provider_organization'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='f0908ff0-8313-11e3-baa7-0800200c9a66'
-              method='csd_prsq:create_provider_organization'
+              method='csd_hwrsq:create_provider_organization'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='f5b36980-8313-11e3-baa7-0800200c9a66'
-              method='csd_prsq:update_provider_organization'
+              method='csd_hwrsq:update_provider_organization'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	     />,
@@ -255,26 +255,26 @@ declare variable $csd_prsq:stored_functions :=
 
 
     <function uuid='6ca9a7b2-e1c8-402c-9b45-8c3009c29492'
-              method='csd_prsq:indices_org_contact_point'
+              method='csd_hwrsq:indices_org_contact_point'
  	      content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='bf6e77e1-8908-4ffb-b322-f472bfd24a51'
-              method='csd_prsq:read_org_contact_point'
+              method='csd_hwrsq:read_org_contact_point'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
 
     <function uuid='90c71896-2991-4f27-a65d-0bd442e60567'
-              method='csd_prsq:delete_org_contact_point'
+              method='csd_hwrsq:delete_org_contact_point'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='82e65afd-a52a-49e0-92b4-292134c1699d'
-              method='csd_prsq:create_org_contact_point'
+              method='csd_hwrsq:create_org_contact_point'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='5e4e6bca-451d-41a7-b82e-7dc017a3e3ff'
-              method='csd_prsq:update_org_contact_point'
+              method='csd_hwrsq:update_org_contact_point'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	      />,
@@ -283,25 +283,25 @@ declare variable $csd_prsq:stored_functions :=
 	     (:Methods for Organiational Address :)
 
     <function uuid='10d8749c-866c-4df8-a3dd-49d0efee5ea4'
-              method='csd_prsq:indices_org_address'
+              method='csd_hwrsq:indices_org_address'
  	      content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='5df2fffc-a0aa-489d-a3af-e09806b9e05f'
-              method='csd_prsq:read_org_address'
+              method='csd_hwrsq:read_org_address'
  	      content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='c96a5fe4-5ccf-460e-8f9f-d696800bc498'
-              method='csd_prsq:delete_org_address'
+              method='csd_hwrsq:delete_org_address'
  	      content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	     />,
     <function uuid='91447349-e771-4b80-b467-934953f38ca1'
-              method='csd_prsq:create_org_address'
+              method='csd_hwrsq:create_org_address'
  	      content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	     />,
     <function uuid='26f230dd-0abf-42e4-883a-57cf7ec760d9'
-              method='csd_prsq:update_org_address'
+              method='csd_hwrsq:update_org_address'
  	      content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	      />,
@@ -311,25 +311,25 @@ declare variable $csd_prsq:stored_functions :=
 	     (:Methods for Identification:)
 
     <function uuid='af556315-9e6f-4a90-b5be-ee0ca71cae26'
-              method='csd_prsq:indices_otherid'
+              method='csd_hwrsq:indices_otherid'
  	      content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='e0e01b0d-8d18-4b65-a3ca-82229050709c'
-              method='csd_prsq:read_otherid'
+              method='csd_hwrsq:read_otherid'
  	     content-type='text/xml; charset=utf-8'      
 	     />,
     <function uuid='ef194926-bdf9-4c80-80e3-cdbe6b73f0a9'
-              method='csd_prsq:delete_otherid'
+              method='csd_hwrsq:delete_otherid'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='a1772539-cfa2-4601-9c34-3c6c473a878a'
-              method='csd_prsq:create_otherid'
+              method='csd_hwrsq:create_otherid'
  	     content-type='text/xml; charset=utf-8'      
 	     updating='1'
 	     />,
     <function uuid='78680061-23c7-41cb-b128-abac3b26b8df'
-              method='csd_prsq:update_otherid'
+              method='csd_hwrsq:update_otherid'
  	     content-type='text/xml; charset=utf-8'      
 	      updating='1'
 	      />
@@ -339,7 +339,7 @@ declare variable $csd_prsq:stored_functions :=
 
 
 (:Utility methods:)
-declare function csd_prsq:wrap_providers($providers) 
+declare function csd_hwrsq:wrap_providers($providers) 
 {
 <CSD xmlns:csd="urn:ihe:iti:csd:2013"  >
   <organizationDirectory/>
@@ -352,7 +352,7 @@ declare function csd_prsq:wrap_providers($providers)
 
 };
 
-declare updating function csd_prsq:wrap_updating_providers($providers) 
+declare updating function csd_hwrsq:wrap_updating_providers($providers) 
 {
   db:output(
     (
@@ -361,18 +361,18 @@ declare updating function csd_prsq:wrap_updating_providers($providers)
 	<http:header name="Content-Type" value="text/xml"/>
       </http:response>
       </rest:response>,
-      csd_prsq:wrap_providers($providers)
+      csd_hwrsq:wrap_providers($providers)
       )
      )
 };
 
 
-declare updating function csd_prsq:bump_timestamp($provider) {
+declare updating function csd_hwrsq:bump_timestamp($provider) {
   if (exists($provider/record/@updated)) then replace value of node $provider/record/@updated with current-dateTime() else ()
 };
 
 (:Top-Level Provider  methods:)
-declare function csd_prsq:get_oids($requestParams, $doc) as element() 
+declare function csd_hwrsq:get_oids($requestParams, $doc) as element() 
 {
   let $provs0 := if (exists($requestParams/id)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else $doc/CSD/providerDirectory/*
   let $provs1 := if (exists($requestParams/otherID)) then csd:filter_by_other_id($provs0,$requestParams/otherID) else $provs0
@@ -384,22 +384,22 @@ declare function csd_prsq:get_oids($requestParams, $doc) as element()
   let $provs7 := for $oid in $provs6/@oid         
    return <provider oid="{$oid}"/>
 
-  return csd_prsq:wrap_providers($provs7)
+  return csd_hwrsq:wrap_providers($provs7)
 };
 
 
-declare function csd_prsq:oid_search_by_id($requestParams, $doc) as element() 
+declare function csd_hwrsq:oid_search_by_id($requestParams, $doc) as element() 
 {
   let $provs0 := if (exists($requestParams/otherID)) then csd:filter_by_other_id($doc/CSD/providerDirectory/*,$requestParams/otherID) else ()
   let $provs1 := if (exists($requestParams/start) and exists($requestParams/max)) then csd:limit_items($provs0,$requestParams/start,$requestParams/max) else $provs0
   let $provs2:= for $oid in $provs1/@oid     
    return <provider oid="{$oid}"/>
 
-  return csd_prsq:wrap_providers($provs2)
+  return csd_hwrsq:wrap_providers($provs2)
 };
 
 
-declare function csd_prsq:read_provider($requestParams,$doc) as element() 
+declare function csd_hwrsq:read_provider($requestParams,$doc) as element() 
 {
 let $provs0 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()  
 let $provs1 :=  if (count($provs0) = 1) then
@@ -420,17 +420,17 @@ let $provs1 :=  if (count($provs0) = 1) then
   )}
   </provider>
   else ()
-  return csd_prsq:wrap_providers($provs1)
+  return csd_hwrsq:wrap_providers($provs1)
 };
 
 
 
 
-declare updating function csd_prsq:create_provider($requestParams,$doc) 
+declare updating function csd_hwrsq:create_provider($requestParams,$doc) 
 {
 let $provs0 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()  
 return
-  if (count($provs0) > 0) then (csd_prsq:wrap_updating_providers(()))     (:do not allow duplicate OIDs:)
+  if (count($provs0) > 0) then (csd_hwrsq:wrap_updating_providers(()))     (:do not allow duplicate OIDs:)
 else
   let $oid := 
     if (exists($requestParams/id/@oid) and not($requestParams/id/@oid = '')) then $requestParams/id/@oid
@@ -458,18 +458,18 @@ else
   
   return (
     insert node $prov into $doc/CSD/providerDirectory,  
-    csd_prsq:wrap_updating_providers(<provider oid="{$oid}"/>)
+    csd_hwrsq:wrap_updating_providers(<provider oid="{$oid}"/>)
   )
 
 };
 
 
-declare updating function csd_prsq:update_provider($requestParams,$doc) 
+declare updating function csd_hwrsq:update_provider($requestParams,$doc) 
 {
 let $provs0 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()  
 return
   if (not (count($provs0) = 1)) 
-    then ( csd_prsq:wrap_updating_providers((<bad/>)))     (:do nothing :)
+    then ( csd_hwrsq:wrap_updating_providers((<bad/>)))     (:do nothing :)
   else
     let $provider := $provs0[1]
     let $demo := $provider/demographic
@@ -477,7 +477,7 @@ return
     let $gender := $demo/gender
     return 
       (
-	csd_prsq:bump_timestamp($provider),
+	csd_hwrsq:bump_timestamp($provider),
 	delete node $provider/codedType,
 	insert node $requestParams/codedType into $provider,
 	if (not(exists($demo)))
@@ -499,14 +499,14 @@ return
 	if (exists($provider/record/@status)) 
 	  then replace value of node $provider/record/@status with $requestParams/status 
 	else insert node attribute { 'status' } { string($requestParams/status) } into $provider/record,
-	csd_prsq:wrap_updating_providers(<provider oid="{$provider/@oid}" ok='1'/>)
+	csd_hwrsq:wrap_updating_providers(<provider oid="{$provider/@oid}" ok='1'/>)
     )
 
 };
 
 
 
-declare updating function csd_prsq:delete_provider($requestParams,$doc) 
+declare updating function csd_hwrsq:delete_provider($requestParams,$doc) 
 {
 let $provs0 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()  
 return  if (count($provs0) = 1) then
@@ -515,7 +515,7 @@ return  if (count($provs0) = 1) then
 
 
 (:Methods for Names:)
-declare function csd_prsq:indices_name($requestParams, $doc) as element() 
+declare function csd_hwrsq:indices_name($requestParams, $doc) as element() 
 {
   let $provs0 := 
     if (exists($requestParams/id/@oid)) then 
@@ -533,10 +533,10 @@ declare function csd_prsq:indices_name($requestParams, $doc) as element()
 	</demographic>
     </provider>
       
-    return csd_prsq:wrap_providers($provs1)
+    return csd_hwrsq:wrap_providers($provs1)
 };
 
-declare function csd_prsq:read_name($requestParams, $doc) as element() 
+declare function csd_hwrsq:read_name($requestParams, $doc) as element() 
 {
 
 let $provs0 := if (exists($requestParams/name/@position)) then $doc/CSD/providerDirectory/*  else ()
@@ -563,14 +563,14 @@ let $provs2 :=
     </provider>
   else ()    
     
-return csd_prsq:wrap_providers($provs2)
+return csd_hwrsq:wrap_providers($provs2)
 };
 
 
 
 
 
-declare updating function csd_prsq:create_name($requestParams, $doc) 
+declare updating function csd_hwrsq:create_name($requestParams, $doc) 
 {  
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
@@ -593,14 +593,14 @@ return
 	  then insert node $requestParams/name into $provider/demographic 
 	else
 	  insert node <demographic>{$requestParams/name}</demographic> into $provider
-	  ,   csd_prsq:wrap_updating_providers($provs3)
+	  ,   csd_hwrsq:wrap_updating_providers($provs3)
 	)
-  else  csd_prsq:wrap_updating_providers(())
+  else  csd_hwrsq:wrap_updating_providers(())
       
 };
 
 
-declare updating function csd_prsq:update_name($requestParams, $doc) 
+declare updating function csd_hwrsq:update_name($requestParams, $doc) 
 {  
 let $provs0 := if (exists($requestParams/name/@position)) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
@@ -620,17 +620,17 @@ return
     </name>
     return
       (
-	csd_prsq:bump_timestamp($provs1[1]),
+	csd_hwrsq:bump_timestamp($provs1[1]),
 	replace  node $name with $new_name,
-	csd_prsq:wrap_updating_providers($provs2)
+	csd_hwrsq:wrap_updating_providers($provs2)
      )
-  else 	csd_prsq:wrap_updating_providers(())
+  else 	csd_hwrsq:wrap_updating_providers(())
 
 };
 
 
 
-declare updating function csd_prsq:delete_name($requestParams, $doc) 
+declare updating function csd_hwrsq:delete_name($requestParams, $doc) 
 {
   if (exists($requestParams/name/@position)) 
     then 
@@ -651,7 +651,7 @@ declare updating function csd_prsq:delete_name($requestParams, $doc)
 
 
 (:Methods for Contact Point:)
-declare function csd_prsq:indices_contact_point($requestParams, $doc) as element() 
+declare function csd_hwrsq:indices_contact_point($requestParams, $doc) as element() 
 {
   let $provs0 := 
     if (exists($requestParams/id/@oid)) then 
@@ -669,10 +669,10 @@ declare function csd_prsq:indices_contact_point($requestParams, $doc) as element
 	</demographic>
     </provider>
       
-    return csd_prsq:wrap_providers($provs1)
+    return csd_hwrsq:wrap_providers($provs1)
 };
 
-declare function csd_prsq:read_contact_point($requestParams, $doc) as element() 
+declare function csd_hwrsq:read_contact_point($requestParams, $doc) as element() 
 {
 
 let $provs0 := if (exists($requestParams/contactPoint/@position)) then $doc/CSD/providerDirectory/*  else ()
@@ -699,14 +699,14 @@ let $provs2 :=
     </provider>
   else ()    
     
-return csd_prsq:wrap_providers($provs2)
+return csd_hwrsq:wrap_providers($provs2)
 };
 
 
 
 
 
-declare updating function csd_prsq:create_contact_point($requestParams, $doc) 
+declare updating function csd_hwrsq:create_contact_point($requestParams, $doc) 
 {  
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
@@ -734,14 +734,14 @@ return
     </provider>
     return 
       (insert node $cp into $provider/demographic ,    
-      csd_prsq:wrap_updating_providers($provs3)
+      csd_hwrsq:wrap_updating_providers($provs3)
       )
-  else  csd_prsq:wrap_updating_providers(())
+  else  csd_hwrsq:wrap_updating_providers(())
       
 };
 
 
-declare updating function csd_prsq:update_contact_point($requestParams, $doc) 
+declare updating function csd_hwrsq:update_contact_point($requestParams, $doc) 
 {  
 let $provs0 := if (exists($requestParams/contactPoint/@position)) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
@@ -758,7 +758,7 @@ return
     </provider>
     return
       (
-	csd_prsq:bump_timestamp($provs1[1]),
+	csd_hwrsq:bump_timestamp($provs1[1]),
 	delete node $old_cp/codeType,
 	if (exists($new_cp/codeType)) then insert node $new_cp/codeType into $old_cp else (),
 	delete node $old_cp/equipment,
@@ -767,16 +767,16 @@ return
 	if (exists($new_cp/purpose)) then insert node $new_cp/purpose into $old_cp else (),
 	delete node $old_cp/certificate,
 	if (exists($new_cp/certificate)) then insert node $new_cp/certificate into $old_cp else (),
-	csd_prsq:wrap_updating_providers($provs2)
+	csd_hwrsq:wrap_updating_providers($provs2)
      )
-  else 	csd_prsq:wrap_updating_providers(())
+  else 	csd_hwrsq:wrap_updating_providers(())
 
 };
 
 
 
 
-declare updating function csd_prsq:delete_contact_point($requestParams, $doc) 
+declare updating function csd_hwrsq:delete_contact_point($requestParams, $doc) 
 {
   if (exists($requestParams/contactPoint/@position)) 
     then 
@@ -792,7 +792,7 @@ declare updating function csd_prsq:delete_contact_point($requestParams, $doc)
 
 
 (:Methods for Organizational Contact Point:)
-declare function csd_prsq:indices_org_contact_point($requestParams, $doc) as element() 
+declare function csd_hwrsq:indices_org_contact_point($requestParams, $doc) as element() 
 {
   let $provs0 := 
     if (exists($requestParams/id/@oid)) then 
@@ -821,10 +821,10 @@ declare function csd_prsq:indices_org_contact_point($requestParams, $doc) as ele
 	</organizations>
     </provider>
       
-    return csd_prsq:wrap_providers($provs1)
+    return csd_hwrsq:wrap_providers($provs1)
 };
 
-declare function csd_prsq:read_org_contact_point($requestParams, $doc) as element() 
+declare function csd_hwrsq:read_org_contact_point($requestParams, $doc) as element() 
 {
 
 let $provs0 := if (exists($requestParams/organization/@oid)) then $doc/CSD/providerDirectory/*  else ()
@@ -854,14 +854,14 @@ let $provs3 :=
     </provider>
   else ()    
     
-return csd_prsq:wrap_providers($provs3)
+return csd_hwrsq:wrap_providers($provs3)
 };
 
 
 
 
 
-declare updating function csd_prsq:create_org_contact_point($requestParams, $doc) 
+declare updating function csd_hwrsq:create_org_contact_point($requestParams, $doc) 
 {  
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
@@ -898,15 +898,15 @@ return
 	</provider>
 	return 
 	  (insert node $cp into $org ,    
-	  csd_prsq:wrap_updating_providers($provs3)
+	  csd_hwrsq:wrap_updating_providers($provs3)
 	)
-      else   csd_prsq:wrap_updating_providers(())
-    else  csd_prsq:wrap_updating_providers(())
+      else   csd_hwrsq:wrap_updating_providers(())
+    else  csd_hwrsq:wrap_updating_providers(())
       
 };
 
 
-declare updating function csd_prsq:update_org_contact_point($requestParams, $doc) 
+declare updating function csd_hwrsq:update_org_contact_point($requestParams, $doc) 
 {  
 let $provs0 := if (exists($requestParams/organization/@oid)) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/organization/contactPoint/@position)) then $provs0  else ()
@@ -926,7 +926,7 @@ return
     </provider>
     return
       (
-	csd_prsq:bump_timestamp($provs2[1]),
+	csd_hwrsq:bump_timestamp($provs2[1]),
 	delete node $old_cp/codeType,
 	if (exists($new_cp/codeType)) then insert node $new_cp/codeType into $old_cp else (),
 	delete node $old_cp/equipment,
@@ -935,16 +935,16 @@ return
 	if (exists($new_cp/purpose)) then insert node $new_cp/purpose into $old_cp else (),
 	delete node $old_cp/certificate,
 	if (exists($new_cp/certificate)) then insert node $new_cp/certificate into $old_cp else (),
-	csd_prsq:wrap_updating_providers($provs3)
+	csd_hwrsq:wrap_updating_providers($provs3)
      )
-  else 	csd_prsq:wrap_updating_providers(())
+  else 	csd_hwrsq:wrap_updating_providers(())
 
 };
 
 
 
 
-declare updating function csd_prsq:delete_org_contact_point($requestParams, $doc) 
+declare updating function csd_hwrsq:delete_org_contact_point($requestParams, $doc) 
 {
   if (exists($requestParams/organization/contactPoint/@position) and exists($requestParams/organization/@oid)) 
     then 
@@ -966,7 +966,7 @@ declare updating function csd_prsq:delete_org_contact_point($requestParams, $doc
 
 
 (:Methods for Provider Organization:)
-declare function csd_prsq:indices_provider_organization($requestParams, $doc) as element() 
+declare function csd_hwrsq:indices_provider_organization($requestParams, $doc) as element() 
 {
   let $provs0 := 
     if (exists($requestParams/id/@oid)) then 
@@ -985,10 +985,10 @@ declare function csd_prsq:indices_provider_organization($requestParams, $doc) as
 	</organizations>
       </provider>
       
-    return csd_prsq:wrap_providers($provs1)
+    return csd_hwrsq:wrap_providers($provs1)
 };
 
-declare function csd_prsq:read_provider_organization($requestParams, $doc) as element() 
+declare function csd_hwrsq:read_provider_organization($requestParams, $doc) as element() 
 {
 
 let $provs0 := if (exists($requestParams/organization/@oid)) then $doc/CSD/providerDirectory/*  else ()
@@ -1016,14 +1016,14 @@ let $provs2 :=
       </provider>
   else ()    
     
-return csd_prsq:wrap_providers($provs2)
+return csd_hwrsq:wrap_providers($provs2)
 };
 
 
 
 
 
-declare updating function csd_prsq:create_provider_organization($requestParams, $doc) 
+declare updating function csd_hwrsq:create_provider_organization($requestParams, $doc) 
 {  
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
@@ -1044,27 +1044,27 @@ return
       if (exists($organizations)) 
 	then
 	(insert node $org into $organizations, 
-	csd_prsq:wrap_updating_providers($provs3)
+	csd_hwrsq:wrap_updating_providers($provs3)
 	)
       else
 	(
 	insert node $orgs_new into $provider,
-	csd_prsq:wrap_updating_providers($provs3)
+	csd_hwrsq:wrap_updating_providers($provs3)
 	)
 
-  else  csd_prsq:wrap_updating_providers(())
+  else  csd_hwrsq:wrap_updating_providers(())
       
 };
 
 
-declare updating function csd_prsq:update_provider_organization($requestParams, $doc) 
+declare updating function csd_hwrsq:update_provider_organization($requestParams, $doc) 
 {  
 () (: does nothing:)
 };
 
 
 
-declare updating function csd_prsq:delete_provider_organization($requestParams, $doc) 
+declare updating function csd_hwrsq:delete_provider_organization($requestParams, $doc) 
 {
   if (exists($requestParams/organization/@oid)) 
     then 
@@ -1082,7 +1082,7 @@ declare updating function csd_prsq:delete_provider_organization($requestParams, 
 
 
 (:Methods for Provider Credential:)
-declare function csd_prsq:indices_credential($requestParams, $doc) as element() 
+declare function csd_hwrsq:indices_credential($requestParams, $doc) as element() 
 {
   let $provs0 := 
     if (exists($requestParams/id/@oid)) then 
@@ -1099,10 +1099,10 @@ declare function csd_prsq:indices_credential($requestParams, $doc) as element()
 	}
       </provider>
       
-    return csd_prsq:wrap_providers($provs1)
+    return csd_hwrsq:wrap_providers($provs1)
 };
 
-declare function csd_prsq:read_credential($requestParams, $doc) as element() 
+declare function csd_hwrsq:read_credential($requestParams, $doc) as element() 
 {
 
 let $provs0 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingSchema) ) then $doc/CSD/providerDirectory/*  else ()
@@ -1125,14 +1125,14 @@ let $provs2 :=
       </provider>
   else ()    
     
-return csd_prsq:wrap_providers($provs2)
+return csd_hwrsq:wrap_providers($provs2)
 };
 
 
 
 
 
-declare updating function csd_prsq:create_credential($requestParams, $doc) 
+declare updating function csd_hwrsq:create_credential($requestParams, $doc) 
 {  
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
@@ -1165,15 +1165,15 @@ return
     return 
 	(
 	insert node $cred_new into $provider,
-	csd_prsq:wrap_updating_providers($provs3)
+	csd_hwrsq:wrap_updating_providers($provs3)
 	)
 
-  else  csd_prsq:wrap_updating_providers(())
+  else  csd_hwrsq:wrap_updating_providers(())
       
 };
 
 
-declare updating function csd_prsq:update_credential($requestParams, $doc) 
+declare updating function csd_hwrsq:update_credential($requestParams, $doc) 
 {  
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
@@ -1199,7 +1199,7 @@ return
     return
       
       (
-	csd_prsq:bump_timestamp($provider),
+	csd_hwrsq:bump_timestamp($provider),
 	if (exists($cred_new/issuingAuthority)) then
 	  (if (exists($cred_old/issuingAuthority)) then (delete node $cred_old/issuingAuthority) else (),
 	  insert node $cred_new/issuingAuthority into $cred_old)
@@ -1216,14 +1216,14 @@ return
 	  (if (exists($cred_old/credentialRenewalDate)) then (delete node $cred_old/credentialRenewalDate) else (),
 	  insert node $cred_new/credentialRenewalDate into $cred_old)
 	else (),
-	csd_prsq:wrap_updating_providers($provs3)
+	csd_hwrsq:wrap_updating_providers($provs3)
        )
-  else 	csd_prsq:wrap_updating_providers((<bad cs="{$codingSchema}" c="{$code}"></bad>,count($provs2), count($creds0)))
+  else 	csd_hwrsq:wrap_updating_providers((<bad cs="{$codingSchema}" c="{$code}"></bad>,count($provs2), count($creds0)))
 };
 
 
 
-declare updating function csd_prsq:delete_credential($requestParams, $doc) 
+declare updating function csd_hwrsq:delete_credential($requestParams, $doc) 
 {
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
@@ -1246,7 +1246,7 @@ return
 
 
 (:Methods for Provider Facility:)
-declare function csd_prsq:indices_provider_facility($requestParams, $doc) as element() 
+declare function csd_hwrsq:indices_provider_facility($requestParams, $doc) as element() 
 {
   let $provs0 := 
     if (exists($requestParams/id/@oid)) then 
@@ -1265,10 +1265,10 @@ declare function csd_prsq:indices_provider_facility($requestParams, $doc) as ele
 	</facilities>
       </provider>
       
-    return csd_prsq:wrap_providers($provs1)
+    return csd_hwrsq:wrap_providers($provs1)
 };
 
-declare function csd_prsq:read_provider_facility($requestParams, $doc) as element() 
+declare function csd_hwrsq:read_provider_facility($requestParams, $doc) as element() 
 {
 
 let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
@@ -1296,14 +1296,14 @@ let $provs2 :=
       </provider>
   else ()    
     
-return csd_prsq:wrap_providers($provs2)
+return csd_hwrsq:wrap_providers($provs2)
 };
 
 
 
 
 
-declare updating function csd_prsq:create_provider_facility($requestParams, $doc) 
+declare updating function csd_hwrsq:create_provider_facility($requestParams, $doc) 
 {  
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
@@ -1324,27 +1324,27 @@ return
       if (exists($facilities)) 
 	then
 	(insert node $fac into $facilities, 
-	csd_prsq:wrap_updating_providers($provs3)
+	csd_hwrsq:wrap_updating_providers($provs3)
 	)
       else
 	(
 	insert node $facs_new into $provider,
-	csd_prsq:wrap_updating_providers($provs3)
+	csd_hwrsq:wrap_updating_providers($provs3)
 	)
 
-  else  csd_prsq:wrap_updating_providers(())
+  else  csd_hwrsq:wrap_updating_providers(())
       
 };
 
 
-declare updating function csd_prsq:update_provider_facility($requestParams, $doc) 
+declare updating function csd_hwrsq:update_provider_facility($requestParams, $doc) 
 {  
 () (: does nothing:)
 };
 
 
 
-declare updating function csd_prsq:delete_provider_facility($requestParams, $doc) 
+declare updating function csd_hwrsq:delete_provider_facility($requestParams, $doc) 
 {
   if (exists($requestParams/facility/@oid)) 
     then 
@@ -1362,7 +1362,7 @@ declare updating function csd_prsq:delete_provider_facility($requestParams, $doc
 
 
 (:Methods for Provider Other ID:)
-declare function csd_prsq:indices_otherid($requestParams, $doc) as element() 
+declare function csd_hwrsq:indices_otherid($requestParams, $doc) as element() 
 {
   let $provs0 := 
     if (exists($requestParams/id/@oid)) then 
@@ -1378,10 +1378,10 @@ declare function csd_prsq:indices_otherid($requestParams, $doc) as element()
 	}
     </provider>
       
-    return csd_prsq:wrap_providers($provs1)
+    return csd_hwrsq:wrap_providers($provs1)
 };
 
-declare function csd_prsq:read_otherid($requestParams, $doc) as element() 
+declare function csd_hwrsq:read_otherid($requestParams, $doc) as element() 
 {
 
 let $provs0 := if (exists($requestParams/otherID/@position)) then $doc/CSD/providerDirectory/*  else ()
@@ -1409,14 +1409,14 @@ let $provs2 :=
     </provider>
   else ()    
     
-return csd_prsq:wrap_providers($provs2)
+return csd_hwrsq:wrap_providers($provs2)
 };
 
 
 
 
 
-declare updating function csd_prsq:create_otherid($requestParams, $doc) 
+declare updating function csd_hwrsq:create_otherid($requestParams, $doc) 
 {  
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
@@ -1438,14 +1438,14 @@ return
     </provider>
     return 
       (insert node $id into $provider ,    
-      csd_prsq:wrap_updating_providers($provs3)
+      csd_hwrsq:wrap_updating_providers($provs3)
       )
-  else  csd_prsq:wrap_updating_providers(())
+  else  csd_hwrsq:wrap_updating_providers(())
       
 };
 
 
-declare updating function csd_prsq:update_otherid($requestParams, $doc) 
+declare updating function csd_hwrsq:update_otherid($requestParams, $doc) 
 {  
 let $provs0 := if (exists($requestParams/otherID)) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
@@ -1459,7 +1459,7 @@ return
     </provider>
     return
       (
-	csd_prsq:bump_timestamp($provs1[1]),
+	csd_hwrsq:bump_timestamp($provs1[1]),
 	if ($requestParams/otherID/@code) 
 	  then 	    
 	    if (exists($id/@code))
@@ -1475,14 +1475,14 @@ return
 	if (not(string($requestParams/otherID) = '')) 
 	  then (replace value of node $id with string($requestParams/otherID))
 	  else (),
-	csd_prsq:wrap_updating_providers($provs2)
+	csd_hwrsq:wrap_updating_providers($provs2)
      )
-  else 	csd_prsq:wrap_updating_providers(())
+  else 	csd_hwrsq:wrap_updating_providers(())
 
 };
 
 
-declare updating function csd_prsq:delete_otherid($requestParams, $doc) 
+declare updating function csd_hwrsq:delete_otherid($requestParams, $doc) 
 {
   if (exists($requestParams/otherID/@position)) 
     then 
@@ -1505,7 +1505,7 @@ declare updating function csd_prsq:delete_otherid($requestParams, $doc)
 
 
 (:Methods for Provider Address:)
-declare function csd_prsq:indices_address($requestParams, $doc) as element() 
+declare function csd_hwrsq:indices_address($requestParams, $doc) as element() 
 {
   let $provs0 := 
     if (exists($requestParams/id/@oid)) then 
@@ -1523,10 +1523,10 @@ declare function csd_prsq:indices_address($requestParams, $doc) as element()
 	</demographic>
     </provider>
       
-    return csd_prsq:wrap_providers($provs1)
+    return csd_hwrsq:wrap_providers($provs1)
 };
 
-declare function csd_prsq:read_address($requestParams, $doc) as element() 
+declare function csd_hwrsq:read_address($requestParams, $doc) as element() 
 {
 
 let $provs0 := if (exists($requestParams/address/@type)) then $doc/CSD/providerDirectory/*  else ()
@@ -1546,14 +1546,14 @@ let $provs2 :=
       {$provider/record}
     </provider>
   else ()        
-return csd_prsq:wrap_providers($provs2)
+return csd_hwrsq:wrap_providers($provs2)
 };
 
 
 
 
 
-declare updating function csd_prsq:create_address($requestParams, $doc) 
+declare updating function csd_hwrsq:create_address($requestParams, $doc) 
 {  
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
@@ -1566,7 +1566,7 @@ return
     let $demo := $provider/demographic
     return if (exists($demo/address[@type = $requestParams/address/@type])) 
       then
-      csd_prsq:wrap_updating_providers(()) (: Do not allow the same type to be created more than once:)
+      csd_hwrsq:wrap_updating_providers(()) (: Do not allow the same type to be created more than once:)
     else
       let $provs3:=  
       <provider oid="{$provider/@oid}">
@@ -1581,14 +1581,14 @@ return
 	 else	
 	   insert node  $requestParams/address into $demo
 	   ,
-	csd_prsq:wrap_updating_providers($provs3)
+	csd_hwrsq:wrap_updating_providers($provs3)
 	)
-  else  csd_prsq:wrap_updating_providers(())
+  else  csd_hwrsq:wrap_updating_providers(())
       
 };
 
 
-declare updating function csd_prsq:update_address($requestParams, $doc) 
+declare updating function csd_hwrsq:update_address($requestParams, $doc) 
 {  
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
@@ -1598,21 +1598,21 @@ let $demo := $provider/demographic
 let $address:= $demo/address[@type = $requestParams/address/@type]
 return  
   if ( not(exists($address))) then
-    csd_prsq:wrap_updating_providers(()) (: Address does not exist.  Do not update:)
+    csd_hwrsq:wrap_updating_providers(()) (: Address does not exist.  Do not update:)
   else
     let $provs3:=  
     <provider oid="{$provider/@oid}">
       <demographic><address type="{$requestParams/address/@type}"/></demographic>
     </provider>
     return (
-      csd_prsq:bump_timestamp($provider),
+      csd_hwrsq:bump_timestamp($provider),
       replace  node  $address with $requestParams/address
       ,
-      csd_prsq:wrap_updating_providers($provs3)
+      csd_hwrsq:wrap_updating_providers($provs3)
     )
 };
 
-declare updating function csd_prsq:delete_address($requestParams, $doc) 
+declare updating function csd_hwrsq:delete_address($requestParams, $doc) 
 {
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
@@ -1630,7 +1630,7 @@ return if (exists($address)) then (delete node $address) else ()
 
 
 (:Methods for Provider's Organizational Address:)
-declare function csd_prsq:indices_org_address($requestParams, $doc) as element() 
+declare function csd_hwrsq:indices_org_address($requestParams, $doc) as element() 
 {
   let $provs0 := 
     if (exists($requestParams/id/@oid)) then 
@@ -1659,13 +1659,13 @@ declare function csd_prsq:indices_org_address($requestParams, $doc) as element()
 	</organizations>
     </provider>
       
-    return csd_prsq:wrap_providers($provs1)
+    return csd_hwrsq:wrap_providers($provs1)
 };
 
 
 
 
-declare function csd_prsq:read_org_address($requestParams, $doc) as element() 
+declare function csd_hwrsq:read_org_address($requestParams, $doc) as element() 
 {
 
 let $provs0 := if (exists($requestParams/organization/@oid) and exists($requestParams/organization/address/@type)) then $doc/CSD/providerDirectory/*  else ()
@@ -1686,13 +1686,13 @@ let $provs2 :=
       {$provider/record}
     </provider>
   else ()        
-return csd_prsq:wrap_providers($provs2)
+return csd_hwrsq:wrap_providers($provs2)
 };
 
 
 
 
-declare updating function csd_prsq:create_org_address($requestParams, $doc) 
+declare updating function csd_hwrsq:create_org_address($requestParams, $doc) 
 {  
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
@@ -1704,11 +1704,11 @@ let $orgs := $provider/organizations/organization[@oid = $requestParams/organiza
 let $org := if(count($orgs) =1) then $orgs[1] else ()
 let $address := $org/address[@type = $requestParams/organization/address/@type]
 return if (not(exists($org)) or exists($address))
-  then   csd_prsq:wrap_updating_providers(()) (:do not create an already existing one :)	  
+  then   csd_hwrsq:wrap_updating_providers(()) (:do not create an already existing one :)	  
 else
   (
     insert node $requestParams/organization/address into $org,
-    csd_prsq:wrap_updating_providers(    
+    csd_hwrsq:wrap_updating_providers(    
 	<provider oid="{$provider/@oid}">
 	  <organizations>
 	    <organization oid="{$org/@oid}">
@@ -1722,7 +1722,7 @@ else
 
 
 
-declare updating function csd_prsq:update_org_address($requestParams, $doc) 
+declare updating function csd_hwrsq:update_org_address($requestParams, $doc) 
 {  
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
@@ -1735,12 +1735,12 @@ let $orgs := $provider/organizations/organization[@oid = $requestParams/organiza
 let $org := if(count($orgs) =1) then $orgs[1] else ()
 let $address := $org/address[@type = $requestParams/organization/address/@type]
 return if (not(exists($address)))
-  then   csd_prsq:wrap_updating_providers((<bad0/>,$requestParams)) (:do not update an non-existent one :)
+  then   csd_hwrsq:wrap_updating_providers((<bad0/>,$requestParams)) (:do not update an non-existent one :)
 else
   (
-    csd_prsq:bump_timestamp($provider),
+    csd_hwrsq:bump_timestamp($provider),
     replace node $address with  $requestParams/organization/address ,
-     csd_prsq:wrap_updating_providers(    
+     csd_hwrsq:wrap_updating_providers(    
        <provider oid="{$provider/@oid}">
 	 <organizations>
 	   <organization oid="{$org/@oid}">
@@ -1754,7 +1754,7 @@ else
 
 
 
-declare updating function csd_prsq:delete_org_address($requestParams, $doc) 
+declare updating function csd_hwrsq:delete_org_address($requestParams, $doc) 
 {  
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
@@ -1772,7 +1772,7 @@ return if (exists($address)) then (delete node $address) else ()
 
 
 (:Methods for Provider's Service :)
-declare function csd_prsq:indices_service($requestParams, $doc) as element() 
+declare function csd_hwrsq:indices_service($requestParams, $doc) as element() 
 {
   let $provs0 := 
     if (exists($requestParams/id/@oid)) then 
@@ -1801,10 +1801,10 @@ declare function csd_prsq:indices_service($requestParams, $doc) as element()
 	</facilities>
     </provider>
       
-    return csd_prsq:wrap_providers($provs1)
+    return csd_hwrsq:wrap_providers($provs1)
 };
 
-declare function csd_prsq:read_service($requestParams, $doc) as element() 
+declare function csd_hwrsq:read_service($requestParams, $doc) as element() 
 {
 
 let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
@@ -1834,14 +1834,14 @@ let $provs3 :=
     </provider>
   else ()    
     
-return csd_prsq:wrap_providers($provs3)
+return csd_hwrsq:wrap_providers($provs3)
 };
 
 
 
 
 
-declare updating function csd_prsq:create_service($requestParams, $doc) 
+declare updating function csd_hwrsq:create_service($requestParams, $doc) 
 {  
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
@@ -1872,14 +1872,14 @@ return if (exists($fac))
   </provider>
   return 
     (insert node $srvc into $fac ,    
-    csd_prsq:wrap_updating_providers($provs3)
+    csd_hwrsq:wrap_updating_providers($provs3)
   )
-else   csd_prsq:wrap_updating_providers(())
+else   csd_hwrsq:wrap_updating_providers(())
       
 };
 
 
-declare updating function csd_prsq:update_service($requestParams, $doc) 
+declare updating function csd_hwrsq:update_service($requestParams, $doc) 
 {  
 let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/facility/service/@position)) then $provs0  else ()
@@ -1899,23 +1899,23 @@ return
     </provider>
     return
       (
-	csd_prsq:bump_timestamp($provs2[1]),
+	csd_hwrsq:bump_timestamp($provs2[1]),
 	delete node $old_srvc/freeBusyURI,
 	if (exists($new_srvc/freeBusyURI)) then insert node $new_srvc/freeBusyURI into $old_srvc else (),
 	delete node $old_srvc/organization,
 	if (exists($new_srvc/organization)) then insert node $new_srvc/organization into $old_srvc else (),
 	delete node $old_srvc/language,
 	if (exists($new_srvc/language)) then insert node $new_srvc/language into $old_srvc else (),
-	csd_prsq:wrap_updating_providers($provs3)
+	csd_hwrsq:wrap_updating_providers($provs3)
      )
-  else 	csd_prsq:wrap_updating_providers(())
+  else 	csd_hwrsq:wrap_updating_providers(())
 
 };
 
 
 
 
-declare updating function csd_prsq:delete_service($requestParams, $doc) 
+declare updating function csd_hwrsq:delete_service($requestParams, $doc) 
 {
   if (exists($requestParams/facility/service/@position) and exists($requestParams/facility/@oid)) 
     then 
@@ -1940,7 +1940,7 @@ declare updating function csd_prsq:delete_service($requestParams, $doc)
 
 
 (:Methods for Provider's Operating Hours :)
-declare function csd_prsq:indices_operating_hours($requestParams, $doc) as element() 
+declare function csd_hwrsq:indices_operating_hours($requestParams, $doc) as element() 
 {
   let $provs0 := 
     if (exists($requestParams/id/@oid)) then 
@@ -1980,10 +1980,10 @@ declare function csd_prsq:indices_operating_hours($requestParams, $doc) as eleme
 	</facilities>
     </provider>
       
-    return csd_prsq:wrap_providers($provs1)
+    return csd_hwrsq:wrap_providers($provs1)
 };
 
-declare function csd_prsq:read_operating_hours($requestParams, $doc) as element() 
+declare function csd_hwrsq:read_operating_hours($requestParams, $doc) as element() 
 {
 let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/facility/service/@position)) then $provs0  else ()
@@ -2007,13 +2007,13 @@ let  $provs4:=
   else ()
 
 
-return csd_prsq:wrap_providers($provs4)
+return csd_hwrsq:wrap_providers($provs4)
 };
 
 
 
 
-declare updating function csd_prsq:create_operating_hours($requestParams, $doc) 
+declare updating function csd_hwrsq:create_operating_hours($requestParams, $doc) 
 {  
 let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/facility/service/@position)) then $provs0  else ()
@@ -2035,14 +2035,14 @@ return if (count($srvc) = 1)
   </provider>
   return 
     (insert node $requestParams/facility/service/operatingHours into $srvc[1] ,    
-    csd_prsq:wrap_updating_providers($provs4)
+    csd_hwrsq:wrap_updating_providers($provs4)
   )
-else   csd_prsq:wrap_updating_providers(())
+else   csd_hwrsq:wrap_updating_providers(())
       
 };
 
 
-declare updating function csd_prsq:update_operating_hours($requestParams, $doc) 
+declare updating function csd_hwrsq:update_operating_hours($requestParams, $doc) 
 {  
 let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/facility/service/@position)) then $provs0  else ()
@@ -2065,7 +2065,7 @@ return
     </provider>
     return
       (
-	csd_prsq:bump_timestamp($provs3[1]),
+	csd_hwrsq:bump_timestamp($provs3[1]),
 	delete node $oh/openFlag,
 	if (exists($new_oh/openFlag)) then insert node $new_oh/openFlag into $oh else (),
 	delete node $oh/dayOfTheWeek,
@@ -2078,16 +2078,16 @@ return
 	if (exists($new_oh/beginEffectiveDate)) then insert node $new_oh/beginEffectiveDate into $oh else (),
 	delete node $oh/endEffectiveDate,
 	if (exists($new_oh/endEffectiveDate)) then insert node $new_oh/endEffectiveDate into $oh else (),
-	csd_prsq:wrap_updating_providers($provs4)
+	csd_hwrsq:wrap_updating_providers($provs4)
      )
-  else 	csd_prsq:wrap_updating_providers(())
+  else 	csd_hwrsq:wrap_updating_providers(())
 
 };
 
 
 
 
-declare updating function csd_prsq:delete_operating_hours($requestParams, $doc) 
+declare updating function csd_hwrsq:delete_operating_hours($requestParams, $doc) 
 {
 let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/facility/service/@position)) then $provs0  else ()
