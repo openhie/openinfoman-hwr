@@ -1,7 +1,7 @@
-OpenInfoMan - Provider Registry Library
+OpenInfoMan - Health Worker Registry Library
 =======================================
 
-Library of Provider Registry Stored Functions to be used with the OpenInfoMan
+Library of Health Worker Registry Stored Functions to be used with the OpenInfoMan
 
 OpenInfoMan
 ===========
@@ -10,7 +10,7 @@ The OpenInfoMan can be found here:
 
 Installation
 ============
-Once you have the OpenInfoMan installed, you can make the Provider Registry Library avaiable by:
+Once you have the OpenInfoMan installed, you can make the Health Worker Registry Library avaiable by:
 - copying/linking everything under openinfoman-pr/repo to the repo/ for BaseX
 - editing repo/csd_webapp_config.xwm and uncommenting:
 - (:import module namespace csd_prsq = "https://github.com/his-interop/openinfoman-pr/csd_prsq" at  "csd_provider_registry_stored_queries.xqm";  :)
