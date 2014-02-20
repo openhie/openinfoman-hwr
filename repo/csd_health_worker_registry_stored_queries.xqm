@@ -7,7 +7,6 @@
 module namespace csd_hwrsq = "https://github.com/his-interop/openinfoman-hwr/csd_hwrsq";
 
 import module namespace csd = "urn:ihe:iti:csd:2013" at "csd_base_library.xqm";
-import module namespace random = "http://basex.org/modules/random";  
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 
 
@@ -366,11 +365,6 @@ declare updating function csd_hwrsq:wrap_updating_providers($providers)
      )
 };
 
-
-declare updating function csd_hwrsq:bump_timestamp($provider) {
-  if (exists($provider/record/@updated)) then replace value of node $provider/record/@updated with current-dateTime() else ()
-};
-
 (:Top-Level Provider  methods:)
 declare function csd_hwrsq:get_oids($requestParams, $doc) as element() 
 {
@@ -434,7 +428,7 @@ return
 else
   let $oid := 
     if (exists($requestParams/id/@oid) and not($requestParams/id/@oid = '')) then $requestParams/id/@oid
-  else concat('2.25.', random:uuid())
+  else csd:uuid_as_oid()
   let $time :=current-dateTime()
   let $prov := 
   <provider oid="{$oid}">

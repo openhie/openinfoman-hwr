@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<careServicesFunction xmlns:ev="http://www.w3.org/2001/xml-events"
+  xmlns="urn:ihe:iti:csd:2013"
+  xmlns:xforms="http://www.w3.org/2002/xforms"
+  xmlns:hfp="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:csd="urn:ihe:iti:csd:2013" 
+  uuid="6cb318a0-8391-11e3-baa7-0800200c9a66">
+  <description>health_worker_update_contact_point</description>
+<definition method="csd_hwru:health_worker_update_contact_point"><xi:include parse="text" href="health_worker_update_contact_point.xq"/></definition>
+
+  <xforms:instance>
+    <careServicesRequest>
+      <!-- FILL ME IN-->
+    </careServicesRequest>
+  </xforms:instance>
+</careServicesFunction>
+
