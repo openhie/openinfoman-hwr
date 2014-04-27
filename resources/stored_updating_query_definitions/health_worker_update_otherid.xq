@@ -17,7 +17,7 @@ return
     then
     let $provs2 := 
     <provider oid="{$provs1[1]/@oid}">
-      <otherID position="{$careServicesRequest/name/@position}"/>
+      <otherID position="{$careServicesRequest/otherID/@position}"/>
     </provider>
     return
       (
