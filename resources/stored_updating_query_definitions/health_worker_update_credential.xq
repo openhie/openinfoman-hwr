@@ -52,4 +52,4 @@ return
 	else (),
 	csd_blu:wrap_updating_providers($provs3)
        )
-  else 	csd_blu:wrap_updating_providers((<bad cs="{$codingSchema}" c="{$code}"></bad>,count($provs2), count($creds0)))
+  else 	csd_blu:wrap_updating_providers(())
