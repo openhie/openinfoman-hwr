@@ -8,7 +8,7 @@
   xmlns:csd="urn:ihe:iti:csd:2013" 
   uuid="0f117fc0-830f-11e3-baa7-0800200c9a66">
   <description>service_get_oids</description>
-<definition method="csd_hwru:service_get_oids"><xi:include parse="text" href="service_get_oids.xq"/></definition>
+  <definition ><xi:include parse="text" href="service_get_oids.xq"/></definition>
 
   <xforms:instance>
     <careServicesRequest>

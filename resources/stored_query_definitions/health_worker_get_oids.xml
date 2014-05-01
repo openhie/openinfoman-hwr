@@ -8,7 +8,7 @@
   xmlns:csd="urn:ihe:iti:csd:2013" 
   uuid="8a5df595-51ec-46e6-8a92-7db3c2484ee8">
   <description>health_worker_get_oids</description>
-<definition method="csd_hwru:health_worker_get_oids"><xi:include parse="text" href="health_worker_get_oids.xq"/></definition>
+  <definition ><xi:include parse="text" href="health_worker_get_oids.xq"/></definition>
 
   <xforms:instance>
     <careServicesRequest>

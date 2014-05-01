@@ -8,7 +8,7 @@
   xmlns:csd="urn:ihe:iti:csd:2013" 
   uuid="cf97b490-8313-11e3-baa7-0800200c9a66">
   <description>health_worker_indices_provider_organization</description>
-<definition method="csd_hwru:health_worker_indices_provider_organization"><xi:include parse="text" href="health_worker_indices_provider_organization.xq"/></definition>
+  <definition ><xi:include parse="text" href="health_worker_indices_provider_organization.xq"/></definition>
 
   <xforms:instance>
     <careServicesRequest>
