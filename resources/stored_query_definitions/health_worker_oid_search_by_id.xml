@@ -6,9 +6,9 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:csd="urn:ihe:iti:csd:2013" 
-  uuid="cf97b490-8313-11e3-baa7-0800200c9a66">
-  <description>health_worker_indices_provider_organization</description>
-<definition method="csd_hwru:health_worker_indices_provider_organization"><xi:include parse="text" href="health_worker_indices_provider_organization.xq"/></definition>
+  uuid="fcbab300-6270-11e3-bd76-0002a5d5c51b">
+  <description>health_worker_oid_search_by_id</description>
+  <definition ><xi:include parse="text" href="health_worker_oid_search_by_id.xq"/></definition>
 
   <xforms:instance>
     <careServicesRequest>

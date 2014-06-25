@@ -52,4 +52,8 @@ return
 	else (),
 	csd_blu:wrap_updating_providers($provs3)
        )
+<<<<<<< HEAD:resources/stored_updating_query_defintions/health_worker_update_credential.xq
   else 	csd_blu:wrap_updating_providers((<bad cs="{$codingScheme}" c="{$code}"></bad>,count($provs2), count($creds0)))
+=======
+  else 	csd_blu:wrap_updating_providers(())
+>>>>>>> 68032fd4f7430bb5d326107563409dfa5e1d7ca1:resources/stored_updating_query_definitions/health_worker_update_credential.xq
