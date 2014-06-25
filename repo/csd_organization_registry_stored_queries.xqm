@@ -6,7 +6,7 @@
 :)
 module namespace csd_orsq = "https://github.com/his-interop/openinfoman-pr/csd_orsq";
 
-import module namespace csd = "urn:ihe:iti:csd:2013" at "csd_base_library.xqm";
+import module namespace csd_bl = "https://github.com/his-interop/openinfoman/csd_bl";
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 
 
@@ -51,12 +51,14 @@ declare updating function csd_orsq:wrap_updating_organizations($organizations)
 (:Top-Level Organization  methods:)
 declare function csd_orsq:get_oids($requestParams, $doc) as element() 
 {
-  let $orgs0 := if (exists($requestParams/id)) then csd:filter_by_primary_id($doc/CSD/organizationDirectory/*,$requestParams/id) else $doc/CSD/organizationDirectory/*
-  let $orgs1 := if (exists($requestParams/otherID)) then csd:filter_by_other_id($orgs0,$requestParams/otherID) else $orgs0
-  let $orgs2 := if (exists($requestParams/codedType)) then csd:filter_by_coded_type($orgs1,$requestParams/codedType)    else $orgs1
-  let $orgs3 := if (exists($requestParams/address/addressLine)) then csd:filter_by_address($orgs2, $requestParams/address/addressLine) else $orgs2
-  let $orgs4 := if (exists($requestParams/record)) then csd:filter_by_record($orgs3,$requestParams/record) else $orgs3
-  let $orgs5 := if (exists($requestParams/start) and exists($requestParams/max)) then csd:limit_items($orgs4,$requestParams/start,$requestParams/max) else $orgs4
+  let $orgs0 := if (exists($requestParams/id)) 
+    then csd_bl:filter_by_primary_id($doc/CSD/organizationDirectory/*,$requestParams/id) 
+    else $doc/CSD/organizationDirectory/*
+  let $orgs1 := if (exists($requestParams/otherID)) then csd_bl:filter_by_other_id($orgs0,$requestParams/otherID) else $orgs0
+  let $orgs2 := if (exists($requestParams/codedType)) then csd_bl:filter_by_coded_type($orgs1,$requestParams/codedType)    else $orgs1
+  let $orgs3 := if (exists($requestParams/address/addressLine)) then csd_bl:filter_by_address($orgs2, $requestParams/address/addressLine) else $orgs2
+  let $orgs4 := if (exists($requestParams/record)) then csd_bl:filter_by_record($orgs3,$requestParams/record) else $orgs3
+  let $orgs5 := if (exists($requestParams/start) and exists($requestParams/max)) then csd_bl:limit_items($orgs4,$requestParams/start,$requestParams/max) else $orgs4
   let $orgs6 := for $oid in $orgs5/@oid         
    return <organization oid="{$oid}"/>
 

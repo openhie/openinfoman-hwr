@@ -1,5 +1,5 @@
-import module namespace csd = "urn:ihe:iti:csd:2013" at "../repo/csd_base_library.xqm";
-import module namespace csd_blu = "https://github.com/his-interop/openinfoman/csd_blu" at "../repo/csd_base_library_updating.xqm";
+import module namespace csd_bl = "https://github.com/his-interop/openinfoman/csd_bl";
+import module namespace csd_blu = "https://github.com/his-interop/openinfoman/csd_blu";
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 declare variable $careServicesRequest as item() external;
 
@@ -12,7 +12,7 @@ declare variable $careServicesRequest as item() external;
 let $provs0 := if (exists($careServicesRequest/facility/@oid)) then /CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($careServicesRequest/facility/service/@position)) then $provs0  else ()
 let $provs2 := if (exists($careServicesRequest/facility/service/operatingHours)) then $provs1  else ()
-let $provs3 := if (exists($careServicesRequest/id/@oid)) then csd:filter_by_primary_id($provs2,$careServicesRequest/id) else ()
+let $provs3 := if (exists($careServicesRequest/id/@oid)) then csd_bl:filter_by_primary_id($provs2,$careServicesRequest/id) else ()
 let $srvc := $provs3[1]/facilities/facility[@oid =$careServicesRequest/facility/@oid]/service[position() = $careServicesRequest/facility/service/@position]
 return if (count($srvc) = 1) 
   then

@@ -6,7 +6,7 @@
 :)
 module namespace csd_frsq = "https://github.com/his-interop/openinfoman-pr/csd_frsq";
 
-import module namespace csd = "urn:ihe:iti:csd:2013" at "csd_base_library.xqm";
+import module namespace csd_bl = "https://github.com/his-interop/openinfoman/csd_bl";
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 
 
@@ -51,12 +51,12 @@ declare updating function csd_frsq:wrap_updating_facilities($facilities)
 (:Top-Level Facility  methods:)
 declare function csd_frsq:get_oids($requestParams, $doc) as element() 
 {
-  let $facs0 := if (exists($requestParams/id)) then csd:filter_by_primary_id($doc/CSD/facilityDirectory/*,$requestParams/id) else $doc/CSD/facilityDirectory/*
-  let $facs1 := if (exists($requestParams/otherID)) then csd:filter_by_other_id($facs0,$requestParams/otherID) else $facs0
-  let $facs2 := if (exists($requestParams/codedType)) then csd:filter_by_coded_type($facs1,$requestParams/codedType)    else $facs1
-  let $facs3 := if (exists($requestParams/address/addressLine)) then csd:filter_by_address($facs2, $requestParams/address/addressLine) else $facs2
-  let $facs4 := if (exists($requestParams/record)) then csd:filter_by_record($facs3,$requestParams/record) else $facs3
-  let $facs5 := if (exists($requestParams/start) and exists($requestParams/max)) then csd:limit_items($facs4,$requestParams/start,$requestParams/max) else $facs4
+  let $facs0 := if (exists($requestParams/id)) then csd_bl:filter_by_primary_id($doc/CSD/facilityDirectory/*,$requestParams/id) else $doc/CSD/facilityDirectory/*
+  let $facs1 := if (exists($requestParams/otherID)) then csd_bl:filter_by_other_id($facs0,$requestParams/otherID) else $facs0
+  let $facs2 := if (exists($requestParams/codedType)) then csd_bl:filter_by_coded_type($facs1,$requestParams/codedType)    else $facs1
+  let $facs3 := if (exists($requestParams/address/addressLine)) then csd_bl:filter_by_address($facs2, $requestParams/address/addressLine) else $facs2
+  let $facs4 := if (exists($requestParams/record)) then csd_bl:filter_by_record($facs3,$requestParams/record) else $facs3
+  let $facs5 := if (exists($requestParams/start) and exists($requestParams/max)) then csd_bl:limit_items($facs4,$requestParams/start,$requestParams/max) else $facs4
   let $facs6 := for $oid in $facs5/@oid         
    return <facility oid="{$oid}"/>
 

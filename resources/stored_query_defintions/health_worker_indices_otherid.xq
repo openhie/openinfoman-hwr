@@ -1,4 +1,4 @@
-import module namespace csd = "urn:ihe:iti:csd:2013" at "../repo/csd_base_library.xqm";
+import module namespace csd_bl = "https://github.com/his-interop/openinfoman/csd_bl";
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 declare variable $careServicesRequest as item() external;
 
@@ -10,7 +10,7 @@ declare variable $careServicesRequest as item() external;
 :) 
   let $provs0 := 
     if (exists($careServicesRequest/id/@oid)) then 
-      csd:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) 
+      csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) 
     else (/CSD/providerDirectory/*)
   let $provs1:=     
       for $provider in  $provs0
@@ -22,4 +22,4 @@ declare variable $careServicesRequest as item() external;
 	}
     </provider>
       
-    return csd:wrap_providers($provs1)
+    return csd_bl:wrap_providers($provs1)

@@ -5,27 +5,27 @@
 :
 :)
 module namespace csd_hwru = "https://github.com/his-interop/openinfoman-hwr/csd_hwru";
-import module namespace csd = "urn:ihe:iti:csd:2013" at "csd_base_library.xqm";
-import module namespace csd_blu = "https://github.com/his-interop/openinfoman/csd_blu" at "csd_base_library_updating.xqm";
+import module namespace csd_bl = "https://github.com/his-interop/openinfoman/csd_bl";
+import module namespace csd_blu = "https://github.com/his-interop/openinfoman/csd_blu" ;
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 
 
 declare updating function csd_hwru:health_worker_delete_provider($requestParams,$doc) 
 {
-let $provs0 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()  
+let $provs0 := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()  
 return  if (count($provs0) = 1) then
   delete node $provs0[1] else ()
 };
 
 declare updating function csd_hwru:health_worker_create_provider($requestParams,$doc) 
 {
-let $provs0 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()  
+let $provs0 := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()  
 return
   if (count($provs0) > 0) then (csd_blu:wrap_updating_providers(()))     (:do not allow duplicate OIDs:)
 else
   let $oid := 
     if (exists($requestParams/id/@oid) and not($requestParams/id/@oid = '')) then $requestParams/id/@oid
-  else csd:uuid_as_oid()
+  else csd_bl:uuid_as_oid()
   let $time :=current-dateTime()
   let $prov := 
   <provider oid="{$oid}">
@@ -56,7 +56,7 @@ else
 
 declare updating function csd_hwru:health_worker_update_provider($requestParams,$doc) 
 {
-let $provs0 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()  
+let $provs0 := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()  
 return
   if (not (count($provs0) = 1)) 
     then ( csd_blu:wrap_updating_providers((<bad/>)))     (:do nothing :)
@@ -98,7 +98,7 @@ declare updating function csd_hwru:health_worker_delete_name($requestParams, $do
 {
   if (exists($requestParams/name/@position)) 
     then 
-    let $providers := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+    let $providers := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
     return
       if ( count($providers) = 1 )
 	then
@@ -111,7 +111,7 @@ declare updating function csd_hwru:health_worker_delete_name($requestParams, $do
 declare updating function csd_hwru:health_worker_create_name($requestParams, $doc) 
 {  
 
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/name))  then $provs1 else ()
 return  
@@ -140,7 +140,7 @@ return
 declare updating function csd_hwru:health_worker_update_name($requestParams, $doc) 
 {  
 let $provs0 := if (exists($requestParams/name/@position)) then $doc/CSD/providerDirectory/*  else ()
-let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($provs0,$requestParams/id) else ()
 let $name := $provs1[1]/demographic/name[position() = $requestParams/name/@position]
 return
   if (count($provs1) = 1 and exists($name)) 
@@ -168,7 +168,7 @@ return
 declare updating function csd_hwru:health_worker_delete_address($requestParams, $doc) 
 {
 
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/address/@type))  then $provs1 else ()
 let $address:= $provs2[1]/demographic/address[@type = $requestParams/address/@type]
@@ -178,7 +178,7 @@ return if (exists($address)) then (delete node $address) else ()
 declare updating function csd_hwru:health_worker_create_address($requestParams, $doc) 
 {  
 
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/address/@type))  then $provs1 else ()
 return  
@@ -211,7 +211,7 @@ return
 
 declare updating function csd_hwru:health_worker_update_address($requestParams, $doc) 
 {  
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/address/@type))  then $provs1 else ()
 let $provider:= $provs2[1]
@@ -237,7 +237,7 @@ declare updating function csd_hwru:health_worker_delete_contact_point($requestPa
 {
   if (exists($requestParams/contactPoint/@position)) 
     then 
-    let $providers := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+    let $providers := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
     return
       if ( count($providers) = 1 )
 	then
@@ -250,7 +250,7 @@ declare updating function csd_hwru:health_worker_delete_contact_point($requestPa
 declare updating function csd_hwru:health_worker_create_contact_point($requestParams, $doc) 
 {  
 
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/contactPoint))  then $provs1 else ()
 return  
@@ -284,7 +284,7 @@ return
 declare updating function csd_hwru:health_worker_update_contact_point($requestParams, $doc) 
 {  
 let $provs0 := if (exists($requestParams/contactPoint/@position)) then $doc/CSD/providerDirectory/*  else ()
-let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($provs0,$requestParams/id) else ()
 let $old_cp := $provs1[1]/demographic/contactPoint[position() = $requestParams/contactPoint/@position]
 return
   if (count($provs1) = 1 and exists($old_cp)) 
@@ -315,7 +315,7 @@ return
 
 declare updating function csd_hwru:health_worker_delete_credential($requestParams, $doc) 
 {
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingSchema) ) then $provs1  else ()
 let $cred_new := $requestParams/credential
@@ -332,7 +332,7 @@ return
 declare updating function csd_hwru:health_worker_create_credential($requestParams, $doc) 
 {  
 
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingSchema) ) then $provs1  else ()
 let $cred_request := $requestParams/credential
@@ -372,7 +372,7 @@ return
 declare updating function csd_hwru:health_worker_update_credential($requestParams, $doc) 
 {  
 
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingSchema) ) then $provs1  else ()
 let $cred_new := $requestParams/credential
@@ -421,7 +421,7 @@ declare updating function csd_hwru:health_worker_delete_provider_facility($reque
 {
   if (exists($requestParams/facility/@oid)) 
     then 
-    let $providers := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+    let $providers := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
     return
       if ( count($providers) = 1 )
 	then
@@ -434,7 +434,7 @@ declare updating function csd_hwru:health_worker_delete_provider_facility($reque
 declare updating function csd_hwru:health_worker_create_provider_facility($requestParams, $doc) 
 {  
 
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/facility/@oid))  then $provs1 else ()
 let $facs0 := $provs2/facilities/facility[@oid = $requestParams/facility/@oid]
@@ -473,7 +473,7 @@ declare updating function csd_hwru:health_worker_delete_service($requestParams, 
 {
   if (exists($requestParams/facility/service/@position) and exists($requestParams/facility/@oid)) 
     then 
-    let $providers := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+    let $providers := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
     return
       if ( count($providers) = 1 )
 	then
@@ -490,7 +490,7 @@ declare updating function csd_hwru:health_worker_delete_service($requestParams, 
 declare updating function csd_hwru:health_worker_create_service($requestParams, $doc) 
 {  
 
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/facility/@oid))  then $provs1 else ()
 let $provs3 := if (exists($requestParams/facility/service/@oid))  then $provs2 else ()
@@ -528,7 +528,7 @@ declare updating function csd_hwru:health_worker_update_service($requestParams, 
 {  
 let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/facility/service/@position)) then $provs0  else ()
-let $provs2 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs1,$requestParams/id) else ()
+let $provs2 := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($provs1,$requestParams/id) else ()
 let $old_srvc := $provs2[1]/facilities/facility[@oid =$requestParams/facility/@oid]/service[position() = $requestParams/facility/service/@position]
 return
   if (count($provs2) = 1 and exists($old_srvc)) 
@@ -562,7 +562,7 @@ declare updating function csd_hwru:health_worker_delete_operating_hours($request
 let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/facility/service/@position)) then $provs0  else ()
 let $provs2 := if (exists($requestParams/facility/service/operatingHours/@position)) then $provs1  else ()
-let $provs3 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs2,$requestParams/id) else ()
+let $provs3 := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($provs2,$requestParams/id) else ()
 let $oh := $provs3[1]/facilities/facility[@oid =$requestParams/facility/@oid]/service[position() = $requestParams/facility/service/@position]/operatingHours[position() = $requestParams/facility/service/operatingHours/@position]
 return
   if (count($oh) = 1)
@@ -574,7 +574,7 @@ declare updating function csd_hwru:health_worker_create_operating_hours($request
 let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/facility/service/@position)) then $provs0  else ()
 let $provs2 := if (exists($requestParams/facility/service/operatingHours)) then $provs1  else ()
-let $provs3 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs2,$requestParams/id) else ()
+let $provs3 := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($provs2,$requestParams/id) else ()
 let $srvc := $provs3[1]/facilities/facility[@oid =$requestParams/facility/@oid]/service[position() = $requestParams/facility/service/@position]
 return if (count($srvc) = 1) 
   then
@@ -602,7 +602,7 @@ declare updating function csd_hwru:health_worker_update_operating_hours($request
 let $provs0 := if (exists($requestParams/facility/@oid)) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/facility/service/@position)) then $provs0  else ()
 let $provs2 := if (exists($requestParams/facility/service/operatingHours/@position)) then $provs1  else ()
-let $provs3 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs2,$requestParams/id) else ()
+let $provs3 := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($provs2,$requestParams/id) else ()
 let $oh := $provs3[1]/facilities/facility[@oid =$requestParams/facility/@oid]/service[position() = $requestParams/facility/service/@position]/operatingHours[position() = $requestParams/facility/service/operatingHours/@position]
 return
   if (count($oh) = 1 and count($provs3) = 1)
@@ -643,7 +643,7 @@ declare updating function csd_hwru:health_worker_delete_provider_organization($r
 {
   if (exists($requestParams/organization/@oid)) 
     then 
-    let $providers := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+    let $providers := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
     return
       if ( count($providers) = 1 )
 	then
@@ -656,7 +656,7 @@ declare updating function csd_hwru:health_worker_delete_provider_organization($r
 declare updating function csd_hwru:health_worker_create_provider_organization($requestParams, $doc) 
 {  
 
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/organization/@oid))  then $provs1 else ()
 let $orgs0 := $provs2/organizations/organization[@oid = $requestParams/organization/@oid]
@@ -695,7 +695,7 @@ declare updating function csd_hwru:health_worker_delete_org_contact_point($reque
 {
   if (exists($requestParams/organization/contactPoint/@position) and exists($requestParams/organization/@oid)) 
     then 
-    let $providers := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+    let $providers := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
     return
       if ( count($providers) = 1 )
 	then
@@ -712,7 +712,7 @@ declare updating function csd_hwru:health_worker_delete_org_contact_point($reque
 declare updating function csd_hwru:health_worker_create_org_contact_point($requestParams, $doc) 
 {  
 
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/organization/@oid))  then $provs1 else ()
 let $provs3 := if (exists($requestParams/organization/contactPoint))  then $provs2 else ()
@@ -757,7 +757,7 @@ declare updating function csd_hwru:health_worker_update_org_contact_point($reque
 {  
 let $provs0 := if (exists($requestParams/organization/@oid)) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/organization/contactPoint/@position)) then $provs0  else ()
-let $provs2 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs1,$requestParams/id) else ()
+let $provs2 := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($provs1,$requestParams/id) else ()
 let $old_cp := $provs2[1]/organizations/organization[@oid =$requestParams/organization/@oid]/contactPoint[position() = $requestParams/organization/contactPoint/@position]
 return
   if (count($provs2) = 1 and exists($old_cp)) 
@@ -791,7 +791,7 @@ return
 declare updating function csd_hwru:health_worker_delete_org_address($requestParams, $doc) 
 {  
 
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/organization/@oid))  then $provs1 else ()
 let $provs3 := if (exists($requestParams/organization/address/@type))  then $provs2 else ()
@@ -805,7 +805,7 @@ return if (exists($address)) then (delete node $address) else ()
 declare updating function csd_hwru:health_worker_create_org_address($requestParams, $doc) 
 {  
 
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/organization/@oid))  then $provs1 else ()
 let $provs3 := if (exists($requestParams/organization/address/@type))  then $provs2 else ()
@@ -833,7 +833,7 @@ else
 declare updating function csd_hwru:health_worker_update_org_address($requestParams, $doc) 
 {  
 
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/organization/@oid))  then $provs1 else ()
 let $provs3 := if (exists($requestParams/organization/address/@type))  then $provs2 else ()
@@ -864,7 +864,7 @@ declare updating function csd_hwru:health_worker_delete_otherid($requestParams, 
 {
   if (exists($requestParams/otherID/@position)) 
     then 
-    let $providers := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+    let $providers := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
     return
       if ( count($providers) = 1 )
 	then
@@ -877,7 +877,7 @@ declare updating function csd_hwru:health_worker_delete_otherid($requestParams, 
 declare updating function csd_hwru:health_worker_create_otherid($requestParams, $doc) 
 {  
 
-let $provs0 := if (exists($requestParams/id/@oid)) then	csd:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
+let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($requestParams/otherID/@code))  then $provs1 else ()
 return  
@@ -905,7 +905,7 @@ return
 declare updating function csd_hwru:health_worker_update_otherid($requestParams, $doc) 
 {  
 let $provs0 := if (exists($requestParams/otherID)) then $doc/CSD/providerDirectory/*  else ()
-let $provs1 := if (exists($requestParams/id/@oid)) then csd:filter_by_primary_id($provs0,$requestParams/id) else ()
+let $provs1 := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($provs0,$requestParams/id) else ()
 let $id := $provs1[1]/otherID[position() = $requestParams/otherID/@position]
 return
   if (count($provs1) = 1 and exists($id)) 
