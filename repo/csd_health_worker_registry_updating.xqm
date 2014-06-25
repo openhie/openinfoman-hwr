@@ -317,11 +317,11 @@ declare updating function csd_hwru:health_worker_delete_credential($requestParam
 {
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
-let $provs2 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingSchema) ) then $provs1  else ()
+let $provs2 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingScheme) ) then $provs1  else ()
 let $cred_new := $requestParams/credential
 let $code:= $cred_new/codedType/@code
-let $codingSchema:= $cred_new/codedType/@codingSchema
-let $creds0 := $provs2/credential[@code = $code and @codingSchema = $codingSchema]
+let $codingScheme:= $cred_new/codedType/@codingScheme
+let $creds0 := $provs2/credential[@code = $code and @codingScheme = $codingScheme]
 return  
   if ( count($provs2) = 1 and count($creds0) = 1)  then
     delete node $creds0[1]
@@ -334,22 +334,22 @@ declare updating function csd_hwru:health_worker_create_credential($requestParam
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
-let $provs2 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingSchema) ) then $provs1  else ()
+let $provs2 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingScheme) ) then $provs1  else ()
 let $cred_request := $requestParams/credential
 let $code:= $cred_request/codedType/@code
-let $codingSchema:= $cred_request/codedType/@codingSchema
-let $creds0 := $provs2/credential[@code = $code and @codingSchema = $codingSchema]
+let $codingScheme:= $cred_request/codedType/@codingScheme
+let $creds0 := $provs2/credential[@code = $code and @codingScheme = $codingScheme]
 return  
   if ( count($provs2) = 1 and count($creds0) = 0)  (:DO NOT ALLOW SAME CRED TWICE :)
     then
     let $provider:= $provs2[1]
     let $cred_rec :=
     <credential>
-      <codedType code="{$code}" codingSchema="{$codingSchema}"/>
+      <codedType code="{$code}" codingScheme="{$codingScheme}"/>
     </credential>
     let $cred_new :=
     <credential>
-      <codedType code="{$code}" codingSchema="{$codingSchema}"/>
+      <codedType code="{$code}" codingScheme="{$codingScheme}"/>
       {(
 	if (exists($cred_request/number)) then $cred_request/number else (),
 	if (exists($cred_request/issuingAuthority)) then $cred_request/issuingAuthority else (),
@@ -374,11 +374,11 @@ declare updating function csd_hwru:health_worker_update_credential($requestParam
 
 let $provs0 := if (exists($requestParams/id/@oid)) then	csd_bl:filter_by_primary_id($doc/CSD/providerDirectory/*,$requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
-let $provs2 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingSchema) ) then $provs1  else ()
+let $provs2 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingScheme) ) then $provs1  else ()
 let $cred_new := $requestParams/credential
 let $code:= $cred_new/codedType/@code
-let $codingSchema:= $cred_new/codedType/@codingSchema
-let $creds0 := $provs2/credential/codedType[@code = $code and @codingSchema = $codingSchema]
+let $codingScheme:= $cred_new/codedType/@codingScheme
+let $creds0 := $provs2/credential/codedType[@code = $code and @codingScheme = $codingScheme]
 return  
   if ( count($provs2) = 1 and count($creds0) = 1)  (:Update only:)
     then
@@ -387,7 +387,7 @@ return
     let $provs3 := 
       <provider oid="{$provider/@oid}">
 	<credential>
-	  <codedType code="{$code}" codingSchema="{$codingSchema}"/>
+	  <codedType code="{$code}" codingScheme="{$codingScheme}"/>
 	</credential>
       </provider>
 
@@ -414,7 +414,7 @@ return
 	else (),
 	csd_blu:wrap_updating_providers($provs3)
        )
-  else 	csd_blu:wrap_updating_providers((<bad cs="{$codingSchema}" c="{$code}"></bad>,count($provs2), count($creds0)))
+  else 	csd_blu:wrap_updating_providers((<bad cs="{$codingScheme}" c="{$code}"></bad>,count($provs2), count($creds0)))
 };
 
 declare updating function csd_hwru:health_worker_delete_provider_facility($requestParams, $doc) 

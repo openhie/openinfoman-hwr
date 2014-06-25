@@ -11,11 +11,11 @@ declare variable $careServicesRequest as item() external;
 :) 
 let $provs0 := if (exists($careServicesRequest/id/@oid)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
-let $provs2 := if (exists($careServicesRequest/credential/codedType/@code) and exists($careServicesRequest/credential/codedType/@codingSchema) ) then $provs1  else ()
+let $provs2 := if (exists($careServicesRequest/credential/codedType/@code) and exists($careServicesRequest/credential/codedType/@codingScheme) ) then $provs1  else ()
 let $cred_new := $careServicesRequest/credential
 let $code:= $cred_new/codedType/@code
-let $codingSchema:= $cred_new/codedType/@codingSchema
-let $creds0 := $provs2/credential[@code = $code and @codingSchema = $codingSchema]
+let $codingScheme:= $cred_new/codedType/@codingScheme
+let $creds0 := $provs2/credential[@code = $code and @codingScheme = $codingScheme]
 return  
   if ( count($provs2) = 1 and count($creds0) = 1)  then
     delete node $creds0[1]

@@ -12,22 +12,22 @@ declare variable $careServicesRequest as item() external;
 
 let $provs0 := if (exists($careServicesRequest/id/@oid)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
-let $provs2 := if (exists($careServicesRequest/credential/codedType/@code) and exists($careServicesRequest/credential/codedType/@codingSchema) ) then $provs1  else ()
+let $provs2 := if (exists($careServicesRequest/credential/codedType/@code) and exists($careServicesRequest/credential/codedType/@codingScheme) ) then $provs1  else ()
 let $cred_request := $careServicesRequest/credential
 let $code:= $cred_request/codedType/@code
-let $codingSchema:= $cred_request/codedType/@codingSchema
-let $creds0 := $provs2/credential[@code = $code and @codingSchema = $codingSchema]
+let $codingScheme:= $cred_request/codedType/@codingScheme
+let $creds0 := $provs2/credential[@code = $code and @codingScheme = $codingScheme]
 return  
   if ( count($provs2) = 1 and count($creds0) = 0)  (:DO NOT ALLOW SAME CRED TWICE :)
     then
     let $provider:= $provs2[1]
     let $cred_rec :=
     <credential>
-      <codedType code="{$code}" codingSchema="{$codingSchema}"/>
+      <codedType code="{$code}" codingScheme="{$codingScheme}"/>
     </credential>
     let $cred_new :=
     <credential>
-      <codedType code="{$code}" codingSchema="{$codingSchema}"/>
+      <codedType code="{$code}" codingScheme="{$codingScheme}"/>
       {(
 	if (exists($cred_request/number)) then $cred_request/number else (),
 	if (exists($cred_request/issuingAuthority)) then $cred_request/issuingAuthority else (),

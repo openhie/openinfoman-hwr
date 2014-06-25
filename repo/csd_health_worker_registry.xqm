@@ -241,19 +241,19 @@ declare function csd_hwr:health_worker_indices_credential($requestParams, $doc) 
 declare function csd_hwr:health_worker_read_credential($requestParams, $doc) as element() 
 {
 
-let $provs0 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingSchema) ) then $doc/CSD/providerDirectory/*  else ()
+let $provs0 := if (exists($requestParams/credential/codedType/@code) and exists($requestParams/credential/codedType/@codingScheme) ) then $doc/CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($requestParams/id/@oid)) then csd_bl:filter_by_primary_id($provs0,$requestParams/id) else ()
 let $provs2 := 
   if (count($provs1) = 1) 
     then 
     let $provider :=  $provs1[1] 
     let $code:= $requestParams/credential/codedType/@code
-    let $codingSchema:= $requestParams/credential/codedType/@codingSchema
+    let $codingScheme:= $requestParams/credential/codedType/@codingScheme
     return 
       <provider oid="{$provider/@oid}">
 	  {
 	    (
-	      $provider/credential/codedType[@code = $code and @codingSchema = $codingSchema]/..
+	      $provider/credential/codedType[@code = $code and @codingScheme = $codingScheme]/..
 	      ,
 	      $provider/record
 	    )
