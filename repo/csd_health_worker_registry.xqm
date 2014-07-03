@@ -1,11 +1,11 @@
 (:~
 : This is a module contatining  read only stored queries for a Care Services Discovery compliant Health Worker registry
 : @version 1.0
-: @see https://github.com/his-interop/openinfoman @see http://ihe.net
+: @see https://github.com/openhie/openinfoman @see http://ihe.net
 :
 :)
-module namespace csd_hwr = "https://github.com/his-interop/openinfoman-hwr/csd_hwr";
-import module namespace csd_bl = "https://github.com/his-interop/openinfoman/csd_bl";
+module namespace csd_hwr = "https://github.com/openhie/openinfoman-hwr/csd_hwr";
+import module namespace csd_bl = "https://github.com/openhie/openinfoman/csd_bl";
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 
 

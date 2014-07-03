@@ -35,7 +35,7 @@ foreach ($files as $file) {
 
 	if ($updating) {
 	    $def = 'import module namespace csd = "urn:ihe:iti:csd:2013" at "../repo/csd_base_library.xqm";
-import module namespace csd_blu = "https://github.com/his-interop/openinfoman/csd_blu" at "../repo/csd_base_library_updating.xqm";
+import module namespace csd_blu = "https://github.com/openhie/openinfoman/csd_blu" at "../repo/csd_base_library_updating.xqm";
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 declare variable $careServicesRequest as item() external;
 
@@ -132,12 +132,12 @@ declare variable $careServicesRequest as item() external;
 $updating = '(:~
 : This is a module contatining  updating stored queries for a Care Services Discovery compliant Health Worker registry
 : @version 1.0
-: @see https://github.com/his-interop/openinfoman @see http://ihe.net
+: @see https://github.com/openhie/openinfoman @see http://ihe.net
 :
 :)
-module namespace csd_hwru = "https://github.com/his-interop/openinfoman-hwr/csd_hwru";
+module namespace csd_hwru = "https://github.com/openhie/openinfoman-hwr/csd_hwru";
 import module namespace csd = "urn:ihe:iti:csd:2013" at "csd_base_library.xqm";
-import module namespace csd_blu = "https://github.com/his-interop/openinfoman/csd_blu" at "csd_base_library_updating.xqm";
+import module namespace csd_blu = "https://github.com/openhie/openinfoman/csd_blu" at "csd_base_library_updating.xqm";
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 
 
@@ -148,10 +148,10 @@ file_put_contents('csd_health_worker_registry_updating.xqm',$updating);
 $nonupdating = '(:~
 : This is a module contatining  read only stored queries for a Care Services Discovery compliant Health Worker registry
 : @version 1.0
-: @see https://github.com/his-interop/openinfoman @see http://ihe.net
+: @see https://github.com/openhie/openinfoman @see http://ihe.net
 :
 :)
-module namespace csd_hwr = "https://github.com/his-interop/openinfoman-hwr/csd_hwr";
+module namespace csd_hwr = "https://github.com/openhie/openinfoman-hwr/csd_hwr";
 import module namespace csd = "urn:ihe:iti:csd:2013" at "csd_base_library.xqm";
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 
