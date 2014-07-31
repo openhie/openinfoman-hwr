@@ -27,6 +27,10 @@ cd ~/basex/resources/stored_query_definitions
 ln -sf ~/openinfoman-hwr/resources/stored_query_definitions/* .
 </pre>
 
+Be sure to reload the stored functions: 
+> https://github.com/openhie/openinfoman/wiki/Install-Instructions#Loading_Stored_Queries
+
+
 Updating Library
 ----------------
 If you want to enable the stored queries with updating functions (e.g. for the CRUD operations for the provider directory) you can do so with:
@@ -35,3 +39,7 @@ If you want to enable the stored queries with updating functions (e.g. for the C
 cd ~/basex/resources/stored_updating_query_definitions
 ln -sf ~/openinfoman-hwr/resources/stored_updating_query_definitions/* .
 </pre>
+
+
+Be sure to reload the stored functions: 
+> https://github.com/openhie/openinfoman/wiki/Install-Instructions#Loading_Stored_Queries
