@@ -52,7 +52,7 @@ declare variable $careServicesRequest as item() external;
      return 
        for $prov in $provs6
 	 return 
-	 <provider oid='{$prov/@oid}'>
+	 <provider urn='{$prov/@urn}'>
 	   <demogrpahic>
 	   {$prov/demographic/name}
 	   </demogrpahic>

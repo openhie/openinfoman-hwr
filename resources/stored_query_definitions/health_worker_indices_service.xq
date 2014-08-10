@@ -9,26 +9,26 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :) 
   let $provs0 := 
-    if (exists($careServicesRequest/id/@oid)) then 
+    if (exists($careServicesRequest/id/@urn)) then 
       csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) 
     else (/CSD/providerDirectory/*)
   let $provs1:=     
       for $provider in  $provs0
       return
-      <provider oid="{$provider/@oid}">
+      <provider urn="{$provider/@urn}">
 	<facilities>
 	  {
 	    let $facs := 
-	      if (exists($careServicesRequest/facility/@oid)) 
+	      if (exists($careServicesRequest/facility/@urn)) 
 		then 
-		$provider/facilities/facility[@oid = $careServicesRequest/facility/@oid]
+		$provider/facilities/facility[@urn = $careServicesRequest/facility/@urn]
 	      else    $provider/facilities/facility
             for $fac in $facs
 	      return 
-	       <facility oid="{$fac/@oid}">
+	       <facility urn="{$fac/@urn}">
 		  {
 		    for $srvc at $pos in $fac/service
-		    return <service position="{$pos}" oid="{$srvc/@oid}"/> 
+		    return <service position="{$pos}" urn="{$srvc/@urn}"/> 
 		  }
 		</facility>
 	  }

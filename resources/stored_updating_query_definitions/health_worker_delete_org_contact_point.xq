@@ -9,13 +9,13 @@ declare variable $careServicesRequest as item() external;
    The dynamic context of this query has $careServicesRequest set to contain any of the search 
    and limit paramaters as sent by the Service Finder
 :) 
-  if (exists($careServicesRequest/organization/contactPoint/@position) and exists($careServicesRequest/organization/@oid)) 
+  if (exists($careServicesRequest/organization/contactPoint/@position) and exists($careServicesRequest/organization/@urn)) 
     then 
-    let $providers := if (exists($careServicesRequest/id/@oid)) then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
+    let $providers := if (exists($careServicesRequest/id/@urn)) then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
     return
       if ( count($providers) = 1 )
 	then
-	let $orgs := $providers[1]/organizations/organization[@oid = $careServicesRequest/organization/@oid]
+	let $orgs := $providers[1]/organizations/organization[@urn = $careServicesRequest/organization/@urn]
 	return
 	  if (count($orgs) = 1) then
 	    let  $cp :=  $orgs[1]/contactPoint[position() = $careServicesRequest/organization/contactPoint/@position]

@@ -54,7 +54,7 @@ declare  variable $careServicesRequest as item() external;
 
       return for $fac in $facs7
         return 
-	 <facility oid='{$fac/@oid}'>
+	 <facility urn='{$fac/@urn}'>
 	   {$fac/primaryName}
 	 </facility>
 

@@ -14,7 +14,7 @@ declare variable $careServicesRequest as item() external;
   let $facs3 := if (exists($careServicesRequest/address/addressLine)) then csd_bl:filter_by_address($facs2, $careServicesRequest/address/addressLine) else $facs2
   let $facs4 := if (exists($careServicesRequest/record)) then csd_bl:filter_by_record($facs3,$careServicesRequest/record) else $facs3
   let $facs5 := if (exists($careServicesRequest/start) and exists($careServicesRequest/max)) then csd_bl:limit_items($facs4,$careServicesRequest/start,$careServicesRequest/max) else $facs4
-  let $facs6 := for $oid in $facs5/@oid         
-   return <facility oid="{$oid}"/>
+  let $facs6 := for $urn in $facs5/@urn         
+   return <facility urn="{$urn}"/>
 
   return csd_bl:wrap_facilities(($facs6))

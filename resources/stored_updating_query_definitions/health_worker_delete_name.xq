@@ -11,7 +11,7 @@ declare variable $careServicesRequest as item() external;
 :) 
   if (exists($careServicesRequest/name/@position)) 
     then 
-    let $providers := if (exists($careServicesRequest/id/@oid)) then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
+    let $providers := if (exists($careServicesRequest/id/@urn)) then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
     return
       if ( count($providers) = 1 )
 	then

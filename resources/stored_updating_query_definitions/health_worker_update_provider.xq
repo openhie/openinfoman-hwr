@@ -9,7 +9,7 @@ declare variable $careServicesRequest as item() external;
    The dynamic context of this query has $careServicesRequest set to contain any of the search 
    and limit paramaters as sent by the Service Finder
 :) 
-let $provs0 := if (exists($careServicesRequest/id/@oid)) then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()  
+let $provs0 := if (exists($careServicesRequest/id/@urn)) then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()  
 return
   if (not (count($provs0) = 1)) 
     then ( csd_blu:wrap_updating_providers((<bad/>)))     (:do nothing :)
@@ -42,6 +42,6 @@ return
 	if (exists($provider/record/@status)) 
 	  then replace value of node $provider/record/@status with $careServicesRequest/status 
 	else insert node attribute { 'status' } { string($careServicesRequest/status) } into $provider/record,
-	csd_blu:wrap_updating_providers(<provider oid="{$provider/@oid}" ok='1'/>)
+	csd_blu:wrap_updating_providers(<provider urn="{$provider/@urn}" ok='1'/>)
     )
 

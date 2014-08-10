@@ -10,7 +10,7 @@ declare variable $careServicesRequest as item() external;
 :) 
 
 let $provs0 := if (exists($careServicesRequest/credential/codedType/@code) and exists($careServicesRequest/credential/codedType/@codingScheme) ) then /CSD/providerDirectory/*  else ()
-let $provs1 := if (exists($careServicesRequest/id/@oid)) then csd_bl:filter_by_primary_id($provs0,$careServicesRequest/id) else ()
+let $provs1 := if (exists($careServicesRequest/id/@urn)) then csd_bl:filter_by_primary_id($provs0,$careServicesRequest/id) else ()
 let $provs2 := 
   if (count($provs1) = 1) 
     then 
@@ -18,7 +18,7 @@ let $provs2 :=
     let $code:= $careServicesRequest/credential/codedType/@code
     let $codingScheme:= $careServicesRequest/credential/codedType/@codingScheme
     return 
-      <provider oid="{$provider/@oid}">
+      <provider urn="{$provider/@urn}">
 	  {
 	    (
 	      $provider/credential/codedType[@code = $code and @codingScheme = $codingScheme]/..

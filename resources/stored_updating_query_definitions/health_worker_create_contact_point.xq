@@ -10,7 +10,7 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :)   
 
-let $provs0 := if (exists($careServicesRequest/id/@oid)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/id/@urn)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($careServicesRequest/contactPoint))  then $provs1 else ()
 return  
@@ -28,7 +28,7 @@ return
 	 )}
       </contactPoint>
     let $provs3:=  
-    <provider oid="{$provider/@oid}">
+    <provider urn="{$provider/@urn}">
       <demographic>
 	<contactPoint position="{$position}"/>
       </demographic>

@@ -10,7 +10,7 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :)   
 
-let $provs0 := if (exists($careServicesRequest/id/@oid)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/id/@urn)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($careServicesRequest/address/@type))  then $provs1 else ()
 return  
@@ -23,7 +23,7 @@ return
       csd_blu:wrap_updating_providers(()) (: Do not allow the same type to be created more than once:)
     else
       let $provs3:=  
-      <provider oid="{$provider/@oid}">
+      <provider urn="{$provider/@urn}">
         <demographic><address type="{$careServicesRequest/address/@type}"/></demographic>
       </provider>
        return (

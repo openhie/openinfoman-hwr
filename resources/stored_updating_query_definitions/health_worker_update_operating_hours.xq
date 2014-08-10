@@ -9,19 +9,19 @@ declare variable $careServicesRequest as item() external;
    The dynamic context of this query has $careServicesRequest set to contain any of the search 
    and limit paramaters as sent by the Service Finder
 :)   
-let $provs0 := if (exists($careServicesRequest/facility/@oid)) then /CSD/providerDirectory/*  else ()
+let $provs0 := if (exists($careServicesRequest/facility/@urn)) then /CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($careServicesRequest/facility/service/@position)) then $provs0  else ()
 let $provs2 := if (exists($careServicesRequest/facility/service/operatingHours/@position)) then $provs1  else ()
-let $provs3 := if (exists($careServicesRequest/id/@oid)) then csd_bl:filter_by_primary_id($provs2,$careServicesRequest/id) else ()
-let $oh := $provs3[1]/facilities/facility[@oid =$careServicesRequest/facility/@oid]/service[position() = $careServicesRequest/facility/service/@position]/operatingHours[position() = $careServicesRequest/facility/service/operatingHours/@position]
+let $provs3 := if (exists($careServicesRequest/id/@urn)) then csd_bl:filter_by_primary_id($provs2,$careServicesRequest/id) else ()
+let $oh := $provs3[1]/facilities/facility[@urn =$careServicesRequest/facility/@urn]/service[position() = $careServicesRequest/facility/service/@position]/operatingHours[position() = $careServicesRequest/facility/service/operatingHours/@position]
 return
   if (count($oh) = 1 and count($provs3) = 1)
     then
     let $new_oh := $careServicesRequest/facility/service/operatingHours
     let $provs4 := 
-    <provider oid="{$provs1[1]/@oid}">
+    <provider urn="{$provs1[1]/@urn}">
       <facilities>
-	<facility oid="{$careServicesRequest/facility/@oid}">
+	<facility urn="{$careServicesRequest/facility/@urn}">
 	  <service position="{$careServicesRequest/facility/service/@position}" >
 	    <operatingHours position="{$careServicesRequest/facility/service/operatingHours/@position}"/>
 	  </service>

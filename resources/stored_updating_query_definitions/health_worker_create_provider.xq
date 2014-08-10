@@ -1,4 +1,5 @@
 import module namespace csd_bl = "https://github.com/openhie/openinfoman/csd_bl";
+import module namespace random = "http://basex.org/modules/random";
 import module namespace csd_blu = "https://github.com/openhie/openinfoman/csd_blu";
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 declare variable $careServicesRequest as item() external;
@@ -9,16 +10,16 @@ declare variable $careServicesRequest as item() external;
    The dynamic context of this query has $careServicesRequest set to contain any of the search 
    and limit paramaters as sent by the Service Finder
 :) 
-let $provs0 := if (exists($careServicesRequest/id/@oid)) then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()  
+let $provs0 := if (exists($careServicesRequest/id/@urn)) then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()  
 return
-  if (count($provs0) > 0) then (csd_blu:wrap_updating_providers(()))     (:do not allow duplicate OIDs:)
+  if (count($provs0) > 0) then (csd_blu:wrap_updating_providers(()))     (:do not allow duplicate URNs:)
 else
-  let $oid := 
-    if (exists($careServicesRequest/id/@oid) and not($careServicesRequest/id/@oid = '')) then $careServicesRequest/id/@oid
-  else csd_bl:uuid_as_oid()
+  let $urn := 
+    if (exists($careServicesRequest/id/@urn) and not($careServicesRequest/id/@urn = '')) then $careServicesRequest/id/@urn
+  else concat('urn:uuid:', random:uuid())
   let $time :=current-dateTime()
   let $prov := 
-  <provider oid="{$oid}">
+  <provider urn="{$urn}">
     {(
       $careServicesRequest/codedType,
       <demographic>
@@ -39,6 +40,6 @@ else
   
   return (
     insert node $prov into /CSD/providerDirectory,  
-    csd_blu:wrap_updating_providers(<provider oid="{$oid}"/>)
+    csd_blu:wrap_updating_providers(<provider urn="{$urn}"/>)
   )
 
