@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<careServicesFunction xmlns="urn:ihe:iti:csd:2013"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:csd="urn:ihe:iti:csd:2013"
-  xsi:schemaLocation="urn:ihe:iti:csd:2013 CSD.xsd" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms"
-  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  xmlns:hfp="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty"
-  uuid="c3ce27a3-5ff2-485d-81b1-40c91d45d38a" content-type="text/xml">
+<careServicesFunction xmlns="urn:ihe:iti:csd:2013" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:csd="urn:ihe:iti:csd:2013" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hfp="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty" xsi:schemaLocation="urn:ihe:iti:csd:2013 CSD.xsd" content-type="text/xml" urn="urn:openhie.org:openinfoman-hwr:stored-function:provider_name_search">
   <description>
     <p> Performs a search for all providers by name, coded type, address or ID. </p>
     <p> The result set consists of all names  providers matching the <i>search parameters</i> ( <b>id</b>,
@@ -69,7 +63,7 @@
          &lt;/careServicesRequest&gt;         
       </pre>
   </description>
-  <definition ><xi:include parse='text' href='provider_name_search.xq'/></definition>
+  <definition><xi:include parse="text" href="provider_name_search.xq"/></definition>
   <xforms:instance>
     <careServicesRequest>
       <id/>
