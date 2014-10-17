@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<careServicesFunction xmlns:ev="http://www.w3.org/2001/xml-events"
-  xmlns:xforms="http://www.w3.org/2002/xforms"
-  xmlns="urn:ihe:iti:csd:2013"
-  xmlns:hfp="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:csd="urn:ihe:iti:csd:2013" 
-  uuid="c6788d2c-cdda-45b7-8a66-25f93ff18e73">
+<careServicesFunction xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns="urn:ihe:iti:csd:2013" xmlns:hfp="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:csd="urn:ihe:iti:csd:2013" urn="urn:openhie.org:openinfoman-hwr:stored-function:organization_name_search">
   <description> 
     <p>
     Performs a search for all organizations by name, coded type, address or ID.   
@@ -24,7 +17,7 @@
     <h2>Parameters</h2> Query
     Parameters are defined as the content of following elements:
     <ul>
-      <li> &lt;id/&gt; <i>csd:uniqueID</i>: (optional) If present and the @oid attribute contains a non-empty value, it is a ID which uniquely identifies an organization. This is an exact match.  
+      <li> &lt;id/&gt; <i>csd:uniqueID</i>: (optional) If present and the @urn attribute contains a non-empty value, it is a ID which uniquely identifies an organization. This is an exact match.  
       </li>
       <li>&lt;primaryName/&gt; <i>xs:string</i>: (optional) If present and contains a non-empty value, then the result set should be restricted to those organizations whose &lt;primaryName/&gt; contains this value. Case insensitive.</li>
       <li>&lt;name/&gt; <i>xs:string</i>: (optional) If present and contains a non-empty value, then the result set should be restricted to those organizations which have a &lt;primaryName/&gt; or &lt;otherName/&gt; element containing this value. Case insensitive.</li>      
@@ -60,7 +53,7 @@
          &lt;/careServicesRequest&gt;         
       </pre>
   </description>
-  <definition ><xi:include parse='text' href='organization_name_search.xq'/></definition>
+  <definition><xi:include parse="text" href="organization_name_search.xq"/></definition>
   <xforms:instance>
     <careServicesRequest>
       <id/>

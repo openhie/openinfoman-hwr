@@ -9,18 +9,18 @@ declare variable $careServicesRequest as item() external;
    The dynamic context of this query has $careServicesRequest set to contain any of the search 
    and limit paramaters as sent by the Service Finder
 :)   
-let $provs0 := if (exists($careServicesRequest/organization/@oid)) then /CSD/providerDirectory/*  else ()
+let $provs0 := if (exists($careServicesRequest/organization/@entityID)) then /CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($careServicesRequest/organization/contactPoint/@position)) then $provs0  else ()
-let $provs2 := if (exists($careServicesRequest/id/@oid)) then csd_bl:filter_by_primary_id($provs1,$careServicesRequest/id) else ()
-let $old_cp := $provs2[1]/organizations/organization[@oid =$careServicesRequest/organization/@oid]/contactPoint[position() = $careServicesRequest/organization/contactPoint/@position]
+let $provs2 := if (exists($careServicesRequest/id/@entityID)) then csd_bl:filter_by_primary_id($provs1,$careServicesRequest/id) else ()
+let $old_cp := $provs2[1]/organizations/organization[upper-case(@entityID) =upper-case($careServicesRequest/organization/@entityID)]/contactPoint[position() = $careServicesRequest/organization/contactPoint/@position]
 return
   if (count($provs2) = 1 and exists($old_cp)) 
     then
     let $new_cp := $careServicesRequest/organization/contactPoint
     let $provs3 := 
-    <provider oid="{$provs1[1]/@oid}">
+    <provider entityID="{$provs1[1]/@entityID}">
       <organizations>
-	<organization oid="{$careServicesRequest/organization/@oid}">
+	<organization entityID="{$careServicesRequest/organization/@entityID}">
 	  <contactPoint position="{$careServicesRequest/organization/contactPoint/@position}"/>
 	</organization>
       </organizations>

@@ -10,7 +10,7 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :)   
 
-let $provs0 := if (exists($careServicesRequest/id/@oid)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($careServicesRequest/credential/codedType/@code) and exists($careServicesRequest/credential/codedType/@codingScheme) ) then $provs1  else ()
 let $cred_request := $careServicesRequest/credential
@@ -36,7 +36,7 @@ return
       )}
     </credential>
     let $provs3:=  
-    <provider oid="{$provider/@oid}">{$cred_rec}</provider>
+    <provider entityID="{$provider/@entityID}">{$cred_rec}</provider>
     return 
 	(
 	insert node $cred_new into $provider,

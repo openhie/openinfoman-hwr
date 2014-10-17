@@ -51,7 +51,7 @@ declare variable $careServicesRequest as item() external;
 	else $orgs6
 	  
       return for $org in $orgs7
-	return<organization oid='{$org/@oid}'>
+	return<organization urn='{$org/@urn}'>
 	  {$org/primaryName}
 	</organization>
 

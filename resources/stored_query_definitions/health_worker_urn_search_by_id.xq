@@ -10,7 +10,7 @@ declare variable $careServicesRequest as item() external;
 :) 
   let $provs0 := if (exists($careServicesRequest/otherID)) then csd_bl:filter_by_other_id(/CSD/providerDirectory/*,$careServicesRequest/otherID) else ()
   let $provs1 := if (exists($careServicesRequest/start) and exists($careServicesRequest/max)) then csd_bl:limit_items($provs0,$careServicesRequest/start,$careServicesRequest/max) else $provs0
-  let $provs2:= for $oid in $provs1/@oid     
-   return <provider oid="{$oid}"/>
+  let $provs2:= for $entityID in $provs1/@entityID     
+   return <provider entityID="{$entityID}"/>
 
   return csd_bl:wrap_providers($provs2)

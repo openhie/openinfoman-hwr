@@ -9,18 +9,18 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :) 
   let $provs0 := 
-    if (exists($careServicesRequest/id/@oid)) then 
+    if (exists($careServicesRequest/id/@entityID)) then 
       csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) 
     else (/CSD/providerDirectory/*)
   let $provs1:=     
       for $provider in  $provs0
       return
-      <provider oid="{$provider/@oid}">
+      <provider entityID="{$provider/@entityID}">
 	<organizations>
           {
 	    for $org in $provider/organizations/organization 
 	    return
-	    <organization oid="{$org/@oid}"></organization>
+	    <organization entityID="{$org/@entityID}"></organization>
 	  }
 	</organizations>
       </provider>
