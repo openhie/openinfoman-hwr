@@ -9,22 +9,22 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :) 
 
-let $provs0 := if (exists($careServicesRequest/organization/@urn)) then /CSD/providerDirectory/*  else ()
+let $provs0 := if (exists($careServicesRequest/organization/@entityID)) then /CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($careServicesRequest/organization/contactPoint/@position)) then $provs0  else ()
-let $provs2 := if (exists($careServicesRequest/id/@urn)) then csd_bl:filter_by_primary_id($provs1,$careServicesRequest/id) else ()
+let $provs2 := if (exists($careServicesRequest/id/@entityID)) then csd_bl:filter_by_primary_id($provs1,$careServicesRequest/id) else ()
 let $provs3 := 
   if (count($provs2) = 1) 
     then 
     let $provider :=  $provs2[1] 
     return 
-    <provider urn="{$provider/@urn}">
+    <provider entityID="{$provider/@entityID}">
       {
-	if (exists($careServicesRequest/organization/@urn) and exists($careServicesRequest/organization/contactPoint/@position)) 
+	if (exists($careServicesRequest/organization/@entityID) and exists($careServicesRequest/organization/contactPoint/@position)) 
 	  then 
 	  <organizations>
-	    <organization urn="{$careServicesRequest/organization/@urn}">
+	    <organization entityID="{$careServicesRequest/organization/@entityID}">
 	    {
-	      for $cp in $provider/organizations/organization[@urn = $careServicesRequest/organization/@urn]/contactPoint[position() = $careServicesRequest/organization/contactPoint/@position]
+	      for $cp in $provider/organizations/organization[upper-case(@entityID) = upper-case($careServicesRequest/organization/@entityID)]/contactPoint[position() = $careServicesRequest/organization/contactPoint/@position]
 	      return       <contactPoint position="{$careServicesRequest/organization/contactPoint/@position}">{$cp/*}</contactPoint>
 	  }
 	    </organization>

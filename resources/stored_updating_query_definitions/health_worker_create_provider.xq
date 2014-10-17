@@ -10,16 +10,16 @@ declare variable $careServicesRequest as item() external;
    The dynamic context of this query has $careServicesRequest set to contain any of the search 
    and limit paramaters as sent by the Service Finder
 :) 
-let $provs0 := if (exists($careServicesRequest/id/@urn)) then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()  
+let $provs0 := if (exists($careServicesRequest/id/@entityID)) then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()  
 return
-  if (count($provs0) > 0) then (csd_blu:wrap_updating_providers(()))     (:do not allow duplicate URNs:)
+  if (count($provs0) > 0) then (csd_blu:wrap_updating_providers(()))     (:do not allow duplicate ENTITYIDs:)
 else
-  let $urn := 
-    if (exists($careServicesRequest/id/@urn) and not($careServicesRequest/id/@urn = '')) then $careServicesRequest/id/@urn
+  let $entityID := 
+    if (exists($careServicesRequest/id/@entityID) and not($careServicesRequest/id/@entityID = '')) then $careServicesRequest/id/@entityID
   else concat('urn:uuid:', random:uuid())
   let $time :=current-dateTime()
   let $prov := 
-  <provider urn="{$urn}">
+  <provider entityID="{$entityID}">
     {(
       $careServicesRequest/codedType,
       <demographic>
@@ -40,6 +40,6 @@ else
   
   return (
     insert node $prov into /CSD/providerDirectory,  
-    csd_blu:wrap_updating_providers(<provider urn="{$urn}"/>)
+    csd_blu:wrap_updating_providers(<provider entityID="{$entityID}"/>)
   )
 

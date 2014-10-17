@@ -9,7 +9,7 @@ declare variable $careServicesRequest as item() external;
    The dynamic context of this query has $careServicesRequest set to contain any of the search 
    and limit paramaters as sent by the Service Finder
 :)   
-let $provs0 := if (exists($careServicesRequest/id/@urn)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
 let $provs2 := if (exists($careServicesRequest/address/@type))  then $provs1 else ()
 let $provider:= $provs2[1]
@@ -20,7 +20,7 @@ return
     csd_blu:wrap_updating_providers(()) (: Address does not exist.  Do not update:)
   else
     let $provs3:=  
-    <provider urn="{$provider/@urn}">
+    <provider entityID="{$provider/@entityID}">
       <demographic><address type="{$careServicesRequest/address/@type}"/></demographic>
     </provider>
     return (

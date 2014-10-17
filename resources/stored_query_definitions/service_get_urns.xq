@@ -12,7 +12,7 @@ declare variable $careServicesRequest as item() external;
   let $srvcs1 := if (exists($careServicesRequest/codedType)) then csd_bl:filter_by_coded_type($srvcs0,$careServicesRequest/codedType)    else $srvcs0
   let $srvcs2 := if (exists($careServicesRequest/record)) then csd_bl:filter_by_record($srvcs1,$careServicesRequest/record) else $srvcs1
   let $srvcs3 := if (exists($careServicesRequest/start) and exists($careServicesRequest/max)) then csd_bl:limit_items($srvcs2,$careServicesRequest/start,$careServicesRequest/max) else $srvcs2
-  let $srvcs4 := for $urn in $srvcs3/@urn         
-   return <service urn="{$urn}"/>
+  let $srvcs4 := for $entityID in $srvcs3/@entityID         
+   return <service entityID="{$entityID}"/>
 
   return csd_bl:wrap_services(($srvcs4))
