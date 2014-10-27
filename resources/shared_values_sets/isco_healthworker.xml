@@ -1,0 +1,47 @@
+<ValueSet 
+    xmlns="urn:ihe:iti:svs:2008" 
+    xmlns:svs="urn:ihe:iti:svs:2008" 
+    id="2.25.48555267612577826574836383592863785670"
+    version="20141027" 
+    displayName="ISCO-08 Codes for Health Workers">
+  <!-- SEE http://www.who.int/hrh/statistics/Health_workers_classification.pdf -->
+    <ConceptList xml:lang="en-US">
+      <Concept code="2211" displayName="Generalist medical practitioners" codeSystem="ISCO-08"/>
+      <Concept code="2212" displayName="Specialist medical practitioners" codeSystem="ISCO-08"/>
+      <Concept code="2221" displayName="Nursing professionals" codeSystem="ISCO-08"/>
+      <Concept code="2222" displayName="Midwifery professionals" codeSystem="ISCO-08"/>
+      <Concept code="2230" displayName="Traditional and complementary medicine professionals" codeSystem="ISCO-08"/>
+      <Concept code="2240" displayName="Paramedical practitioners" codeSystem="ISCO-08"/>
+      <Concept code="2261" displayName="Dentists" codeSystem="ISCO-08"/>
+      <Concept code="2262" displayName="Pharmacists" codeSystem="ISCO-08"/>
+      <Concept code="2263" displayName="Environmental and occupational health &amp; hygiene workers" codeSystem="ISCO-08"/>
+      <Concept code="2264" displayName="Physiotherapists and physiotherapy assistants" codeSystem="ISCO-08"/>
+      <Concept code="2265" displayName="Dieticians and Nutritionists" codeSystem="ISCO-08"/>
+      <Concept code="2266" displayName="Audiologists and speech therapists" codeSystem="ISCO-08"/>
+      <Concept code="2267" displayName="Optometrists and ophthalmic opticians" codeSystem="ISCO-08"/>
+      <Concept code="3211" displayName="Medical imaging and therapeutic equipment technicians" codeSystem="ISCO-08"/>
+      <Concept code="3212" displayName="Medical and pathology laboratory technicians" codeSystem="ISCO-08"/>
+      <Concept code="3213" displayName="Pharmaceutical technicians and assistants" codeSystem="ISCO-08"/>
+      <Concept code="3214" displayName="Medical and dental prosthetic and related technicians" codeSystem="ISCO-08"/>
+      <Concept code="3221" displayName="Nursing associate professionals" codeSystem="ISCO-08"/>
+      <Concept code="3222" displayName="Midwifery associate professionals" codeSystem="ISCO-08"/>
+      <Concept code="3230" displayName="Traditional and complementary medicine associate practitioners" codeSystem="ISCO-08"/>
+      <Concept code="3251" displayName="Dental assistants and therapists" codeSystem="ISCO-08"/>
+      <Concept code="3252" displayName="Medical records and health information technicians" codeSystem="ISCO-08"/>
+      <Concept code="3253" displayName="Community health workers" codeSystem="ISCO-08"/>
+      <Concept code="3254" displayName="Dispensing opticians" codeSystem="ISCO-08"/>
+      <Concept code="3255" displayName="Physiotherapy technicians and assistants" codeSystem="ISCO-08"/>
+      <Concept code="3256" displayName="Medical assistants" codeSystem="ISCO-08"/>
+      <Concept code="3257" displayName="Environmental and occupational health inspectors and associates workers" codeSystem="ISCO-08"/>
+      <Concept code="3258" displayName="Ambulance workers" codeSystem="ISCO-08"/>
+      <Concept code="3259" displayName="Health associate professionals (n.o.c.)" codeSystem="ISCO-08"/>
+      <Concept code="5321" displayName="Health care assistants" codeSystem="ISCO-08"/>
+      <Concept code="5322" displayName="Home-based personal care workers" codeSystem="ISCO-08"/>
+      <Concept code="5329" displayName="Personal care workers in health services (n.o.c.)" codeSystem="ISCO-08"/>
+      <Concept code="1342" displayName="Health service managers" codeSystem="ISCO-08"/>
+      <Concept code="1343" displayName="Aged care service managers" codeSystem="ISCO-08"/>
+      <Concept code="2634" displayName="Psychologists" codeSystem="ISCO-08"/>
+      <Concept code="2635" displayName="Social worker and counselling professionals" codeSystem="ISCO-08"/>
+      <Concept code="3344" displayName="Medical secretaries" codeSystem="ISCO-08"/>
+  </ConceptList>
+</ValueSet>
