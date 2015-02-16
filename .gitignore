@@ -10,3 +10,10 @@ org-mode-config.el
 .DS_Store
 org-clock-save.el
 emacs-config.el
+.gnupg
+packaging/.gitconfig
+packaging/.gnupg
+packaging/*/.gnupg
+packaging/builds
+pubring.gpg
+secring.gpg
