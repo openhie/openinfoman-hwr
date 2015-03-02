@@ -3,16 +3,29 @@ OpenInfoMan - Health Worker Registry Library
 
 Library of Health Worker Registry Stored Functions to be used with the OpenInfoMan
 
+It makes use of the OpenInfoMan software https://github.com/openhie/openinfoman
 
-Prerequisites
-=============
+Ubuntu Installation
+===================
+You can easily install on Ubuntu 14.04 and Ubuntu 14.10 using the following commands
+<pre>
+sudo add-apt-repository ppa:openhie/release
+sudo apt-get update
+sudo apt-get install openinfoman-fhir
+</pre>
+
+
+
+Manual Installation
+===================
+
 
 Assumes that you have installed BaseX and OpenInfoMan according to:
 > https://github.com/openhie/openinfoman/wiki/Install-Instructions
 
 
 Directions
-==========
+----------
 To get the libarary:
 <pre>
 cd ~/
