@@ -1,5 +1,7 @@
 import module namespace csd_bl = "https://github.com/openhie/openinfoman/csd_bl";
+(:
 import module namespace random = "http://basex.org/modules/random";
+:)
 import module namespace csd_blu = "https://github.com/openhie/openinfoman/csd_blu";
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 declare variable $careServicesRequest as item() external;
