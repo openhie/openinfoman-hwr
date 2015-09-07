@@ -1,3 +1,19 @@
+openinfoman-hwr (1.0.9~utopic) utopic; urgency=medium
+
+  * Release Version 1.0.9
+    -ede952a file name swapping
+    --https://github.com/openhie/openinfoman-hwr/commmit/ede952a
+    -650a264 created stored functions for credentials
+    --https://github.com/openhie/openinfoman-hwr/commmit/650a264
+    -37ec473 added a bunch of stored functions for reading facility and
+    --https://github.com/openhie/openinfoman-hwr/commmit/37ec473
+    -46e709f Update README.md
+    --https://github.com/openhie/openinfoman-hwr/commmit/46e709f
+    -7e052ef Update README.md
+    --https://github.com/openhie/openinfoman-hwr/commmit/7e052ef
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 07 Sep 2015 01:49:46 +0000
+
 openinfoman-hwr (1.0.8~utopic) utopic; urgency=medium
 
   * Release Version 1.0.8
