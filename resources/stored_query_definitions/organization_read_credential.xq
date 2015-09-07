@@ -9,24 +9,24 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :) 
 
-let $provs0 := if (exists($careServicesRequest/credential/codedType/@code) and exists($careServicesRequest/credential/codedType/@codingScheme) ) then /CSD/providerDirectory/*  else ()
-let $provs1 := if (exists($careServicesRequest/id/@entityID)) then csd_bl:filter_by_primary_id($provs0,$careServicesRequest/id) else ()
-let $provs2 := 
-  if (count($provs1) = 1) 
+let $orgs0 := if (exists($careServicesRequest/credential/codedType/@code) and exists($careServicesRequest/credential/codedType/@codingScheme) ) then /CSD/organizationDirectory/*  else ()
+let $orgs1 := if (exists($careServicesRequest/id/@entityID)) then csd_bl:filter_by_primary_id($orgs0,$careServicesRequest/id) else ()
+let $orgs2 := 
+  if (count($orgs1) = 1) 
     then 
-    let $provider :=  $provs1[1] 
+    let $organization :=  $orgs1[1] 
     let $code:= $careServicesRequest/credential/codedType/@code
     let $codingScheme:= $careServicesRequest/credential/codedType/@codingScheme
     return 
-      <provider entityID="{$provider/@entityID}">
+      <organization entityID="{$organization/@entityID}">
 	  {
 	    (
-	      $provider/credential/codedType[@code = $code and @codingScheme = $codingScheme]/..
+	      $organization/credential/codedType[@code = $code and @codingScheme = $codingScheme]/..
 	      ,
-	      $provider/record
+	      $organization/record
 	    )
 	  }
-      </provider>
+      </organization>
   else ()    
     
-return csd_bl:wrap_providers($provs2)
+return csd_bl:wrap_organizations($orgs2)

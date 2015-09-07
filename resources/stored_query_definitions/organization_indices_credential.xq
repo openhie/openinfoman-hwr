@@ -8,19 +8,19 @@ declare variable $careServicesRequest as item() external;
    The dynamic context of this query has $careServicesRequest set to contain any of the search 
    and limit paramaters as sent by the Service Finder
 :) 
-  let $provs0 := 
+  let $orgs0 := 
     if (exists($careServicesRequest/id/@entityID)) then 
-      csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) 
-    else (/CSD/providerDirectory/*)
-  let $provs1:=     
-      for $provider in  $provs0
+      csd_bl:filter_by_primary_id(/CSD/organizationDirectory/*,$careServicesRequest/id) 
+    else (/CSD/organizationDirectory/*)
+  let $orgs1:=     
+      for $organization in  $orgs0
       return
-      <provider entityID="{$provider/@entityID}">
+      <organization entityID="{$organization/@entityID}">
         {
-	  for $cred in $provider/credential
+	  for $cred in $organization/credential
 	  return
 	  <credential >{$cred/codedType}</credential>
 	}
-      </provider>
+      </organization>
       
-    return csd_bl:wrap_providers($provs1)
+    return csd_bl:wrap_organizations($orgs1)
