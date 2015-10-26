@@ -1,0 +1,14 @@
+openinfoman-hwr (1.0.11~vivid) vivid; urgency=medium
+
+  * Release Version 1.0.11
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sun, 25 Oct 2015 20:11:27 -0400
+
+openinfoman-hwr (1.0.0~vivid) vivid; urgency=low
+
+  [Carl Leitner <litlfred@ibiblio.org>]
+  * Initial Build
+    Fri 2015-02-13 13:55:10 -0500
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 16 February 2015 13:55:10 -0500
+
