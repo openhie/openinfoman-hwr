@@ -1,0 +1,5 @@
+#!/bin/bash
+set -x
+
+WGET=/usr/bin/wget
+$WGET http://localhost:8984/CSD/storedFunctions/reload -O > /dev/null
