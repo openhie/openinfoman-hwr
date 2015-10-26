@@ -1,3 +1,9 @@
+openinfoman-hwr (1.0.13~trusty) trusty; urgency=medium
+
+  * Release Version 1.0.13
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sun, 25 Oct 2015 20:22:19 -0400
+
 openinfoman-hwr (1.0.12~trusty) trusty; urgency=medium
 
   * Release Version 1.0.12
