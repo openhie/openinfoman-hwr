@@ -1,3 +1,11 @@
+openinfoman-hwr (1.0.16~vivid) vivid; urgency=medium
+
+  * Release Version 1.0.16
+    -b16d37a packaging fixup
+    --https://github.com/openhie/openinfoman-hwr/commmit/b16d37a
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 18 Jan 2016 20:03:36 -0500
+
 openinfoman-hwr (1.0.15~vivid) vivid; urgency=medium
 
   * Release Version 1.0.15
