@@ -1,3 +1,11 @@
+openinfoman-hwr (1.0.17~trusty) trusty; urgency=medium
+
+  * Release Version 1.0.17
+    -fcaef39 added --no-check-certificate in packaging wget request
+    --http://github.com/openhie/openinfoman-hwr/commmit/fcaef39
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 05 Mar 2016 09:36:40 +0000
+
 openinfoman-hwr (1.0.16~trusty) trusty; urgency=medium
 
   * Release Version 1.0.16
