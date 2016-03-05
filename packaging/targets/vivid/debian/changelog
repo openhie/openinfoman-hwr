@@ -1,3 +1,11 @@
+openinfoman-hwr (1.1.2~vivid) vivid; urgency=medium
+
+  * Release Version 1.1.2
+    -d065ca5 fixed issue in facility read
+    --http://github.com/openhie/openinfoman-hwr/commmit/d065ca5
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 05 Mar 2016 09:43:05 +0000
+
 openinfoman-hwr (1.1.1~vivid) vivid; urgency=medium
 
   * Release Version 1.1.1
