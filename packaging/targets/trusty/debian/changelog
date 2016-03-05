@@ -1,3 +1,11 @@
+openinfoman-hwr (1.1.6~trusty) trusty; urgency=medium
+
+  * Release Version 1.1.6
+    -020f8e2 fixed typo in org read otherid
+    --http://github.com/openhie/openinfoman-hwr/commmit/020f8e2
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 05 Mar 2016 09:50:28 +0000
+
 openinfoman-hwr (1.1.5~trusty) trusty; urgency=medium
 
   * Release Version 1.1.5
