@@ -1,3 +1,11 @@
+openinfoman-hwr (1.1.5~trusty) trusty; urgency=medium
+
+  * Release Version 1.1.5
+    -4c6b372 fixed issue in org. indices address
+    --http://github.com/openhie/openinfoman-hwr/commmit/4c6b372
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 05 Mar 2016 09:48:13 +0000
+
 openinfoman-hwr (1.1.4~trusty) trusty; urgency=medium
 
   * Release Version 1.1.4
