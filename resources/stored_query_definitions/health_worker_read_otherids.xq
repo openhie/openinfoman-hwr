@@ -11,15 +11,16 @@ declare variable $careServicesRequest as item() external;
 
 let $provs0 := if (exists($careServicesRequest/otherID/@position)) then /CSD/providerDirectory/*  else ()
 let $provs1 := if (exists($careServicesRequest/id/@entityID)) then csd_bl:filter_by_primary_id($provs0,$careServicesRequest/id) else ()
-let $other_ids := 
-  if ($careServicesRequest/code/text())
-  then $provider/otherID[@code = $careServicesRequest/code/text()]
-  else $provider/otherID
 
 let $provs2 := 
   if (count($provs1) = 1) 
     then 
     let $provider :=  $provs1[1] 
+    let $other_ids := 
+      if ($careServicesRequest/code/text())
+      then $provider/otherID[@code = $careServicesRequest/code/text()]
+      else $provider/otherID
+
     return 
     <provider entityID="{$provider/@entityID}">
       {(
