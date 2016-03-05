@@ -1,3 +1,11 @@
+openinfoman-hwr (1.1.4~trusty) trusty; urgency=medium
+
+  * Release Version 1.1.4
+    -ff61a30 fixed issue in facility read service
+    --http://github.com/openhie/openinfoman-hwr/commmit/ff61a30
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 05 Mar 2016 09:46:16 +0000
+
 openinfoman-hwr (1.1.3~trusty) trusty; urgency=medium
 
   * Release Version 1.1.3
