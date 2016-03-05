@@ -20,6 +20,6 @@ declare variable $careServicesRequest as item() external;
 	    for $address in  $organization/address
 	    return <address type="{$address/@type}"/> 
 	  }
-    </provider>
+      </organization>
       
     return csd_bl:wrap_organizations($orgs1)
