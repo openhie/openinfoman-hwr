@@ -34,4 +34,4 @@ let $facs2 :=
       </facility>
   else ()    
     
-return csd_bl:wrap_facilties($facs2)
+return csd_bl:wrap_facilities($facs2)
