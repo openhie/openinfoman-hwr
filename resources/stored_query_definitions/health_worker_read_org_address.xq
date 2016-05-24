@@ -9,8 +9,8 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :) 
 
-let $provs0 := if (exists($careServicesRequest/organization/@entityID) and exists($careServicesRequest/organization/address/@type)) then /CSD/providerDirectory/*  else ()
-let $provs1 := if (exists($careServicesRequest/id/@entityID)) then csd_bl:filter_by_primary_id($provs0,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/requestParams/organization/@entityID) and exists($careServicesRequest/requestParams/organization/address/@type)) then /CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($careServicesRequest/requestParams/id/@entityID)) then csd_bl:filter_by_primary_id($provs0,$careServicesRequest/requestParams/id) else ()
 let $provs2 := 
   if (count($provs1) = 1) 
     then 
@@ -18,9 +18,9 @@ let $provs2 :=
     return 
     <provider entityID="{$provider/@entityID}">
       <organizations>
-	<organization entityID="{$careServicesRequest/organization/@entityID}">
+	<organization entityID="{$careServicesRequest/requestParams/organization/@entityID}">
 	  {
-	    $provider/organizations/organization[upper-case(@entityID) = upper-case($careServicesRequest/organization/@entityID)]/address[@type = $careServicesRequest/organization/address/@type]
+	    $provider/organizations/organization[upper-case(@entityID) = upper-case($careServicesRequest/requestParams/organization/@entityID)]/address[@type = $careServicesRequest/requestParams/organization/address/@type]
 	  }
 	</organization>
       </organizations>

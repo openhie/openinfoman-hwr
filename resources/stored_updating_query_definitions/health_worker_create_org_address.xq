@@ -10,24 +10,24 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :)   
 
-let $provs0 := if (exists($careServicesRequest/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/requestParams/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
-let $provs2 := if (exists($careServicesRequest/organization/@entityID))  then $provs1 else ()
-let $provs3 := if (exists($careServicesRequest/organization/address/@type))  then $provs2 else ()
+let $provs2 := if (exists($careServicesRequest/requestParams/organization/@entityID))  then $provs1 else ()
+let $provs3 := if (exists($careServicesRequest/requestParams/organization/address/@type))  then $provs2 else ()
 let $provider:= $provs3[1]
-let $orgs := $provider/organizations/organization[upper-case(@entityID) = upper-case($careServicesRequest/organization/@entityID)]
+let $orgs := $provider/organizations/organization[upper-case(@entityID) = upper-case($careServicesRequest/requestParams/organization/@entityID)]
 let $org := if(count($orgs) =1) then $orgs[1] else ()
-let $address := $org/address[@type = $careServicesRequest/organization/address/@type]
+let $address := $org/address[@type = $careServicesRequest/requestParams/organization/address/@type]
 return if (not(exists($org)) or exists($address))
   then   csd_blu:wrap_updating_providers(()) (:do not create an already existing one :)	  
 else
   (
-    insert node $careServicesRequest/organization/address into $org,
+    insert node $careServicesRequest/requestParams/organization/address into $org,
     csd_blu:wrap_updating_providers(    
 	<provider entityID="{$provider/@entityID}">
 	  <organizations>
 	    <organization entityID="{$org/@entityID}">
-	      <contactPoint position="{$careServicesRequest/organization/address/@type}"/>
+	      <contactPoint position="{$careServicesRequest/requestParams/organization/address/@type}"/>
 	    </organization>
 	  </organizations>
 	</provider>

@@ -9,23 +9,23 @@ declare variable $careServicesRequest as item() external;
    The dynamic context of this query has $careServicesRequest set to contain any of the search 
    and limit paramaters as sent by the Service Finder
 :)   
-let $provs0 := if (exists($careServicesRequest/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/requestParams/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
-let $provs2 := if (exists($careServicesRequest/address/@type))  then $provs1 else ()
+let $provs2 := if (exists($careServicesRequest/requestParams/address/@type))  then $provs1 else ()
 let $provider:= $provs2[1]
 let $demo := $provider/demographic
-let $address:= $demo/address[@type = $careServicesRequest/address/@type]
+let $address:= $demo/address[@type = $careServicesRequest/requestParams/address/@type]
 return  
   if ( not(exists($address))) then
     csd_blu:wrap_updating_providers(()) (: Address does not exist.  Do not update:)
   else
     let $provs3:=  
     <provider entityID="{$provider/@entityID}">
-      <demographic><address type="{$careServicesRequest/address/@type}"/></demographic>
+      <demographic><address type="{$careServicesRequest/requestParams/address/@type}"/></demographic>
     </provider>
     return (
       csd_blu:bump_timestamp($provider),
-      replace  node  $address with $careServicesRequest/address
+      replace  node  $address with $careServicesRequest/requestParams/address
       ,
       csd_blu:wrap_updating_providers($provs3)
     )

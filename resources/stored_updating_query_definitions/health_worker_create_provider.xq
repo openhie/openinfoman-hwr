@@ -12,31 +12,31 @@ declare variable $careServicesRequest as item() external;
    The dynamic context of this query has $careServicesRequest set to contain any of the search 
    and limit paramaters as sent by the Service Finder
 :) 
-let $provs0 := if (exists($careServicesRequest/id/@entityID)) then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()  
+let $provs0 := if (exists($careServicesRequest/requestParams/id/@entityID)) then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/requestParams/id) else ()  
 return
   if (count($provs0) > 0) then (csd_blu:wrap_updating_providers(()))     (:do not allow duplicate ENTITYIDs:)
 else
   let $entityID := 
-    if (exists($careServicesRequest/id/@entityID) and not($careServicesRequest/id/@entityID = '')) then $careServicesRequest/id/@entityID
+    if (exists($careServicesRequest/requestParams/id/@entityID) and not($careServicesRequest/requestParams/id/@entityID = '')) then $careServicesRequest/requestParams/id/@entityID
   else concat('urn:uuid:', random:uuid())
   let $time :=current-dateTime()
   let $prov := 
   <provider entityID="{$entityID}">
     {(
-      $careServicesRequest/codedType,
+      $careServicesRequest/requestParams/codedType,
       <demographic>
 	{(
-	  $careServicesRequest/gender,
-	  $careServicesRequest/dateOfBirth
+	  $careServicesRequest/requestParams/gender,
+	  $careServicesRequest/requestParams/dateOfBirth
 	 )}
 	 </demographic>,
-	 $careServicesRequest/language,
-         $careServicesRequest/specialty,
-	 if ($careServicesRequest/status) 
+	 $careServicesRequest/requestParams/language,
+         $careServicesRequest/requestParams/specialty,
+	 if ($careServicesRequest/requestParams/status) 
 	   then
-	   <record created="{$time}" updated="{$time}" status="{$careServicesRequest/status}" sourceDirectory="{$careServicesRequest/sourceDirectory}"/>
+	   <record created="{$time}" updated="{$time}" status="{$careServicesRequest/requestParams/status}" sourceDirectory="{$careServicesRequest/requestParams/sourceDirectory}"/>
 	 else 
-	   <record created="{$time}" updated="{$time}" status="Active" sourceDirectory="{$careServicesRequest/sourceDirectory}"/>
+	   <record created="{$time}" updated="{$time}" status="Active" sourceDirectory="{$careServicesRequest/requestParams/sourceDirectory}"/>
      )}
   </provider>
   

@@ -12,14 +12,14 @@ declare variable $careServicesRequest as item() external;
 :) 
 
 
-let $code := $careServicesRequest/code/text()
-let $aa := $careServicesRequest/assigningAuthorityName/text()
+let $code := $careServicesRequest/requestParams/code/text()
+let $aa := $careServicesRequest/requestParams/assigningAuthorityName/text()
 
 let $xml:= 
   <json  type="object">
     <results type='array'>
       { 
-      for $ent_id in $careServicesRequest/id
+      for $ent_id in $careServicesRequest/requestParams/id
       let $req_id := upper-case(string($ent_id/@entityID))
       let $provider := (/CSD/providerDirectory/provider[upper-case(string(@entityID)) = $req_id])[1]
       let $other_ids_0 := 

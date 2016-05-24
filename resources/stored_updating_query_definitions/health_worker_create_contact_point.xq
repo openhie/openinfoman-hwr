@@ -10,9 +10,9 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :)   
 
-let $provs0 := if (exists($careServicesRequest/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/requestParams/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
-let $provs2 := if (exists($careServicesRequest/contactPoint))  then $provs1 else ()
+let $provs2 := if (exists($careServicesRequest/requestParams/contactPoint))  then $provs1 else ()
 return  
   if ( count($provs2) = 1 )
     then
@@ -21,10 +21,10 @@ return
     let $cp := 
       <contactPoint>
 	{(
-	  if (exists($careServicesRequest/contactPoint/codedType)) then  $careServicesRequest/contactPoint/codedType else (),
-	  if (exists($careServicesRequest/contactPoint/equipment)) then  $careServicesRequest/contactPoint/equipment else (),
-	  if (exists($careServicesRequest/contactPoint/purpose)) then  $careServicesRequest/contactPoint/purpose else (),
-	  if (exists($careServicesRequest/contactPoint/certificate)) then  $careServicesRequest/contactPoint/certificate else ()
+	  if (exists($careServicesRequest/requestParams/contactPoint/codedType)) then  $careServicesRequest/requestParams/contactPoint/codedType else (),
+	  if (exists($careServicesRequest/requestParams/contactPoint/equipment)) then  $careServicesRequest/requestParams/contactPoint/equipment else (),
+	  if (exists($careServicesRequest/requestParams/contactPoint/purpose)) then  $careServicesRequest/requestParams/contactPoint/purpose else (),
+	  if (exists($careServicesRequest/requestParams/contactPoint/certificate)) then  $careServicesRequest/requestParams/contactPoint/certificate else ()
 	 )}
       </contactPoint>
     let $provs3:=  

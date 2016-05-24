@@ -9,8 +9,8 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :) 
 
-let $orgs0 := if (exists($careServicesRequest/contactPoint/@position)) then /CSD/organizationDirectory/*  else ()
-let $orgs1 := if (exists($careServicesRequest/id/@entityID)) then csd_bl:filter_by_primary_id($orgs0,$careServicesRequest/id) else ()
+let $orgs0 := if (exists($careServicesRequest/requestParams/contactPoint/@position)) then /CSD/organizationDirectory/*  else ()
+let $orgs1 := if (exists($careServicesRequest/requestParams/id/@entityID)) then csd_bl:filter_by_primary_id($orgs0,$careServicesRequest/requestParams/id) else ()
 let $orgs2 := 
   if (count($orgs1) = 1) 
     then 
@@ -18,10 +18,10 @@ let $orgs2 :=
     return 
     <organization entityID="{$organization/@entityID}">
       {
-	if (exists($careServicesRequest/contactPoint) and exists($careServicesRequest/contactPoint/@position)) 
+	if (exists($careServicesRequest/requestParams/contactPoint) and exists($careServicesRequest/requestParams/contactPoint/@position)) 
 	  then 
-	      for $cp in $organization/contactPoint[position() = $careServicesRequest/contactPoint/@position]
-	      return       <contactPoint position="{$careServicesRequest/contactPoint/@position}">{$cp/*}</contactPoint>
+	      for $cp in $organization/contactPoint[position() = $careServicesRequest/requestParams/contactPoint/@position]
+	      return       <contactPoint position="{$careServicesRequest/requestParams/contactPoint/@position}">{$cp/*}</contactPoint>
 	else
 	  ()
       }

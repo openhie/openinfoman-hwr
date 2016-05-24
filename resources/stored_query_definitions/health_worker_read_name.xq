@@ -9,8 +9,8 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :) 
 
-let $provs0 := if (exists($careServicesRequest/name/@position)) then /CSD/providerDirectory/*  else ()
-let $provs1 := if (exists($careServicesRequest/id/@entityID)) then csd_bl:filter_by_primary_id($provs0,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/requestParams/name/@position)) then /CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($careServicesRequest/requestParams/id/@entityID)) then csd_bl:filter_by_primary_id($provs0,$careServicesRequest/requestParams/id) else ()
 let $provs2 := 
   if (count($provs1) = 1) 
     then 
@@ -18,12 +18,12 @@ let $provs2 :=
     return 
     <provider entityID="{$provider/@entityID}">
       {
-	if (exists($careServicesRequest/name) and exists($careServicesRequest/name/@position)) 
+	if (exists($careServicesRequest/requestParams/name) and exists($careServicesRequest/requestParams/name/@position)) 
 	  then 
 	  <demographic>
 	    {
-	      for $name in $provider/demographic/name[position() = $careServicesRequest/name/@position]
-	      return       <name position="{$careServicesRequest/name/@position}">{$name/*}</name>
+	      for $name in $provider/demographic/name[position() = $careServicesRequest/requestParams/name/@position]
+	      return       <name position="{$careServicesRequest/requestParams/name/@position}">{$name/*}</name>
 	  }
 	  </demographic>
 	else

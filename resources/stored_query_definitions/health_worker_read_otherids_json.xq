@@ -12,11 +12,11 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :) 
 
-let $provs1 := if (exists($careServicesRequest/id/@entityID)) then csd_bl:filter_by_primary_id( /CSD/providerDirectory/*,$careServicesRequest/id) else ()
+let $provs1 := if (exists($careServicesRequest/requestParams/id/@entityID)) then csd_bl:filter_by_primary_id( /CSD/providerDirectory/*,$careServicesRequest/requestParams/id) else ()
 let $provider :=  $provs1[1] 
 let $other_ids := 
-  if ($careServicesRequest/code/text())
-  then $provider/otherID[@code = $careServicesRequest/code/text()]
+  if ($careServicesRequest/requestParams/code/text())
+  then $provider/otherID[@code = $careServicesRequest/requestParams/code/text()]
   else $provider/otherID
 let $xml:= 
   <json  type="object">

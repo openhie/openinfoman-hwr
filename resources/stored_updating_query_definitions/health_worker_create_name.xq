@@ -10,9 +10,9 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :)   
 
-let $provs0 := if (exists($careServicesRequest/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/requestParams/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
-let $provs2 := if (exists($careServicesRequest/name))  then $provs1 else ()
+let $provs2 := if (exists($careServicesRequest/requestParams/name))  then $provs1 else ()
 return  
   if ( count($provs2) = 1 )
     then
@@ -27,9 +27,9 @@ return
     return 
       (
 	if (exists($provider/demographic))
-	  then insert node $careServicesRequest/name into $provider/demographic 
+	  then insert node $careServicesRequest/requestParams/name into $provider/demographic 
 	else
-	  insert node <demographic>{$careServicesRequest/name}</demographic> into $provider
+	  insert node <demographic>{$careServicesRequest/requestParams/name}</demographic> into $provider
 	  ,   csd_blu:wrap_updating_providers($provs3)
 	)
   else  csd_blu:wrap_updating_providers(())

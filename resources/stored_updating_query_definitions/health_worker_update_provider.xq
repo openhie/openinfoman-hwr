@@ -9,7 +9,7 @@ declare variable $careServicesRequest as item() external;
    The dynamic context of this query has $careServicesRequest set to contain any of the search 
    and limit paramaters as sent by the Service Finder
 :) 
-let $provs0 := if (exists($careServicesRequest/id/@entityID)) then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()  
+let $provs0 := if (exists($careServicesRequest/requestParams/id/@entityID)) then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/requestParams/id) else ()  
 return
   if (not (count($provs0) = 1)) 
     then ( csd_blu:wrap_updating_providers((<bad/>)))     (:do nothing :)
@@ -22,26 +22,26 @@ return
       (
 	csd_blu:bump_timestamp($provider),
 	delete node $provider/codedType,
-	insert node $careServicesRequest/codedType into $provider,
+	insert node $careServicesRequest/requestParams/codedType into $provider,
 	if (not(exists($demo)))
 	  then
 	  insert node
 	  <demographic>
-	    {($careServicesRequest/gender,$careServicesRequest/dateOfBirth)}
+	    {($careServicesRequest/requestParams/gender,$careServicesRequest/requestParams/dateOfBirth)}
 	  </demographic>
 	  into $provider	
 	else	
 	  (
-	    if (not(exists($dob))) then  insert node $careServicesRequest/dateOfBirth into $demo else replace value of node  $demo/dateOfBirth with $careServicesRequest/dateOfBirth,
-	    if (not(exists($gender))) then  insert node $careServicesRequest/gender into $demo else replace value of node  $demo/gender with $careServicesRequest/gender
+	    if (not(exists($dob))) then  insert node $careServicesRequest/requestParams/dateOfBirth into $demo else replace value of node  $demo/dateOfBirth with $careServicesRequest/requestParams/dateOfBirth,
+	    if (not(exists($gender))) then  insert node $careServicesRequest/requestParams/gender into $demo else replace value of node  $demo/gender with $careServicesRequest/requestParams/gender
 	),
 	delete node $provider/language,
-	insert node $careServicesRequest/language into $provider,
+	insert node $careServicesRequest/requestParams/language into $provider,
 	delete node $provider/specialty,
-	insert node $careServicesRequest/specialty into $provider,
+	insert node $careServicesRequest/requestParams/specialty into $provider,
 	if (exists($provider/record/@status)) 
-	  then replace value of node $provider/record/@status with $careServicesRequest/status 
-	else insert node attribute { 'status' } { string($careServicesRequest/status) } into $provider/record,
+	  then replace value of node $provider/record/@status with $careServicesRequest/requestParams/status 
+	else insert node attribute { 'status' } { string($careServicesRequest/requestParams/status) } into $provider/record,
 	csd_blu:wrap_updating_providers(<provider entityID="{$provider/@entityID}" />)
     )
 

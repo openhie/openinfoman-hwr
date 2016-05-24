@@ -9,9 +9,9 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :) 
 
-let $provs0 := if (exists($careServicesRequest/organization/@entityID)) then /CSD/providerDirectory/*  else ()
-let $provs1 := if (exists($careServicesRequest/organization/contactPoint/@position)) then $provs0  else ()
-let $provs2 := if (exists($careServicesRequest/id/@entityID)) then csd_bl:filter_by_primary_id($provs1,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/requestParams/organization/@entityID)) then /CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($careServicesRequest/requestParams/organization/contactPoint/@position)) then $provs0  else ()
+let $provs2 := if (exists($careServicesRequest/requestParams/id/@entityID)) then csd_bl:filter_by_primary_id($provs1,$careServicesRequest/requestParams/id) else ()
 let $provs3 := 
   if (count($provs2) = 1) 
     then 
@@ -19,13 +19,13 @@ let $provs3 :=
     return 
     <provider entityID="{$provider/@entityID}">
       {
-	if (exists($careServicesRequest/organization/@entityID) and exists($careServicesRequest/organization/contactPoint/@position)) 
+	if (exists($careServicesRequest/requestParams/organization/@entityID) and exists($careServicesRequest/requestParams/organization/contactPoint/@position)) 
 	  then 
 	  <organizations>
-	    <organization entityID="{$careServicesRequest/organization/@entityID}">
+	    <organization entityID="{$careServicesRequest/requestParams/organization/@entityID}">
 	    {
-	      for $cp in $provider/organizations/organization[upper-case(@entityID) = upper-case($careServicesRequest/organization/@entityID)]/contactPoint[position() = $careServicesRequest/organization/contactPoint/@position]
-	      return       <contactPoint position="{$careServicesRequest/organization/contactPoint/@position}">{$cp/*}</contactPoint>
+	      for $cp in $provider/organizations/organization[upper-case(@entityID) = upper-case($careServicesRequest/requestParams/organization/@entityID)]/contactPoint[position() = $careServicesRequest/requestParams/organization/contactPoint/@position]
+	      return       <contactPoint position="{$careServicesRequest/requestParams/organization/contactPoint/@position}">{$cp/*}</contactPoint>
 	  }
 	    </organization>
 	  </organizations>

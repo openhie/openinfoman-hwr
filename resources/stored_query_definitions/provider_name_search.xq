@@ -16,37 +16,37 @@ declare variable $careServicesRequest as item() external;
   <providerDirectory>
     {
 
-      let $provs0 := if (exists($careServicesRequest/id))
-	then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id)
+      let $provs0 := if (exists($careServicesRequest/requestParams/id))
+	then csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/requestParams/id)
       else /CSD/providerDirectory/*
 
-      let $provs1 := if(exists($careServicesRequest/otherID))
-	then csd_bl:filter_by_other_id($provs0,$careServicesRequest/otherID)
+      let $provs1 := if(exists($careServicesRequest/requestParams/otherID))
+	then csd_bl:filter_by_other_id($provs0,$careServicesRequest/requestParams/otherID)
       else $provs0
          
-      let $provs2 := if(exists($careServicesRequest/commonName))
-	then csd_bl:filter_by_common_name($provs1,$careServicesRequest/commonName)
+      let $provs2 := if(exists($careServicesRequest/requestParams/commonName))
+	then csd_bl:filter_by_common_name($provs1,$careServicesRequest/requestParams/commonName)
       else $provs1
     
-      let $provs3 := if (exists($careServicesRequest/codedType))
-	then csd_bl:filter_by_coded_type($provs2,$careServicesRequest/codedType) 
+      let $provs3 := if (exists($careServicesRequest/requestParams/codedType))
+	then csd_bl:filter_by_coded_type($provs2,$careServicesRequest/requestParams/codedType) 
       else $provs2
    
-      let $provs4 := if (exists($careServicesRequest/address/addressLine))
-	then csd_bl:filter_by_demographic_address($provs3, $careServicesRequest/address/addressLine) 
+      let $provs4 := if (exists($careServicesRequest/requestParams/address/addressLine))
+	then csd_bl:filter_by_demographic_address($provs3, $careServicesRequest/requestParams/address/addressLine) 
       else $provs3
 
-      let $provs5 :=  if (exists($careServicesRequest/record)) 
-	then csd_bl:filter_by_record($provs4,$careServicesRequest/record)      
+      let $provs5 :=  if (exists($careServicesRequest/requestParams/record)) 
+	then csd_bl:filter_by_record($provs4,$careServicesRequest/requestParams/record)      
       else  $provs4
 
-      let $provs6:= if (exists($careServicesRequest/start)) then
-	if (exists($careServicesRequest/max)) 
-	  then csd_bl:limit_items($provs5,$careServicesRequest/start,$careServicesRequest/max)         
-	else csd_bl:limit_items($provs5,$careServicesRequest/start,<max/>)         
+      let $provs6:= if (exists($careServicesRequest/requestParams/start)) then
+	if (exists($careServicesRequest/requestParams/max)) 
+	  then csd_bl:limit_items($provs5,$careServicesRequest/requestParams/start,$careServicesRequest/requestParams/max)         
+	else csd_bl:limit_items($provs5,$careServicesRequest/requestParams/start,<max/>)         
       else
-	if (exists($careServicesRequest/max)) 
-	  then csd_bl:limit_items($provs5,<start/>,$careServicesRequest/max)         
+	if (exists($careServicesRequest/requestParams/max)) 
+	  then csd_bl:limit_items($provs5,<start/>,$careServicesRequest/requestParams/max)         
 	else $provs5
 
      return 

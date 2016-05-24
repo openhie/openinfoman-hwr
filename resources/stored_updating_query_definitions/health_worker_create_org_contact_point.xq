@@ -10,21 +10,21 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :)   
 
-let $provs0 := if (exists($careServicesRequest/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/requestParams/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
-let $provs2 := if (exists($careServicesRequest/organization/@entityID))  then $provs1 else ()
-let $provs3 := if (exists($careServicesRequest/organization/contactPoint))  then $provs2 else ()
+let $provs2 := if (exists($careServicesRequest/requestParams/organization/@entityID))  then $provs1 else ()
+let $provs3 := if (exists($careServicesRequest/requestParams/organization/contactPoint))  then $provs2 else ()
 return  
   if ( count($provs3) = 1 )
     then
     let $provider:= $provs3[1]
-    let $orgs := $provider/organizations/organization[upper-case(@entityID) = upper-case($careServicesRequest/organization/@entityID)]
+    let $orgs := $provider/organizations/organization[upper-case(@entityID) = upper-case($careServicesRequest/requestParams/organization/@entityID)]
     return 
       if (count($orgs) = 1) 
 	then
 	let $org := $orgs[1]
 	let $position := count($org/contactPoint) +1
-	let $new_cp := $careServicesRequest/organization/contactPoint
+	let $new_cp := $careServicesRequest/requestParams/organization/contactPoint
 	let $cp := 
 	<contactPoint>
 	  {(

@@ -10,16 +10,16 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :)   
 
-let $provs0 := if (exists($careServicesRequest/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/requestParams/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
-let $provs2 := if (exists($careServicesRequest/organization/@entityID))  then $provs1 else ()
-let $orgs0 := $provs2/organizations/organization[upper-case(@entityID) = upper-case($careServicesRequest/organization/@entityID)]
+let $provs2 := if (exists($careServicesRequest/requestParams/organization/@entityID))  then $provs1 else ()
+let $orgs0 := $provs2/organizations/organization[upper-case(@entityID) = upper-case($careServicesRequest/requestParams/organization/@entityID)]
 let $organizations := $provs2/organizations[1]
 return  
   if ( count($provs2) = 1 and count($orgs0) = 0)  (:DO NOT ALLOW SAME ORG TWICE :)
     then
     let $provider:= $provs2[1]
-    let $org :=  <organization entityID="{$careServicesRequest/organization/@entityID}"/>
+    let $org :=  <organization entityID="{$careServicesRequest/requestParams/organization/@entityID}"/>
     let $orgs_new :=  <organizations>{$org}</organizations>
 
     let $provs3:=  

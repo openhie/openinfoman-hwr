@@ -9,26 +9,26 @@ declare variable $careServicesRequest as item() external;
    The dynamic context of this query has $careServicesRequest set to contain any of the search 
    and limit paramaters as sent by the Service Finder
 :)   
-let $provs0 := if (exists($careServicesRequest/facility/@entityID)) then /CSD/providerDirectory/*  else ()
-let $provs1 := if (exists($careServicesRequest/facility/service/@position)) then $provs0  else ()
-let $provs2 := if (exists($careServicesRequest/facility/service/operatingHours)) then $provs1  else ()
-let $provs3 := if (exists($careServicesRequest/id/@entityID)) then csd_bl:filter_by_primary_id($provs2,$careServicesRequest/id) else ()
-let $srvc := $provs3[1]/facilities/facility[upper-case(@entityID) = upper-case($careServicesRequest/facility/@entityID)]/service[position() = $careServicesRequest/facility/service/@position]
+let $provs0 := if (exists($careServicesRequest/requestParams/facility/@entityID)) then /CSD/providerDirectory/*  else ()
+let $provs1 := if (exists($careServicesRequest/requestParams/facility/service/@position)) then $provs0  else ()
+let $provs2 := if (exists($careServicesRequest/requestParams/facility/service/operatingHours)) then $provs1  else ()
+let $provs3 := if (exists($careServicesRequest/requestParams/id/@entityID)) then csd_bl:filter_by_primary_id($provs2,$careServicesRequest/requestParams/id) else ()
+let $srvc := $provs3[1]/facilities/facility[upper-case(@entityID) = upper-case($careServicesRequest/requestParams/facility/@entityID)]/service[position() = $careServicesRequest/requestParams/facility/service/@position]
 return if (count($srvc) = 1) 
   then
   let $position := count($srvc/operatingHours)
   let $provs4:=  
-  <provider entityID="{$careServicesRequest/id/@entityID}">
+  <provider entityID="{$careServicesRequest/requestParams/id/@entityID}">
     <facilities>
-      <facility entityID="{$careServicesRequest/facility/@entityID}">
-	<service position="{$careServicesRequest/facility/service/@position}" entityID="{$careServicesRequest/facility/service/@entityID}">
+      <facility entityID="{$careServicesRequest/requestParams/facility/@entityID}">
+	<service position="{$careServicesRequest/requestParams/facility/service/@position}" entityID="{$careServicesRequest/requestParams/facility/service/@entityID}">
 	  <operatingHours position="{$position}" />
 	</service>
       </facility>
     </facilities>
   </provider>
   return 
-    (insert node $careServicesRequest/facility/service/operatingHours into $srvc[1] ,    
+    (insert node $careServicesRequest/requestParams/facility/service/operatingHours into $srvc[1] ,    
     csd_blu:wrap_updating_providers($provs4)
   )
 else   csd_blu:wrap_updating_providers(())

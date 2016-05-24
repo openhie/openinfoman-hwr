@@ -10,29 +10,29 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :)   
 
-let $provs0 := if (exists($careServicesRequest/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/requestParams/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
-let $provs2 := if (exists($careServicesRequest/facility/@entityID))  then $provs1 else ()
-let $provs3 := if (exists($careServicesRequest/facility/service/@entityID))  then $provs2 else ()
+let $provs2 := if (exists($careServicesRequest/requestParams/facility/@entityID))  then $provs1 else ()
+let $provs3 := if (exists($careServicesRequest/requestParams/facility/service/@entityID))  then $provs2 else ()
 let $provider:=   if ( count($provs3) = 1 ) then $provs3[1] else ()
-let $facs := $provider/facilities/facility[upper-case(@entityID) = upper-case($careServicesRequest/facility/@entityID)]
+let $facs := $provider/facilities/facility[upper-case(@entityID) = upper-case($careServicesRequest/requestParams/facility/@entityID)]
 let $fac := if (count($facs) = 1) then $facs[1] else ()
 return if (exists($fac))
   then
   let $position := count($fac/service) +1
   let $srvc := 
-  <service entityID="{$careServicesRequest/facility/service/@entityID}">
+  <service entityID="{$careServicesRequest/requestParams/facility/service/@entityID}">
     {(
-      $careServicesRequest/facility/service/organization,
-      $careServicesRequest/facility/service/language,
-      $careServicesRequest/facility/service/freeBusyURI
+      $careServicesRequest/requestParams/facility/service/organization,
+      $careServicesRequest/requestParams/facility/service/language,
+      $careServicesRequest/requestParams/facility/service/freeBusyURI
      )}
   </service>
   let $provs3:=  
   <provider entityID="{$provider/@entityID}">
     <facilities>
       <facility entityID="{$fac/@entityID}">
-	<service position="{$position}" entityID="{$careServicesRequest/facility/service/@entityID}"/>
+	<service position="{$position}" entityID="{$careServicesRequest/requestParams/facility/service/@entityID}"/>
       </facility>
     </facilities>
   </provider>

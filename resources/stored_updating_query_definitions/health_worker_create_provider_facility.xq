@@ -10,16 +10,16 @@ declare variable $careServicesRequest as item() external;
    and limit paramaters as sent by the Service Finder
 :)   
 
-let $provs0 := if (exists($careServicesRequest/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/id) else ()
+let $provs0 := if (exists($careServicesRequest/requestParams/id/@entityID)) then	csd_bl:filter_by_primary_id(/CSD/providerDirectory/*,$careServicesRequest/requestParams/id) else ()
 let $provs1 := if (count($provs0) = 1) then $provs0 else ()
-let $provs2 := if (exists($careServicesRequest/facility/@entityID))  then $provs1 else ()
-let $facs0 := $provs2/facilities/facility[upper-case(@entityID) = upper-case($careServicesRequest/facility/@entityID)]
+let $provs2 := if (exists($careServicesRequest/requestParams/facility/@entityID))  then $provs1 else ()
+let $facs0 := $provs2/facilities/facility[upper-case(@entityID) = upper-case($careServicesRequest/requestParams/facility/@entityID)]
 let $facilities := $provs2/facilities[1]
 return  
   if ( count($provs2) = 1 and count($facs0) = 0)  (:DO NOT ALLOW SAME ORG TWICE :)
     then
     let $provider:= $provs2[1]
-    let $fac :=  <facility entityID="{$careServicesRequest/facility/@entityID}"/>
+    let $fac :=  <facility entityID="{$careServicesRequest/requestParams/facility/@entityID}"/>
     let $facs_new :=  <facilities>{$fac}</facilities>
 
     let $provs3:=  
