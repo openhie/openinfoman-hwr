@@ -16,7 +16,7 @@ let $provs2 := if (exists($careServicesRequest/credential/codedType/@code) and e
 let $cred_request := $careServicesRequest/credential
 let $code:= $cred_request/codedType/@code
 let $codingScheme:= $cred_request/codedType/@codingScheme
-let $creds0 := $provs2/credential[@code = $code and @codingScheme = $codingScheme]
+let $creds0 := $provs2/credential/codedType[@code = $code and @codingScheme = $codingScheme]
 return  
   if ( count($provs2) = 1 and count($creds0) = 0)  (:DO NOT ALLOW SAME CRED TWICE :)
     then
