@@ -27,7 +27,7 @@ return
 	   $careServicesRequest/address
 	   into $facility
 	   ,
-	csd_blu:wrap_updating_facilitys($fac3)
+	csd_blu:wrap_updating_facilities($fac3)
 	)
-  else  csd_blu:wrap_updating_facilitys(())
+  else  csd_blu:wrap_updating_facilities(())
       
