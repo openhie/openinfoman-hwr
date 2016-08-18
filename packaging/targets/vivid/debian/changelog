@@ -1,3 +1,159 @@
+openinfoman-hwr (1.2.2~vivid) vivid; urgency=medium
+
+  * Release Version 1.2.2
+    -42fe5fb Adding a stored function to update other IDs of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/42fe5fb
+    -a53a92a Adding a stored function to update operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/a53a92a
+    -da68e13 Adding a stored function to update facility name
+    --https://github.com/openhie/openinfoman-hwr/commmit/da68e13
+    -eec7c6d Adding a stored function to update contact pont of a facil
+    --https://github.com/openhie/openinfoman-hwr/commmit/eec7c6d
+    -86745f8 Adding a stored function to update address of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/86745f8
+    -31496d1 Adding a stored function to delete language of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/31496d1
+    -c45985d Adding a stored function to delete other IDs of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/c45985d
+    -bcc9741 Adding a stored function to delete operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/bcc9741
+    -cc45c27 Adding a stored function to delete name of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/cc45c27
+    -e42d313 Adding a stored function to delete geocode of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/e42d313
+    -debe1f8 Adding a stored function to delete contact point of a faci
+    --https://github.com/openhie/openinfoman-hwr/commmit/debe1f8
+    -44fbac4 Adding a stored function to delete facility address
+    --https://github.com/openhie/openinfoman-hwr/commmit/44fbac4
+    -801b04c Adding a stored function to create operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/801b04c
+    -83f06b6 Adding a stored function to create language of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/83f06b6
+    -dfad964 Adding stored function to create geocode to a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/dfad964
+    -a2e3e80 Adding a stored function to create other id on a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/a2e3e80
+    -8651bba Adding a stored function to create contact point on a faci
+    --https://github.com/openhie/openinfoman-hwr/commmit/8651bba
+    -70e9e91 Adding a stored function to create address on facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/70e9e91
+    -56fa188 Adding updating function to create credentials to an organ
+    --https://github.com/openhie/openinfoman-hwr/commmit/56fa188
+    -80144ba Fixed a bug when checking for multiple credentials
+    --https://github.com/openhie/openinfoman-hwr/commmit/80144ba
+    -c1ff340 Adding updating function to create contact point of an org
+    --https://github.com/openhie/openinfoman-hwr/commmit/c1ff340
+    -796c29c Adding updating function to create address to an organozat
+    --https://github.com/openhie/openinfoman-hwr/commmit/796c29c
+    -1964d9e Adding updating function to create other id of an organoza
+    --https://github.com/openhie/openinfoman-hwr/commmit/1964d9e
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Thu, 18 Aug 2016 09:23:21 +0300
+
+openinfoman-hwr (1.2.2~vivid) vivid; urgency=medium
+
+  * Release Version 1.2.2
+    -42fe5fb Adding a stored function to update other IDs of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/42fe5fb
+    -a53a92a Adding a stored function to update operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/a53a92a
+    -da68e13 Adding a stored function to update facility name
+    --https://github.com/openhie/openinfoman-hwr/commmit/da68e13
+    -eec7c6d Adding a stored function to update contact pont of a facil
+    --https://github.com/openhie/openinfoman-hwr/commmit/eec7c6d
+    -86745f8 Adding a stored function to update address of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/86745f8
+    -31496d1 Adding a stored function to delete language of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/31496d1
+    -c45985d Adding a stored function to delete other IDs of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/c45985d
+    -bcc9741 Adding a stored function to delete operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/bcc9741
+    -cc45c27 Adding a stored function to delete name of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/cc45c27
+    -e42d313 Adding a stored function to delete geocode of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/e42d313
+    -debe1f8 Adding a stored function to delete contact point of a faci
+    --https://github.com/openhie/openinfoman-hwr/commmit/debe1f8
+    -44fbac4 Adding a stored function to delete facility address
+    --https://github.com/openhie/openinfoman-hwr/commmit/44fbac4
+    -801b04c Adding a stored function to create operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/801b04c
+    -83f06b6 Adding a stored function to create language of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/83f06b6
+    -dfad964 Adding stored function to create geocode to a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/dfad964
+    -a2e3e80 Adding a stored function to create other id on a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/a2e3e80
+    -8651bba Adding a stored function to create contact point on a faci
+    --https://github.com/openhie/openinfoman-hwr/commmit/8651bba
+    -70e9e91 Adding a stored function to create address on facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/70e9e91
+    -56fa188 Adding updating function to create credentials to an organ
+    --https://github.com/openhie/openinfoman-hwr/commmit/56fa188
+    -80144ba Fixed a bug when checking for multiple credentials
+    --https://github.com/openhie/openinfoman-hwr/commmit/80144ba
+    -c1ff340 Adding updating function to create contact point of an org
+    --https://github.com/openhie/openinfoman-hwr/commmit/c1ff340
+    -796c29c Adding updating function to create address to an organozat
+    --https://github.com/openhie/openinfoman-hwr/commmit/796c29c
+    -1964d9e Adding updating function to create other id of an organoza
+    --https://github.com/openhie/openinfoman-hwr/commmit/1964d9e
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Thu, 18 Aug 2016 09:22:35 +0300
+
+openinfoman-hwr (1.2.2~vivid) vivid; urgency=medium
+
+  * Release Version 1.2.2
+    -42fe5fb Adding a stored function to update other IDs of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/42fe5fb
+    -a53a92a Adding a stored function to update operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/a53a92a
+    -da68e13 Adding a stored function to update facility name
+    --https://github.com/openhie/openinfoman-hwr/commmit/da68e13
+    -eec7c6d Adding a stored function to update contact pont of a facil
+    --https://github.com/openhie/openinfoman-hwr/commmit/eec7c6d
+    -86745f8 Adding a stored function to update address of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/86745f8
+    -31496d1 Adding a stored function to delete language of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/31496d1
+    -c45985d Adding a stored function to delete other IDs of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/c45985d
+    -bcc9741 Adding a stored function to delete operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/bcc9741
+    -cc45c27 Adding a stored function to delete name of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/cc45c27
+    -e42d313 Adding a stored function to delete geocode of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/e42d313
+    -debe1f8 Adding a stored function to delete contact point of a faci
+    --https://github.com/openhie/openinfoman-hwr/commmit/debe1f8
+    -44fbac4 Adding a stored function to delete facility address
+    --https://github.com/openhie/openinfoman-hwr/commmit/44fbac4
+    -801b04c Adding a stored function to create operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/801b04c
+    -83f06b6 Adding a stored function to create language of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/83f06b6
+    -dfad964 Adding stored function to create geocode to a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/dfad964
+    -a2e3e80 Adding a stored function to create other id on a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/a2e3e80
+    -8651bba Adding a stored function to create contact point on a faci
+    --https://github.com/openhie/openinfoman-hwr/commmit/8651bba
+    -70e9e91 Adding a stored function to create address on facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/70e9e91
+    -56fa188 Adding updating function to create credentials to an organ
+    --https://github.com/openhie/openinfoman-hwr/commmit/56fa188
+    -80144ba Fixed a bug when checking for multiple credentials
+    --https://github.com/openhie/openinfoman-hwr/commmit/80144ba
+    -c1ff340 Adding updating function to create contact point of an org
+    --https://github.com/openhie/openinfoman-hwr/commmit/c1ff340
+    -796c29c Adding updating function to create address to an organozat
+    --https://github.com/openhie/openinfoman-hwr/commmit/796c29c
+    -1964d9e Adding updating function to create other id of an organoza
+    --https://github.com/openhie/openinfoman-hwr/commmit/1964d9e
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Thu, 18 Aug 2016 09:20:38 +0300
+
 openinfoman-hwr (1.2.1~vivid) vivid; urgency=medium
 
   * Release Version 1.2.1
