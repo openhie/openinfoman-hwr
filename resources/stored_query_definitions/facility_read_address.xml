@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <careServicesFunction xmlns:ev="http://www.w3.org/2001/xml-events" xmlns="urn:ihe:iti:csd:2013" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:hfp="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:csd="urn:ihe:iti:csd:2013" urn="urn:openhie.org:openinfoman-hwr:stored-function:facility_read_address">
-  <description>facilty_read_address</description>
-<definition ><xi:include parse="text" href="facility_read_address.xq"/></definition>
+  <description>
+    <h2>Example Request</h2>
+    <pre>
+      &lt;csd:requestParams xmlns:csd="urn:ihe:iti:csd:2013"&gt;
+        &lt;csd:id entityID="urn:uuid:c7640530-f600-11e2-b778-0800200c9a66"&gt;
+        &lt;/csd:id&gt;
+        &lt;csd:address type="Practice"&gt;&lt;/csd:address&gt;
+      &lt;/csd:requestParams&gt;
+    </pre>
+  </description>
+  <definition ><xi:include parse="text" href="facility_read_address.xq"/></definition>
 
   <xforms:instance>
     <careServicesRequest>

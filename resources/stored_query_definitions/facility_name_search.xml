@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <careServicesFunction xmlns:ev="http://www.w3.org/2001/xml-events" xmlns="urn:ihe:iti:csd:2013" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:hfp="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:csd="urn:ihe:iti:csd:2013" urn="urn:openhie.org:openinfoman-hwr:stored-function:facility_name_search">
-  <description> 
+  <description>
     <p>
-    Performs a search for all facilities by name, type, address or ID.   
+    Performs a search for all facilities by name, type, address or ID.
     </p>
     <p>
       The result set consists of the primary name of all facilities matching the  <i>search parameters</i> ( <b>id</b>, <b>primaryName</b>, <b>name</b>, <b>codedType</b> and <b>address</b> ).
      </p>
-     <p>   
+     <p>
       The results set may be further restricted according to the <i>limit parameters</i> (<b>start</b>, <b>max</b>, <b>record/@status</b> and <b>record/@updated</b>).  An ordering of the result set is not specified.
     </p>
     <p>
@@ -17,16 +17,16 @@
     <h2>Parameters</h2> Query
     Parameters are defined as the content of following elements:
     <ul>
-      <li> &lt;id/&gt; <i>csd:uniqueID</i>: (optional) If present and the @urn attribute contains a non-empty value, it is a ID which uniquely identifies a facility. This is an exact match.  
+      <li> &lt;id/&gt; <i>csd:uniqueID</i>: (optional) If present and the @urn attribute contains a non-empty value, it is a ID which uniquely identifies a facility. This is an exact match.
       </li>
       <li>&lt;primaryName/&gt; <i>xs:string</i>: (optional) If present and contains a non-empty value, then the result set should be restricted to those facilities whose &lt;primaryName/&gt; contains this value. Case insensitive.</li>
-      <li>&lt;name/&gt; <i>xs:string</i>: (optional) If present and contains a non-empty value, then the result set should be restricted to those facilities which have a &lt;primaryName/&gt; or &lt;otherName/&gt; element containing this value. Case insensitive.</li>      
+      <li>&lt;name/&gt; <i>xs:string</i>: (optional) If present and contains a non-empty value, then the result set should be restricted to those facilities which have a &lt;primaryName/&gt; or &lt;otherName/&gt; element containing this value. Case insensitive.</li>
       <li>&lt;codedType/&gt; <i>csd:codedtype</i>:  If present and contains a non-empty value the result set should be restricted to those facilities whose &lt;codedType/@code&gt; equals this value for the coding schema specified by the @codingSchema attribute.  Case insensitive.
       </li>
       <li> &lt;address/&gt; <i>csd:address</i>: (optional) Contains of any-number of child &lt;addressLine/&gt; elements as follows:
         <ul>
           <li>Text content <i>xs:string</i>: (optional) If present and contains a non-empty value, then the results set should be restricted to those facilities whose have an &lt;addressLine/&gt; with specified @component containing this value exactly.  Case insensitive.
-          </li> 
+          </li>
           <li>@component <i>xs:string</i> : (Required attribute) The component of the address we are searching. Case insensitive.</li>
           </ul>
       </li>
@@ -42,16 +42,12 @@
     </ul>
     <h2>Example Request</h2>
     <pre>
-         &lt;careServicesRequest&gt;
-           &lt;function uuid='c7640530-f600-11e2-b778-0800200c9a66'&gt;
-               &lt;codedType code='OPC' codingSchema="USDVA"/&gt;
-               &lt;address&gt;
-                 &lt;addressLine component='city'&gt;Chapel Hill&lt;/addressLine&gt;
-	       &lt;/address&gt;
-               &lt;max&gt;5&lt;/max&gt;
-           &lt;/function&gt;
-         &lt;/careServicesRequest&gt;         
-      </pre>
+      &lt;csd:requestParams xmlns:csd="urn:ihe:iti:csd:2013"&gt;
+        &lt;csd:id entityID="urn:uuid:c7640530-f600-11e2-b778-0800200c9a66"&gt;
+        &lt;/csd:id&gt;
+        &lt;csd:primaryName&gt;Hill Mount Facility&lt;/csd:primaryName&gt;
+      &lt;/csd:requestParams&gt;
+    </pre>
   </description>
   <definition><xi:include parse="text" href="facility_name_search.xq"/></definition>
   <xforms:instance>
