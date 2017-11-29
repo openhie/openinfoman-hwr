@@ -15,7 +15,7 @@ declare variable $careServicesRequest as item() external;
     return
       if ( count($facilities) = 1 )
 	then
-	let  $id :=  $facilities[1]/otherID[@code = $careServicesRequest/id/otherID/@code and @assigningAuthorityName = $careServicesRequest/id/otherID/@assigningAuthorityName]
+	let  $id :=  $facilities[1]/otherID[@code = $careServicesRequest/id/otherID/@code and @assigningAuthorityName = $careServicesRequest/id/otherID/@assigningAuthorityName and ./text() = $careServicesRequest/id/otherID/text()]
 	return if (exists($id)) then (delete node $id) else ()
       else  ()
     else ()
