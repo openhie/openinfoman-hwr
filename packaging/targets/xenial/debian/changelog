@@ -1,0 +1,356 @@
+openinfoman-hwr (1.2.4~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.4
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 31 Aug 2016 12:09:11 +0300
+
+openinfoman-hwr (1.2.3~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.3
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 31 Aug 2016 11:54:58 +0300
+
+openinfoman-hwr (1.2.2~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.2
+    -42fe5fb Adding a stored function to update other IDs of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/42fe5fb
+    -a53a92a Adding a stored function to update operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/a53a92a
+    -da68e13 Adding a stored function to update facility name
+    --https://github.com/openhie/openinfoman-hwr/commmit/da68e13
+    -eec7c6d Adding a stored function to update contact pont of a facil
+    --https://github.com/openhie/openinfoman-hwr/commmit/eec7c6d
+    -86745f8 Adding a stored function to update address of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/86745f8
+    -31496d1 Adding a stored function to delete language of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/31496d1
+    -c45985d Adding a stored function to delete other IDs of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/c45985d
+    -bcc9741 Adding a stored function to delete operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/bcc9741
+    -cc45c27 Adding a stored function to delete name of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/cc45c27
+    -e42d313 Adding a stored function to delete geocode of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/e42d313
+    -debe1f8 Adding a stored function to delete contact point of a faci
+    --https://github.com/openhie/openinfoman-hwr/commmit/debe1f8
+    -44fbac4 Adding a stored function to delete facility address
+    --https://github.com/openhie/openinfoman-hwr/commmit/44fbac4
+    -801b04c Adding a stored function to create operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/801b04c
+    -83f06b6 Adding a stored function to create language of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/83f06b6
+    -dfad964 Adding stored function to create geocode to a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/dfad964
+    -a2e3e80 Adding a stored function to create other id on a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/a2e3e80
+    -8651bba Adding a stored function to create contact point on a faci
+    --https://github.com/openhie/openinfoman-hwr/commmit/8651bba
+    -70e9e91 Adding a stored function to create address on facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/70e9e91
+    -56fa188 Adding updating function to create credentials to an organ
+    --https://github.com/openhie/openinfoman-hwr/commmit/56fa188
+    -80144ba Fixed a bug when checking for multiple credentials
+    --https://github.com/openhie/openinfoman-hwr/commmit/80144ba
+    -c1ff340 Adding updating function to create contact point of an org
+    --https://github.com/openhie/openinfoman-hwr/commmit/c1ff340
+    -796c29c Adding updating function to create address to an organozat
+    --https://github.com/openhie/openinfoman-hwr/commmit/796c29c
+    -1964d9e Adding updating function to create other id of an organoza
+    --https://github.com/openhie/openinfoman-hwr/commmit/1964d9e
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Thu, 18 Aug 2016 09:23:20 +0300
+
+openinfoman-hwr (1.2.2~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.2
+    -42fe5fb Adding a stored function to update other IDs of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/42fe5fb
+    -a53a92a Adding a stored function to update operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/a53a92a
+    -da68e13 Adding a stored function to update facility name
+    --https://github.com/openhie/openinfoman-hwr/commmit/da68e13
+    -eec7c6d Adding a stored function to update contact pont of a facil
+    --https://github.com/openhie/openinfoman-hwr/commmit/eec7c6d
+    -86745f8 Adding a stored function to update address of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/86745f8
+    -31496d1 Adding a stored function to delete language of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/31496d1
+    -c45985d Adding a stored function to delete other IDs of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/c45985d
+    -bcc9741 Adding a stored function to delete operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/bcc9741
+    -cc45c27 Adding a stored function to delete name of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/cc45c27
+    -e42d313 Adding a stored function to delete geocode of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/e42d313
+    -debe1f8 Adding a stored function to delete contact point of a faci
+    --https://github.com/openhie/openinfoman-hwr/commmit/debe1f8
+    -44fbac4 Adding a stored function to delete facility address
+    --https://github.com/openhie/openinfoman-hwr/commmit/44fbac4
+    -801b04c Adding a stored function to create operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/801b04c
+    -83f06b6 Adding a stored function to create language of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/83f06b6
+    -dfad964 Adding stored function to create geocode to a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/dfad964
+    -a2e3e80 Adding a stored function to create other id on a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/a2e3e80
+    -8651bba Adding a stored function to create contact point on a faci
+    --https://github.com/openhie/openinfoman-hwr/commmit/8651bba
+    -70e9e91 Adding a stored function to create address on facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/70e9e91
+    -56fa188 Adding updating function to create credentials to an organ
+    --https://github.com/openhie/openinfoman-hwr/commmit/56fa188
+    -80144ba Fixed a bug when checking for multiple credentials
+    --https://github.com/openhie/openinfoman-hwr/commmit/80144ba
+    -c1ff340 Adding updating function to create contact point of an org
+    --https://github.com/openhie/openinfoman-hwr/commmit/c1ff340
+    -796c29c Adding updating function to create address to an organozat
+    --https://github.com/openhie/openinfoman-hwr/commmit/796c29c
+    -1964d9e Adding updating function to create other id of an organoza
+    --https://github.com/openhie/openinfoman-hwr/commmit/1964d9e
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Thu, 18 Aug 2016 09:22:35 +0300
+
+openinfoman-hwr (1.2.2~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.2
+    -42fe5fb Adding a stored function to update other IDs of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/42fe5fb
+    -a53a92a Adding a stored function to update operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/a53a92a
+    -da68e13 Adding a stored function to update facility name
+    --https://github.com/openhie/openinfoman-hwr/commmit/da68e13
+    -eec7c6d Adding a stored function to update contact pont of a facil
+    --https://github.com/openhie/openinfoman-hwr/commmit/eec7c6d
+    -86745f8 Adding a stored function to update address of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/86745f8
+    -31496d1 Adding a stored function to delete language of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/31496d1
+    -c45985d Adding a stored function to delete other IDs of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/c45985d
+    -bcc9741 Adding a stored function to delete operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/bcc9741
+    -cc45c27 Adding a stored function to delete name of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/cc45c27
+    -e42d313 Adding a stored function to delete geocode of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/e42d313
+    -debe1f8 Adding a stored function to delete contact point of a faci
+    --https://github.com/openhie/openinfoman-hwr/commmit/debe1f8
+    -44fbac4 Adding a stored function to delete facility address
+    --https://github.com/openhie/openinfoman-hwr/commmit/44fbac4
+    -801b04c Adding a stored function to create operating hours of a fa
+    --https://github.com/openhie/openinfoman-hwr/commmit/801b04c
+    -83f06b6 Adding a stored function to create language of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/83f06b6
+    -dfad964 Adding stored function to create geocode to a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/dfad964
+    -a2e3e80 Adding a stored function to create other id on a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/a2e3e80
+    -8651bba Adding a stored function to create contact point on a faci
+    --https://github.com/openhie/openinfoman-hwr/commmit/8651bba
+    -70e9e91 Adding a stored function to create address on facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/70e9e91
+    -56fa188 Adding updating function to create credentials to an organ
+    --https://github.com/openhie/openinfoman-hwr/commmit/56fa188
+    -80144ba Fixed a bug when checking for multiple credentials
+    --https://github.com/openhie/openinfoman-hwr/commmit/80144ba
+    -c1ff340 Adding updating function to create contact point of an org
+    --https://github.com/openhie/openinfoman-hwr/commmit/c1ff340
+    -796c29c Adding updating function to create address to an organozat
+    --https://github.com/openhie/openinfoman-hwr/commmit/796c29c
+    -1964d9e Adding updating function to create other id of an organoza
+    --https://github.com/openhie/openinfoman-hwr/commmit/1964d9e
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Thu, 18 Aug 2016 09:20:37 +0300
+
+openinfoman-hwr (1.2.1~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.1
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sun, 20 Mar 2016 18:37:18 +0000
+
+openinfoman-hwr (1.1.7~xenial) xenial; urgency=medium
+
+  * Release Version 1.1.7
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 05 Mar 2016 10:55:36 +0000
+
+openinfoman-hwr (1.1.6~xenial) xenial; urgency=medium
+
+  * Release Version 1.1.6
+    -020f8e2 fixed typo in org read otherid
+    --http://github.com/openhie/openinfoman-hwr/commmit/020f8e2
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 05 Mar 2016 09:50:28 +0000
+
+openinfoman-hwr (1.1.5~xenial) xenial; urgency=medium
+
+  * Release Version 1.1.5
+    -4c6b372 fixed issue in org. indices address
+    --http://github.com/openhie/openinfoman-hwr/commmit/4c6b372
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 05 Mar 2016 09:48:13 +0000
+
+openinfoman-hwr (1.1.4~xenial) xenial; urgency=medium
+
+  * Release Version 1.1.4
+    -ff61a30 fixed issue in facility read service
+    --http://github.com/openhie/openinfoman-hwr/commmit/ff61a30
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 05 Mar 2016 09:46:16 +0000
+
+openinfoman-hwr (1.1.3~xenial) xenial; urgency=medium
+
+  * Release Version 1.1.3
+    -ef1d85b fixed issue in facility read
+    --http://github.com/openhie/openinfoman-hwr/commmit/ef1d85b
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 05 Mar 2016 09:44:28 +0000
+
+openinfoman-hwr (1.1.2~xenial) xenial; urgency=medium
+
+  * Release Version 1.1.2
+    -d065ca5 fixed issue in facility read
+    --http://github.com/openhie/openinfoman-hwr/commmit/d065ca5
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 05 Mar 2016 09:43:05 +0000
+
+openinfoman-hwr (1.1.1~xenial) xenial; urgency=medium
+
+  * Release Version 1.1.1
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 05 Mar 2016 09:41:29 +0000
+
+openinfoman-hwr (1.0.17~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.17
+    -fcaef39 added --no-check-certificate in packaging wget request
+    --http://github.com/openhie/openinfoman-hwr/commmit/fcaef39
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 05 Mar 2016 09:36:40 +0000
+
+openinfoman-hwr (1.0.16~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.16
+    -b16d37a packaging fixup
+    --https://github.com/openhie/openinfoman-hwr/commmit/b16d37a
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 18 Jan 2016 20:03:36 -0500
+
+openinfoman-hwr (1.0.15~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.15
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 18 Jan 2016 16:39:13 -0500
+
+openinfoman-hwr (1.0.14~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.14
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sun, 25 Oct 2015 20:22:31 -0400
+
+openinfoman-hwr (1.0.13~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.13
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sun, 25 Oct 2015 20:22:19 -0400
+
+openinfoman-hwr (1.0.12~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.12
+    -3843078 reload stored functions when installing ubuntu package.  r
+    --https://github.com/openhie/openinfoman-hwr/commmit/3843078
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sun, 25 Oct 2015 20:18:12 -0400
+
+openinfoman-hwr (1.0.11~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.11
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sun, 25 Oct 2015 20:11:26 -0400
+
+openinfoman-hwr (1.0.10~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.10
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 07 Sep 2015 01:53:06 +0000
+
+openinfoman-hwr (1.0.9~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.9
+    -ede952a file name swapping
+    --https://github.com/openhie/openinfoman-hwr/commmit/ede952a
+    -650a264 created stored functions for credentials
+    --https://github.com/openhie/openinfoman-hwr/commmit/650a264
+    -37ec473 added a bunch of stored functions for reading facility and
+    --https://github.com/openhie/openinfoman-hwr/commmit/37ec473
+    -46e709f Update README.md
+    --https://github.com/openhie/openinfoman-hwr/commmit/46e709f
+    -7e052ef Update README.md
+    --https://github.com/openhie/openinfoman-hwr/commmit/7e052ef
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 07 Sep 2015 01:49:46 +0000
+
+openinfoman-hwr (1.0.8~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.8
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 02 Mar 2015 14:31:44 -0500
+
+openinfoman-hwr (1.0.7~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.7
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 02 Mar 2015 14:30:07 -0500
+
+openinfoman-hwr (1.0.6~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.6
+    -06ee6aa removed explict import random module
+    --https://github.com/openhie/openinfoman-hwr/commmit/06ee6aa
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 02 Mar 2015 14:29:49 -0500
+
+openinfoman-hwr (1.0.5~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.5
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 18 Feb 2015 19:07:23 +0000
+
+openinfoman-hwr (1.0.4~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.4
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 16 Feb 2015 19:06:05 +0000
+
+openinfoman-hwr (1.0.3~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.3
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 16 Feb 2015 16:21:32 +0000
+
+openinfoman-hwr (1.0.2~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.2
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 16 Feb 2015 14:40:49 +0000
+
+openinfoman-hwr (1.0.1~xenial) xenial; urgency=medium
+
+  * Release Version 1.0.1
+    -9c219ed initial packaging
+    --https://github.com/openhie/openinfoman-hwr/commit/9c219ed
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 16 Feb 2015 14:36:17 +0000
+
+openinfoman-hwr (1.0.0~xenial) xenial; urgency=low
+
+  [Carl Leitner <litlfred@ibiblio.org>]
+  * Initial Build
+    Fri 2015-02-13 13:55:10 -0500
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 16 February 2015 13:55:10 -0500
+
