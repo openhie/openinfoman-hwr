@@ -1,3 +1,29 @@
+openinfoman-hwr (1.2.5~vivid) vivid; urgency=medium
+
+  * Release Version 1.2.5
+    -4dcc7ab packaging openinfoma-hwr for 16.04
+    --https://github.com/openhie/openinfoman-hwr/commmit/4dcc7ab
+    -d00ba56 deleting otherid by code and value
+    --https://github.com/openhie/openinfoman-hwr/commmit/d00ba56
+    -6e34db7 Adding a stored function to delete facilities by code and
+    --https://github.com/openhie/openinfoman-hwr/commmit/6e34db7
+    -ac2de29 Adding a stored function to create extension to a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/ac2de29
+    -13121ea Adding stored function to return all provider details
+    --https://github.com/openhie/openinfoman-hwr/commmit/13121ea
+    -7f32357 Adding stored function to return all details for a queried
+    --https://github.com/openhie/openinfoman-hwr/commmit/7f32357
+    -df88593 Adding a stored function to return all facility details
+    --https://github.com/openhie/openinfoman-hwr/commmit/df88593
+    -72e6bef Updating/Adding documentation of facility stored query fun
+    --https://github.com/openhie/openinfoman-hwr/commmit/72e6bef
+    -a76a348 Adding stored functions to update entityID of orgs and pro
+    --https://github.com/openhie/openinfoman-hwr/commmit/a76a348
+    -89af8e8 Adding a stored function to update entityID of a facility
+    --https://github.com/openhie/openinfoman-hwr/commmit/89af8e8
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 05 Mar 2018 12:35:56 +0300
+
 openinfoman-hwr (1.2.4~vivid) vivid; urgency=medium
 
   * Release Version 1.2.4
