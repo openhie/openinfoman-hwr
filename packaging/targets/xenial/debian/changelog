@@ -1,3 +1,9 @@
+openinfoman-hwr (1.2.7~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.7
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Fri, 13 Apr 2018 07:11:42 +0000
+
 openinfoman-hwr (1.2.6~xenial) xenial; urgency=medium
 
   * Release Version 1.2.6
