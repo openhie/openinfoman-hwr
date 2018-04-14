@@ -1,3 +1,11 @@
+openinfoman-hwr (1.2.8~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.8
+    -eebbbbf fixing missing extension on SF
+    --https://github.com/openhie/openinfoman-hwr/commmit/eebbbbf
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 14 Apr 2018 05:54:31 +0000
+
 openinfoman-hwr (1.2.7~xenial) xenial; urgency=medium
 
   * Release Version 1.2.7
